@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>conosuer.io</title>
+
+    <!-- Google Fonts Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baskerville+SC&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply the Baskerville SC font to the body */
+        body {
+            font-family: 'Baskerville SC', serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+
+        .artwork-container {
+            background-color: white;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.2em;
+        }
+
+        .artist {
+            font-weight: bold;
+            color: #333;
+        }
+
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading screen style */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(0, 0, 0);
+            font-size: 2em;
+            z-index: 9999;
+            opacity: 1;
+            /* Fully visible initially */
+            transition: opacity 1s ease-out;
+            /* Smooth fade-out effect */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Loading screen overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        Loading...
+    </div>
+
+    <div class="artwork-container">
+        <h1 id="artwork-title">Loading...</h1>
+        <img id="artwork-image" src="" alt="Artwork of the day">
+        <p id="artwork-description"></p>
+        <p id="artwork-artist" class="artist"></p>
+        <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
+    </div>
+
+    <script>
+        // Fetch the artwork data from the 'cleaned_artwork_data.json' file
+        fetch('./art_data/cleaned_artwork_data.json')  // Ensure the file exists in the correct directory
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();  // Parse the JSON response
+            })
+            .then(data => {
+                // Select the artwork of the day (first artwork in the list)
+                const artwork = data[3075];  // You can randomize or choose another index if desired
+
+                // Populate the webpage with the data
+                document.getElementById('artwork-title').textContent = artwork.title || 'Untitled';
+                document.getElementById('artwork-image').src = artwork.image_url || '';  // Ensure there's a fallback if image_url is missing
+                document.getElementById('artwork-description').textContent = artwork.metadata && artwork.metadata.ImageDescription && artwork.metadata.ImageDescription.value ? artwork.metadata.ImageDescription.value : 'No description available.';
+                document.getElementById('artwork-artist').textContent = `Artist: ${artwork.artist || 'Unknown Artist'}`;
+                document.getElementById('artwork-link').href = artwork.wikipedia_url || '#';  // Ensure fallback for missing Wikipedia URL
+
+                // Fade out the loading overlay using JavaScript
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.transition = 'opacity 1s ease-out';  // Apply transition for smooth fade
+                overlay.style.opacity = '0';  // Fade out the overlay
+
+                // Wait for the fade-out to complete and then hide the overlay completely
+                setTimeout(() => {
+                    overlay.style.display = 'none';  // Remove from the DOM after fade
+                }, 2000); // Wait for 1 second (fade duration)
+            })
+            .catch(error => {
+                console.error('Error fetching artwork data:', error);
+                document.getElementById('artwork-title').textContent = 'conosuer.io';
+                document.getElementById('artwork-description').textContent = 'There was an error loading the artwork data.';
+
+                // Fade out the loading overlay in case of an error
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.transition = 'opacity 2s ease-out';  // Apply transition for smooth fade
+                // overlay.style.opacity = '0';  // Fade out the overlay
+
+                // Wait for the fade-out to complete and then hide the overlay completely
+                setTimeout(() => {
+                    overlay.style.display = 'none';  // Remove from the DOM after fade
+                }, 3000); // Wait for 1 second (fade duration)
+            });
+    </script>
+
+</body>
+
+</html>
