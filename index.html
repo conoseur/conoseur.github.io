@@ -5,21 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>conosuer.io</title>
-
-    <!-- Google Fonts Links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baskerville+SC&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9809194945228761"
         crossorigin="anonymous"></script>
 </head>
 
 <body>
     <!-- Loading screen overlay -->
-    <div id="loading-overlay2" class="loading-overlay">
-    </div>
+    <div id="loading-overlay2" class="loading-overlay"></div>
     <div id="loading-overlay" class="loading-overlay">
         <div>
             <img src="images/logo2.png" alt="Logo">
@@ -45,43 +43,95 @@
     </nav>
 
     <div class="content-container">
-
         <div class="artwork-container">
-            <!-- Category selectors -->
-            <select id="style-select" class="category-select">
-                <option value="">Select Style...</option>
-            </select>
-            <select id="artist-select" class="category-select">
-                <option value="">Select Artist...</option>
-            </select>
-            <select id="nationality-select" class="category-select">
-                <option value="">Select Nationality...</option>
-            </select>
-            <select id="subject-select" class="category-select">
-                <option value="">Select Subject...</option>
-            </select>
-
             <img id="artwork-image" src="" alt="Error">
-            <p id="artwork-description"></p>
-            <p id="artwork-artist" class="artist"></p>
-            <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
-            <input type="text">
+            <div style="margin-top: 5px; margin-bottom: 5px;">
+                <span id="subject" class="badge blue">landscape</span>
+                <span id="style" class="badge green">american art</span>
+            </div>
+
+            <div style="margin-top: 10px;">
+                <input type="text" list="nationality-select" placeholder="Type the Nationality...">
+                <datalist id="nationality-select"></datalist>
+
+                <input type="number" placeholder="A year when the artist was alive">
+
+                <input style="display: none;" type="text" list="artist-select" placeholder="Type the Artist...">
+                <datalist id="artist-select"></datalist>
+            </div>
+
+            <div id="reveal" style="display: none;">
+                <p id="artwork-artist" class="artist"></p>
+                <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px;">
+        <div class="timer-container">
+            <svg class="timer-circle" width="60" height="60">
+                <circle cx="30" cy="30" r="25" stroke="#ddd" stroke-width="4" fill="none" />
+                <circle id="timer-progress" cx="30" cy="30" r="25" stroke="#4CAF50" stroke-width="4" fill="none" />
+            </svg>
+            <div id="timer-text" class="timer-text">30</div>
         </div>
     </div>
 
     <script>
-        // Date handling ----------------------------------------------------------------------------
+        // Initialize global artwork data
+        let globalartworkData;
+        let startDate = new Date("12/01/2024");
         let currentDate = new Date();
 
-        function formatDate(date) {
+        // Async function to fetch the artwork data
+        async function fetchArtworkData() {
+            const responses = await Promise.all([
+                fetch('./art_data/cleaned_artwork_data.json'),
+                fetch('./art_data/unique_values.json')
+            ]);
+            const [artworkData, uniqueValues] = await Promise.all(responses.map(res => res.json()));
+
+            globalartworkData = artworkData;
+
+            // Populate select elements with unique values
+            populateSelect('artist-select', uniqueValues.artists);
+            populateSelect('nationality-select', uniqueValues.nationalities);
+        }
+
+        // Function to display artwork
+        function displayArtwork(artwork) {
+            console.log(artwork);
+            document.getElementById('artwork-image').src = artwork.image_url || '';
+            document.getElementById('artwork-artist').textContent = `Artist: ${artwork.artist || 'Unknown Artist'}`;
+            document.getElementById('subject').textContent = `${artwork.subject || ''}`;
+            document.getElementById('style').textContent = `${artwork.style || ''}`;
+            document.getElementById('artwork-link').href = artwork.wikipedia_url || '#';
+        }
+
+        // Format date and wait for artwork data
+        async function formatDate(date) {
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const dd = String(date.getDate()).padStart(2, '0');
             const yyyy = date.getFullYear();
+
+            let Difference_In_Time = Math.round(
+                (currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
+            );
+
+            console.log(Difference_In_Time);
+
+            // Wait for artwork data to load before displaying the artwork
+            await fetchArtworkData();
+
+            // Ensure artwork data is loaded before calling displayArtwork
+            displayArtwork(globalartworkData[Difference_In_Time]);
+
             return `${mm}/${dd}/${yyyy}`;
         }
 
-        function updateDateDisplay() {
-            document.getElementById('currentDate').textContent = formatDate(currentDate);
+        // Update the date display
+        async function updateDateDisplay() {
+            document.getElementById('currentDate').textContent = await formatDate(currentDate);
         }
 
         // Initialize date display
@@ -109,93 +159,81 @@
             });
         }
 
-        // Function to display artwork
-        function displayArtwork(artwork) {
-            document.getElementById('artwork-image').src = artwork.image_url || '';
-            document.getElementById('artwork-description').textContent =
-                artwork.metadata?.ImageDescription?.value || 'No description available.';
-            document.getElementById('artwork-artist').textContent =
-                `Artist: ${artwork.artist || 'Unknown Artist'}`;
-            document.getElementById('artwork-link').href = artwork.wikipedia_url || '#';
-        }
-
-        // Fetch both data files
-        Promise.all([
-            fetch('./art_data/cleaned_artwork_data.json'),
-            fetch('./art_data/unique_values.json')
-        ])
-            .then(responses => Promise.all(responses.map(response => response.json())))
-            .then(([artworkData, uniqueValues]) => {
-                // Populate select elements with unique values
-                populateSelect('style-select', uniqueValues.styles);
-                populateSelect('artist-select', uniqueValues.artists);
-                populateSelect('nationality-select', uniqueValues.nationalities);
-                populateSelect('subject-select', uniqueValues.subjects);
-
-                // Initial artwork display
-                displayArtwork(artworkData[2]);
-
-                // Function to filter artwork based on selections
-                function filterAndDisplayArtwork() {
-                    const selectedStyle = document.getElementById('style-select').value;
-                    const selectedArtist = document.getElementById('artist-select').value;
-                    const selectedNationality = document.getElementById('nationality-select').value;
-                    const selectedSubject = document.getElementById('subject-select').value;
-
-                    let filteredArtworks = artworkData.filter(artwork => {
-                        return (!selectedStyle || artwork.style === selectedStyle) &&
-                            (!selectedArtist || artwork.artist === selectedArtist) &&
-                            (!selectedNationality || artwork.nationality === selectedNationality) &&
-                            (!selectedSubject || artwork.subject === selectedSubject);
-                    });
-
-                    if (filteredArtworks.length > 0) {
-                        const randomIndex = Math.floor(Math.random() * filteredArtworks.length);
-                        displayArtwork(filteredArtworks[randomIndex]);
-                    }
-                }
-
-                // Add event listeners to all select elements
-                ['style-select', 'artist-select', 'nationality-select', 'subject-select'].forEach(selectId => {
-                    document.getElementById(selectId).addEventListener('change', filterAndDisplayArtwork);
-                });
-
-                // Loading screen fade out
-                document.getElementById('loading-text').style.display = 'block';
-
-                setTimeout(() => {
-                    const overlay = document.getElementById('loading-overlay');
-                    overlay.style.transition = 'opacity 1s ease-out';
-                    overlay.style.opacity = '0';
-                }, 2000);
-
-                setTimeout(() => {
-                    const overlay = document.getElementById('loading-overlay2');
-                    overlay.style.transition = 'opacity 1s ease-out';
-                    overlay.style.opacity = '0';
-                }, 3000);
-
-                setTimeout(() => {
-                    const overlay = document.getElementById('loading-overlay');
-                    const overlay2 = document.getElementById('loading-overlay2');
-
-                    overlay.style.display = 'none';  // Correct way to hide the overlay
-                    overlay2.style.display = 'none';  // Correct way to hide the second overlay
-                }, 4000);
+        // Fetch data on load
+        fetchArtworkData()
+            .then(() => {
+                hideLoadingOverlays()
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
-                document.getElementById('artwork-description').textContent =
-                    'There was an error loading the artwork data.';
-
-                const overlay = document.getElementById('loading-overlay');
-                overlay.style.transition = 'opacity 2s ease-out';
-                overlay.style.opacity = '0';
-
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 3000);
+                document.getElementById('loading-text').textContent = 'Failed to load data.';
             });
+
+        // Quiz state
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let score = 0;
+        let timerInterval;
+
+        // DOM elements
+        const timerProgress = document.getElementById('timer-progress');
+        const timerText = document.getElementById('timer-text');
+
+        // Timer circle calculations
+        const radius = 25;
+        const circumference = 2 * Math.PI * radius;
+        timerProgress.style.strokeDasharray = circumference;
+
+        function updateTimer() {
+            const offset = circumference * (1 - timeLeft / 30);
+            timerProgress.style.strokeDashoffset = offset;
+            timerText.textContent = timeLeft;
+        }
+
+        function startTimer() {
+            updateTimer();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    showFeedback(false);
+                }
+            }, 1000);
+        }
+
+        function hideLoadingOverlays() {
+            // Display loading text
+            document.getElementById('loading-text').style.display = 'block';
+            document.getElementById('loading-overlay').style.display = 'fixed';
+            document.getElementById('loading-overlay2').style.display = 'fixed';
+
+            // Fade out the first overlay
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.transition = 'opacity 1s ease-out';
+                overlay.style.opacity = '0';
+            }, 2000);
+
+            // Fade out the second overlay
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay2');
+                overlay.style.transition = 'opacity 1s ease-out';
+                overlay.style.opacity = '0';
+            }, 3000);
+
+            // Hide the overlays completely after they fade out
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay');
+                const overlay2 = document.getElementById('loading-overlay2');
+                overlay.style.display = 'none';
+                overlay2.style.display = 'none';
+            }, 4000);
+        }
+
+
+
+        startTimer();
     </script>
 </body>
 
