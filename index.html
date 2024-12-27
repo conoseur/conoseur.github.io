@@ -10,137 +10,193 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskerville+SC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
 
-    <style>
-        /* Apply the Baskerville SC font to the body */
-        body {
-            font-family: 'Baskerville SC', serif;
-            padding: 20px;
-            background-color: #f4f4f9;
-            margin: 0;
-        }
-
-        .artwork-container {
-            background-color: white;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 2.5em;
-        }
-
-        p {
-            color: #555;
-            font-size: 1.2em;
-        }
-
-        .artist {
-            font-weight: bold;
-            color: #333;
-        }
-
-        a {
-            color: #1e90ff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Loading screen style */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: rgb(0, 0, 0);
-            font-size: 2em;
-            z-index: 9999;
-            opacity: 1;
-            /* Fully visible initially */
-            transition: opacity 1s ease-out;
-            /* Smooth fade-out effect */
-        }
-    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9809194945228761"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
-
     <!-- Loading screen overlay -->
+    <div id="loading-overlay2" class="loading-overlay">
+    </div>
     <div id="loading-overlay" class="loading-overlay">
-        Loading...
+        <div>
+            <img src="images/logo2.png" alt="Logo">
+            <p id="loading-text" class="loading-text">Loading artwork...</p>
+        </div>
     </div>
 
-    <div class="artwork-container">
-        <h1 id="artwork-title">Loading...</h1>
-        <img id="artwork-image" src="" alt="Artwork of the day">
-        <p id="artwork-description"></p>
-        <p id="artwork-artist" class="artist"></p>
-        <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
+    <nav class="navbar">
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="date-navigation">
+            <button class="nav-button" id="prevDate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <path
+                        d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
+                    <path d="M13.293 7.293 8.586 12l4.707 4.707 1.414-1.414L11.414 12l3.293-3.293-1.414-1.414z" />
+                </svg></button>
+            <span class="date-display" id="currentDate"></span>
+            <button class="nav-button" id="nextDate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <path
+                        d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
+                    <path d="M9.293 8.707 12.586 12l-3.293 3.293 1.414 1.414L15.414 12l-4.707-4.707-1.414 1.414z" />
+                </svg></button>
+        </div>
+    </nav>
+
+    <div class="content-container">
+
+        <div class="artwork-container">
+            <!-- Category selectors -->
+            <select id="style-select" class="category-select">
+                <option value="">Select Style...</option>
+            </select>
+            <select id="artist-select" class="category-select">
+                <option value="">Select Artist...</option>
+            </select>
+            <select id="nationality-select" class="category-select">
+                <option value="">Select Nationality...</option>
+            </select>
+            <select id="subject-select" class="category-select">
+                <option value="">Select Subject...</option>
+            </select>
+
+            <img id="artwork-image" src="" alt="Error">
+            <p id="artwork-description"></p>
+            <p id="artwork-artist" class="artist"></p>
+            <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
+            <input type="text">
+        </div>
     </div>
 
     <script>
-        // Fetch the artwork data from the 'cleaned_artwork_data.json' file
-        fetch('./art_data/cleaned_artwork_data.json')  // Ensure the file exists in the correct directory
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        // Date handling ----------------------------------------------------------------------------
+        let currentDate = new Date();
+
+        function formatDate(date) {
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const yyyy = date.getFullYear();
+            return `${mm}/${dd}/${yyyy}`;
+        }
+
+        function updateDateDisplay() {
+            document.getElementById('currentDate').textContent = formatDate(currentDate);
+        }
+
+        // Initialize date display
+        updateDateDisplay();
+
+        // Event listeners for navigation buttons
+        document.getElementById('prevDate').addEventListener('click', () => {
+            currentDate.setDate(currentDate.getDate() - 1);
+            updateDateDisplay();
+        });
+
+        document.getElementById('nextDate').addEventListener('click', () => {
+            currentDate.setDate(currentDate.getDate() + 1);
+            updateDateDisplay();
+        });
+
+        // Function to populate a select element with options
+        function populateSelect(selectId, options) {
+            const select = document.getElementById(selectId);
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+        }
+
+        // Function to display artwork
+        function displayArtwork(artwork) {
+            document.getElementById('artwork-image').src = artwork.image_url || '';
+            document.getElementById('artwork-description').textContent =
+                artwork.metadata?.ImageDescription?.value || 'No description available.';
+            document.getElementById('artwork-artist').textContent =
+                `Artist: ${artwork.artist || 'Unknown Artist'}`;
+            document.getElementById('artwork-link').href = artwork.wikipedia_url || '#';
+        }
+
+        // Fetch both data files
+        Promise.all([
+            fetch('./art_data/cleaned_artwork_data.json'),
+            fetch('./art_data/unique_values.json')
+        ])
+            .then(responses => Promise.all(responses.map(response => response.json())))
+            .then(([artworkData, uniqueValues]) => {
+                // Populate select elements with unique values
+                populateSelect('style-select', uniqueValues.styles);
+                populateSelect('artist-select', uniqueValues.artists);
+                populateSelect('nationality-select', uniqueValues.nationalities);
+                populateSelect('subject-select', uniqueValues.subjects);
+
+                // Initial artwork display
+                displayArtwork(artworkData[2]);
+
+                // Function to filter artwork based on selections
+                function filterAndDisplayArtwork() {
+                    const selectedStyle = document.getElementById('style-select').value;
+                    const selectedArtist = document.getElementById('artist-select').value;
+                    const selectedNationality = document.getElementById('nationality-select').value;
+                    const selectedSubject = document.getElementById('subject-select').value;
+
+                    let filteredArtworks = artworkData.filter(artwork => {
+                        return (!selectedStyle || artwork.style === selectedStyle) &&
+                            (!selectedArtist || artwork.artist === selectedArtist) &&
+                            (!selectedNationality || artwork.nationality === selectedNationality) &&
+                            (!selectedSubject || artwork.subject === selectedSubject);
+                    });
+
+                    if (filteredArtworks.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * filteredArtworks.length);
+                        displayArtwork(filteredArtworks[randomIndex]);
+                    }
                 }
-                return response.json();  // Parse the JSON response
-            })
-            .then(data => {
-                // Select the artwork of the day (first artwork in the list)
-                const artwork = data[3075];  // You can randomize or choose another index if desired
 
-                // Populate the webpage with the data
-                document.getElementById('artwork-title').textContent = artwork.title || 'Untitled';
-                document.getElementById('artwork-image').src = artwork.image_url || '';  // Ensure there's a fallback if image_url is missing
-                document.getElementById('artwork-description').textContent = artwork.metadata && artwork.metadata.ImageDescription && artwork.metadata.ImageDescription.value ? artwork.metadata.ImageDescription.value : 'No description available.';
-                document.getElementById('artwork-artist').textContent = `Artist: ${artwork.artist || 'Unknown Artist'}`;
-                document.getElementById('artwork-link').href = artwork.wikipedia_url || '#';  // Ensure fallback for missing Wikipedia URL
+                // Add event listeners to all select elements
+                ['style-select', 'artist-select', 'nationality-select', 'subject-select'].forEach(selectId => {
+                    document.getElementById(selectId).addEventListener('change', filterAndDisplayArtwork);
+                });
 
-                // Fade out the loading overlay using JavaScript
-                const overlay = document.getElementById('loading-overlay');
-                overlay.style.transition = 'opacity 1s ease-out';  // Apply transition for smooth fade
-                overlay.style.opacity = '0';  // Fade out the overlay
+                // Loading screen fade out
+                document.getElementById('loading-text').style.display = 'block';
 
-                // Wait for the fade-out to complete and then hide the overlay completely
                 setTimeout(() => {
-                    overlay.style.display = 'none';  // Remove from the DOM after fade
-                }, 2000); // Wait for 1 second (fade duration)
+                    const overlay = document.getElementById('loading-overlay');
+                    overlay.style.transition = 'opacity 1s ease-out';
+                    overlay.style.opacity = '0';
+                }, 2000);
+
+                setTimeout(() => {
+                    const overlay = document.getElementById('loading-overlay2');
+                    overlay.style.transition = 'opacity 1s ease-out';
+                    overlay.style.opacity = '0';
+                }, 3000);
+
+                setTimeout(() => {
+                    const overlay = document.getElementById('loading-overlay');
+                    const overlay2 = document.getElementById('loading-overlay2');
+
+                    overlay.style.display = 'none';  // Correct way to hide the overlay
+                    overlay2.style.display = 'none';  // Correct way to hide the second overlay
+                }, 4000);
             })
             .catch(error => {
-                console.error('Error fetching artwork data:', error);
-                document.getElementById('artwork-title').textContent = 'conosuer.io';
-                document.getElementById('artwork-description').textContent = 'There was an error loading the artwork data.';
+                console.error('Error fetching data:', error);
+                document.getElementById('artwork-description').textContent =
+                    'There was an error loading the artwork data.';
 
-                // Fade out the loading overlay in case of an error
                 const overlay = document.getElementById('loading-overlay');
-                overlay.style.transition = 'opacity 2s ease-out';  // Apply transition for smooth fade
-                // overlay.style.opacity = '0';  // Fade out the overlay
+                overlay.style.transition = 'opacity 2s ease-out';
+                overlay.style.opacity = '0';
 
-                // Wait for the fade-out to complete and then hide the overlay completely
                 setTimeout(() => {
-                    overlay.style.display = 'none';  // Remove from the DOM after fade
-                }, 3000); // Wait for 1 second (fade duration)
+                    overlay.style.display = 'none';
+                }, 3000);
             });
     </script>
-
 </body>
 
 </html>

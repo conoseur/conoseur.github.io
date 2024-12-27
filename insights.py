@@ -1,27 +1,32 @@
 import json
 
-# Sample data (replace this with the actual 'cleaned_artwork_data.json' file path)
+# Read the original artwork data
 with open('art_data/cleaned_artwork_data.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 
-# Function to calculate unique values in a list of dictionaries
+# Function to get sorted unique values
 def get_unique_values(data, field):
-    return set(entry.get(field) for entry in data if entry.get(field))
+    # Filter out None and empty strings, then sort
+    unique_values = list(set(entry.get(field) for entry in data if entry.get(field) and entry.get(field).strip()))
+    return sorted(unique_values)
 
-# Calculating unique values for various fields
-unique_artists = get_unique_values(data, "artist")
-unique_titles = get_unique_values(data, "title")
-unique_nationalities = get_unique_values(data, "nationality")
-unique_styles = get_unique_values(data, "style")
-unique_subjects = get_unique_values(data, "subject")
-unique_countries = get_unique_values(data, "country")
-unique_museums = get_unique_values(data, "museum")
+# Create dictionary with unique values for each field
+unique_values = {
+    "artists": get_unique_values(data, "artist"),
+    "titles": get_unique_values(data, "title"),
+    "nationalities": get_unique_values(data, "nationality"),
+    "styles": get_unique_values(data, "style"),
+    "subjects": get_unique_values(data, "subject"),
+    "countries": get_unique_values(data, "country"),
+    "museums": get_unique_values(data, "museum")
+}
 
-# Printing insights
-print(f"Number of unique artists: {len(unique_artists)}")
-print(f"Number of unique titles: {len(unique_titles)}")
-print(f"Number of unique nationalities: {len(unique_nationalities)}")
-print(f"Number of unique styles: {len(unique_styles)}")
-print(f"Number of unique subjects: {len(unique_subjects)}")
-print(f"Number of unique countries: {len(unique_countries)}")
-print(f"Number of unique museums: {len(unique_museums)}")
+# Save unique values to a new JSON file
+with open('art_data/unique_values.json', 'w', encoding='utf-8') as outfile:
+    json.dump(unique_values, outfile, indent=2, ensure_ascii=False)
+
+# Print statistics
+for category, values in unique_values.items():
+    print(f"Number of unique {category}: {len(values)}")
+    print(f"Sample of {category}: {values[:3]}")  # Show first 3 examples
+    print()
