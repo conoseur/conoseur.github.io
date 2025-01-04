@@ -20,7 +20,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(241, 241, 241, 0.1); 
+  background: rgba(241, 241, 241, 0.1);
 }
 
 ::-webkit-scrollbar {
@@ -30,8 +30,6 @@ body {
 .content-container {
   padding-left: 10px;
 }
-
-
 
 a {
   color: #1e90ff;
@@ -151,38 +149,30 @@ a:hover {
   font-weight: 600;
   font-size: 0.75rem; /* text-xs */
   color: #000000; /* text-gray-600 */
-  border: 1px solid rgba(113, 128, 150, 0.1); /* ring-1 ring-inset ring-gray-500/10 */
+  border: 1px solid rgba(114, 114, 114, 0.418); /* ring-1 ring-inset ring-gray-500/10 */
 }
 
-/* Blue badge */
 .badge.blue {
-  background-color: #3b83f634; /* Tailwind's blue-500 */
-  color: rgb(0, 21, 125); /* White text */
+  background-color: #3b83f634;
+  color: rgb(0, 21, 125);
   border: 1px solid rgba(0, 42, 255, 0.3);
 }
 
-/* Red badge */
 .badge.red {
-  background-color: #ef4444; /* Tailwind's red-500 */
-  color: white; /* White text */
+  background-color: rgba(255, 0, 0, 0.3);
+  color: rgb(87, 0, 0);
 }
 
-/* Green badge */
 .badge.green {
-  background-color: rgba(70, 255, 193, 0.3); /* Tailwind's green-500 */
-  color: rgb(0, 120, 80); /* White text */
+  background-color: rgba(0, 255, 76, 0.3);
+  color: rgb(0, 81, 53);
 }
 
-/* Yellow badge */
 .badge.yellow {
-  background-color: #f59e0b; /* Tailwind's yellow-500 */
-  color: white; /* White text */
+  background-color: rgba(255, 247, 0, 0.3);
+  color: rgb(90, 93, 0);
 }
 
-/* Hover effects */
-.badge:hover {
-  opacity: 0.85; /* Slightly fade the badge on hover */
-}
 /* Style for the input element */
 input {
   padding: 5px 8px;
@@ -221,4 +211,110 @@ datalist option:hover {
 
 datalist option:focus {
   background-color: #e5e7eb; /* gray-200 */
+}
+.tutorial-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  max-width: 300px;
+  width: 91.666667%;
+  animation: modalAppear 0.3s ease-out;
+}
+
+.modal-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 15px;
+}
+
+
+.step {
+  display: flex;
+  align-items: flex-start;
+}
+
+.step-number {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: #22c55e;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.step-text {
+  font-family: "Inter", sans-serif;
+  transform: translate(-5px,-20px);
+
+}
+
+.start-button {
+  width: 100%;
+  background-color: #22c55e;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.start-button:hover {
+  background-color: #16a34a;
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.submit-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.answer-feedback {
+  font-weight: 500;
+  border-radius: 4px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -49,8 +49,8 @@
 
     <div class="content-container">
 
-        <span id="subject" class="badge blue">landscape</span>
-        <span id="style" class="badge green">american art</span>
+        <span id="subject" class="badge yellow">landscape</span>
+        <span id="style" class="badge red">american art</span>
 
         <div style="position: relative; display: flex; max-width: 400px;">
             <input style="max-width: 3700px; width: 87vw; margin-right: 5px;" type="text" list="nationality-select"
@@ -67,7 +67,7 @@
                     <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none" />
                     <circle id="timer-progress" cx="25" cy="25" r="20" stroke="#4CAF50" stroke-width="4" fill="none" />
                 </svg>
-                <div id="timer-text" class="timer-text">30</div>
+                <div id="timer-text" class="timer-text">99</div>
             </div>
         </div>
 
@@ -77,9 +77,43 @@
         </div>
     </div>
 
-
-
     <script src="script.js"></script>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorial-modal" class="tutorial-modal">
+        <div class="modal-content">
+            <h2 class="modal-title">How to Play</h2>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <p class="step-text">
+                    You get 100 seconds to guess the Nationality of the artist,
+                    a year when the artist was alive,
+                    and finally the artist name itself
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <p class="step-text">
+                    Using your fingers pan left, right, up, and down on the image
+                    to get more details to help you narrow it down
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <p class="step-text">
+                    Helpful suggestions will pop up from the wordbank of possible answers
+                    Use them to help you not misspell
+                </p>
+            </div>
+
+            <button id="start-game" class="start-button">
+                Start Game
+            </button>
+        </div>
+    </div>
 </body>
 
 </html>
