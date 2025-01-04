@@ -4,7 +4,14 @@ body {
   font-weight: 400;
   font-style: normal;
   background-color: #f4f4f9;
+  color: #555;
   margin: 0;
+}
+
+img {
+  /* max-width: 80vw; */
+  max-height: 75vh;
+  border-radius: 10px;
 }
 
 .artwork-container {
@@ -12,27 +19,16 @@ body {
   padding: 5px;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 
-img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 10px;
+.content-container {
+  padding: 10px;
 }
 
-h1 {
-  color: #333;
-  font-size: 2.5em;
-}
-
-p {
-  color: #555;
-  font-size: 1.2em;
-}
-
-.artist {
-  font-weight: bold;
-  color: #333;
+#artwork-image {
+  width: 100%;
+  object-fit: cover;
 }
 
 a {
@@ -70,16 +66,15 @@ a:hover {
 /* Navbar styles */
 .navbar {
   background-color: white;
-  padding: 5px 10px;
+  padding: 0px 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 5px;
 }
 
 .logo {
-  height: 40px;
+  height: 35px;
 }
 
 .date-navigation {
@@ -109,16 +104,10 @@ a:hover {
   text-align: center;
 }
 
-/* Container for content below navbar */
-.content-container {
-  padding: 10px;
-}
-
 .timer-container {
   position: relative;
-  width: 60px;
-  height: 60px;
-  margin: 4px auto;
+  width: 50px;
+  height: 50px;
 }
 
 .timer-circle {
@@ -129,8 +118,8 @@ a:hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 25px;
+  transform: translate(-50%, -54%);
+  font-size: 24px;
   font-weight: bold;
 }
 
