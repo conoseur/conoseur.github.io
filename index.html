@@ -43,41 +43,37 @@
         </div>
     </nav>
 
+    <div class="artwork-container">
+        <img id="artwork-image" src="" alt="Error">
+    </div>
+
     <div class="content-container">
-        <div class="artwork-container">
-            <div class="map touch-pan-right">
-                <img id="artwork-image" src="" alt="Error">
-            </div>
-            <div style="margin-top: 5px; margin-bottom: 5px;">
-                <span id="subject" class="badge blue">landscape</span>
-                <span id="style" class="badge green">american art</span>
-            </div>
 
-            <div style="margin-top: 10px;">
-                <input type="text" list="nationality-select" placeholder="Type the Nationality...">
-                <datalist id="nationality-select"></datalist>
+        <span id="subject" class="badge blue">landscape</span>
+        <span id="style" class="badge green">american art</span>
 
-                <input type="number" placeholder="A year when the artist was alive">
+        <div style="position: relative; display: flex; max-width: 400px;">
+            <input style="max-width: 3700px; width: 87vw; margin-right: 5px;" type="text" list="nationality-select"
+                placeholder="Type the Nationality...">
+            <datalist id="nationality-select"></datalist>
 
-                <input style="display: none;" type="text" list="artist-select" placeholder="Type the Artist...">
-                <datalist id="artist-select"></datalist>
+            <input style="display: none;" type="number" placeholder="A year when the artist was alive">
+
+            <input style="display: none;" type="text" list="artist-select" placeholder="Type the Artist...">
+            <datalist id="artist-select"></datalist>
+
+            <div class="timer-container">
+                <svg class="timer-circle" width="50" height="50">
+                    <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none" />
+                    <circle id="timer-progress" cx="25" cy="25" r="20" stroke="#4CAF50" stroke-width="4" fill="none" />
+                </svg>
+                <div id="timer-text" class="timer-text">30</div>
             </div>
+        </div>
 
-            <div id="reveal" style="display: none;">
-                <p id="artwork-artist" class="artist"></p>
-                <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
-            </div>
-
-            <div style="position: absolute; bottom: 20px; right: 20px;">
-                <div class="timer-container">
-                    <svg class="timer-circle" width="50" height="50">
-                        <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none" />
-                        <circle id="timer-progress" cx="25" cy="25" r="20" stroke="#4CAF50" stroke-width="4"
-                            fill="none" />
-                    </svg>
-                    <div id="timer-text" class="timer-text">30</div>
-                </div>
-            </div>
+        <div id="reveal" style="display: none;">
+            <p id="artwork-artist" class="artist"></p>
+            <p><a id="artwork-link" href="" target="_blank">View more details</a></p>
         </div>
     </div>
 

@@ -8,28 +8,30 @@ body {
   margin: 0;
 }
 
-img {
-  /* max-width: 80vw; */
-  max-height: 75vh;
-  border-radius: 10px;
-}
-
 .artwork-container {
-  background-color: white;
-  padding: 5px;
-  max-width: 800px;
-  margin: 0 auto;
+  max-height: 75vh;
+  overflow: clip;
+  overflow: scroll;
   position: relative;
 }
 
-.content-container {
-  padding: 10px;
+#artwork-image {
+  touch-action: manipulation pinch-zoom;
 }
 
-#artwork-image {
-  width: 100%;
-  object-fit: cover;
+::-webkit-scrollbar-track {
+  background: rgba(241, 241, 241, 0.1); 
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.content-container {
+  padding-left: 10px;
+}
+
+
 
 a {
   color: #1e90ff;
