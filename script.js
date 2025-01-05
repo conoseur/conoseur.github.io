@@ -33,11 +33,21 @@ async function fetchArtworkData() {
 function displayArtwork(artwork) {
   console.log(artwork);
   document.getElementById("artwork-image").src = artwork.image_url || "";
-  document.getElementById("artwork-artist").textContent = `Artist: ${
+  document.getElementById("artwork-image-result").src = artwork.image_url || "";
+  document.getElementById("artwork-artist").textContent = `${
     artwork.artist || "Unknown Artist"
   }`;
-  document.getElementById("subject").textContent = `${artwork.subject || ""}`;
-  document.getElementById("style").textContent = `${artwork.style || ""}`;
+  document.getElementById("artwork-title").textContent = `${
+    artwork.title || "Untitled"
+  }`;
+  if (artwork.subject) {
+    document.getElementById("subject").textContent = artwork.subject;
+    document.getElementById("subject").style.display = "inline";
+  }
+  if (artwork.style) {
+    document.getElementById("style").textContent = artwork.style;
+    document.getElementById("style").style.display = "inline";
+  }
   document.getElementById("artwork-link").href = artwork.wikipedia_url || "#";
 }
 
@@ -142,22 +152,8 @@ function showNextQuestion() {
 
 // Function to show final score
 function showFinalScore() {
-  const modal = document.createElement("div");
-  modal.className = "tutorial-modal";
-
-  modal.innerHTML = `
-    <div class="modal-content">
-      <h2 class="modal-title">Quiz Complete!</h2>
-      <div class="step">
-        <p class="step-text">Your final score: ${totalScore} / 3</p>
-      </div>
-      <button onclick="location.reload()" class="start-button">
-        Play Again
-      </button>
-    </div>
-  `;
-
-  document.body.appendChild(modal);
+//   document.getElementById("score").innerHTML = totalScore;
+  document.getElementById("result").style.display = "inline";
 }
 
 // Function to handle answer submission
@@ -176,10 +172,8 @@ function handleAnswer(value, type) {
       isCorrect = checkAnswer(value, artwork.nationality);
       break;
     case "year":
-      // Extract year from birth-death string (e.g., "1853-1890")
-      const yearRange = artwork.artist_dates.split("-");
-      const birthYear = parseInt(yearRange[0]);
-      const deathYear = parseInt(yearRange[1]);
+      const birthYear = artwork.artist_born;
+      const deathYear = artwork.artist_dead;
       isCorrect = value >= birthYear && value <= deathYear;
       break;
     case "artist":

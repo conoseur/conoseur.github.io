@@ -19,6 +19,16 @@ body {
   touch-action: manipulation pinch-zoom;
 }
 
+#artwork-title {
+  font-size: 1.5rem;
+}
+
+
+#artwork-artist {
+  font-size: 1.2rem;
+  color: black;
+}
+
 ::-webkit-scrollbar-track {
   background: rgba(241, 241, 241, 0.1);
 }
@@ -29,15 +39,6 @@ body {
 
 .content-container {
   padding-left: 10px;
-}
-
-a {
-  color: #1e90ff;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 /* Loading screen style */
@@ -212,7 +213,7 @@ datalist option:hover {
 datalist option:focus {
   background-color: #e5e7eb; /* gray-200 */
 }
-.tutorial-modal {
+.modal {
   position: fixed;
   top: 0;
   right: 0;
