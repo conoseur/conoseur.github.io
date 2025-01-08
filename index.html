@@ -53,16 +53,12 @@
         <span id="style" class="badge red" style="display: none;">american art</span>
 
         <div style="position: relative; display: flex; max-width: 400px;">
-            <input style="max-width: 3700px; width: 87vw; margin-right: 5px;" type="text" list="nationality-select"
-                placeholder="Type the Nationality...">
-            <datalist id="nationality-select"></datalist>
 
-            <input style="display: none;" type="number" placeholder="A year when the artist was alive">
+            <input type="text" placeholder="Type the Nationality..." id="nationality-select">
+            <input style="display: none;" type="number" id="year-select" placeholder="A year when the artist was alive">
+            <input style="display: none;" type="text" id="artist-select" placeholder="Type the Artist...">
 
-            <input style="display: none;" type="text" list="artist-select" placeholder="Type the Artist...">
-            <datalist id="artist-select"></datalist>
-
-            <div class="timer-container" style="margin-right: 5px;">
+            <div class="timer-container" style="margin-right: 5px;" onclick="handleAnswer()">
                 <svg class="timer-circle" width="50" height="50">
                     <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none" />
                     <circle id="timer-progress" cx="25" cy="25" r="20" stroke="#4CAF50" stroke-width="4" fill="none" />
@@ -100,7 +96,7 @@
                 <div class="step-number">3</div>
                 <p class="step-text">
                     Helpful suggestions will pop up from the wordbank of possible answers
-                    Use them to help you not misspell
+                    Use them to help you not misspell. Click on the timer to submit your answer.
                 </p>
             </div>
 
@@ -164,6 +160,87 @@
 
         </div>
     </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+
+
+    <script>
+        // 1. Toast Logic
+        const toastContainer = document.getElementById('toast-container');
+
+        // Function to generate toasts based on the autocomplete suggestions
+        function generateToasts(filteredNationalities) {
+            toastContainer.innerHTML = ''; // Clear previous toasts
+
+            // Generate toasts with nationalities from the autocomplete suggestions
+            filteredNationalities.forEach((nationality, index) => {
+                if (index < 5) { // Show up to 3 toasts at a time
+                    const toast = document.createElement('div');
+                    toast.classList.add('toast');
+                    toast.textContent = nationality;
+
+                    // Add click event to toast
+                    toast.addEventListener('click', function () {
+                        nationalityInput.value = nationality;
+                    });
+
+                    // Append toast to the container
+                    toastContainer.appendChild(toast);
+
+                    // Remove toast after it disappears
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 5000); // Toast disappears after 4 seconds
+                }
+            });
+        }
+
+        // 2. Autocomplete Logic
+        nationalityInput.addEventListener('input', function () {
+            const query = nationalityInput.value.toLowerCase();
+
+            if (query.length > 0) {
+                const filteredNationalities = ARTWORK_VALUES.nationalities.filter(nationality =>
+                    nationality.toLowerCase().includes(query)
+                );
+
+                // Show autocomplete suggestions
+                filteredNationalities.forEach(nationality => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.classList.add('autocomplete-suggestion');
+                    suggestionItem.textContent = nationality;
+
+                    // On click of a suggestion, set the input to the selected nationality
+                    suggestionItem.addEventListener('click', function () {
+                        nationalityInput.value = nationality;
+                    });
+
+                });
+
+                // Generate toasts with the filtered nationalities
+                generateToasts(filteredNationalities);
+            }
+        });
+
+        artistInput.addEventListener('input', function () {
+            // Only trigger autocomplete when the question step is 3 (for artists)
+            const query = artistInput.value.toLowerCase();
+
+            if (query.length > 0) {
+                // Filter the artist names based on the input query
+                const filteredArtists = ARTWORK_VALUES.artists.filter(artist =>
+                    artist.toLowerCase().includes(query)
+                );
+
+                // Show autocomplete suggestions (if any)
+                generateToasts(filteredArtists);
+            }
+        });
+
+
+    </script>
 </body>
 
 </html>

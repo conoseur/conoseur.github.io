@@ -5,41 +5,159 @@ let currentDate = new Date();
 let totalScore = 0;
 let questionStep = 1;
 
-// DOM elements for inputs
-const nationalityInput = document.querySelector(
-  'input[list="nationality-select"]'
-);
-const yearInput = document.querySelector('input[type="number"]');
-const artistInput = document.querySelector('input[list="artist-select"]');
+const shareData = {
+  title: "Do you know this famous piece?",
+  text: "See if you can figure out the artist faster than I did",
+  url: "https://conoseur.github.io",
+};
+
+// prettier-ignore
+const ARTWORK_VALUES = {
+    artists: [
+        "Abraham Mignon 🇳🇱", "Adam Albrecht 🇩🇪", "Adam Edouard 🇺🇸", "Adelaide Labille Guiard 🇫🇷", 
+        "Adele Romany 🇫🇷", "Adolph Ulrich Wertmuller 🇨🇭", "Adriaan De Lelie 🇳🇱", "Adriaen Thomasz Key 🇳🇱", 
+        "Aelbert Cuyp 🇳🇱", "Albert Andre 🇫🇷", "Albert Bierstadt 🇺🇸", "Albert Marquet 🇫🇷", 
+        "Albrecht Durer 🇩🇪", "Alexandre Cabanel 🇫🇷", "Alexei Von Jawlensky 🇷🇺", "Alexey Savrasov 🇷🇺", 
+        "Alfred Henry Maurer 🇺🇸", "Alfred Sisley 🇫🇷", "Alfred Thompson Bricher 🇺🇸", "Alice Bailly 🇨🇭", 
+        "Amadeo de Souza Cardoso 🇪🇸", "Ambrosius Bosschaert 🇳🇱", "Amedeo Modigliani 🇮🇹", 
+        "Anders Zorn 🇨🇭", "Andre Derain 🇫🇷", "Andrea Mantegna 🇮🇹", "Angel Zarraga 🇲🇽", 
+        "Anne Vallayer Coster 🇫🇷", "Anthony Van Dyck 🇧🇪", "Antoine Bouvard 🇫🇷", "Antoine Jean Gros 🇫🇷", 
+        "Anton Raphael Mengs 🇩🇪", "Aristide Maillol 🇫🇷", "Arnold Bocklin 🇨🇭", "Arthur Bowen Davies 🇺🇸", 
+        "Arthur Fitzwilliam Tait 🇺🇸", "Arthur Stockdale Cope 🇬🇧", "Asher Brown Durand 🇺🇸", "August Macke 🇩🇪", 
+        "Bartholomeus Van der Helst 🇳🇱", "Bartolome Esteban Murillo 🇪🇸", "Becker Paula Modersohn 🇩🇪", 
+        "Benjamin Marshall 🇬🇧", "Benjamin West 🇺🇸", "Benson Frank Weston 🇺🇸", "Benvenuto Garofalo 🇮🇹", 
+        "Berthe Morisot 🇫🇷", "Buonarroti Michelangelo 🇮🇹", "Caesar Boetius Van Everdingen 🇳🇱", 
+        "Camille Bombois 🇫🇷", "Camille Pissarro 🇫🇷", "Carel Fabritius 🇳🇱", "Carl Larsson 🇨🇭", 
+        "Carlo Brancaccio 🇮🇹", "Carlo Carra 🇮🇹", "Caspar David Friedrich 🇩🇪", "Cecilia Beaux 🇺🇸", 
+        "Chaim Soutine 🇫🇷", "Charles Brooking 🇬🇧", "Charles Caleb Ward 🇨🇦", "Charles Courtney Curran 🇺🇸", 
+        "Charles Cromwell Ingham 🇮🇪", "Charles Demuth 🇺🇸", "Charles Francois Daubigny 🇫🇷", 
+        "Charles Marion Russell 🇺🇸", "Charles Peale Polk 🇺🇸", "Charles Sprague Pearce 🇺🇸", "Charles Towne 🇬🇧", 
+        "Charles Willson Peale 🇺🇸", "Childe Hassam 🇺🇸", "Christian Rohlfs 🇩🇪", "Cima Da Conegliano 🇮🇹", 
+        "Claude Joseph Vernet 🇫🇷", "Claude Lorraine 🇫🇷", "Claude Monet 🇫🇷", "Constantin A Westchiloff 🇷🇺", 
+        "Cornelis Springer 🇳🇱", "Cornelis Troost 🇳🇱", "Cornelis Van Haarlem 🇳🇱", "Daniel Ridgway Knight 🇺🇸", 
+        "David Teniers 🇧🇪", "Diego Velazquez 🇪🇸", "Dominikos Theotokópoulos 🇪🇸", "Dominic Serres 🇬🇧", 
+        "Edgar Degas 🇫🇷", "Edgar William 🇺🇸", "Edmond Francois Aman Jean 🇫🇷", "Edmund Charles Tarbell 🇺🇸", 
+        "Edouard Manet 🇫🇷", "Edouard Vuillard 🇫🇷", "Eduard Von Grutzner 🇩🇪", "Edvard Munch 🇳🇴", 
+        "Edward Burne Jones 🇬🇧", "Edward Hicks 🇺🇸", "Edward Potthast 🇺🇸", "Edward William Cooke 🇬🇧", 
+        "Edwin Lord Weeks 🇺🇸", "Egon Schiele 🇦🇹", "Elisabeth Vigee Le Brun 🇫🇷", "Emile Bernard 🇫🇷", 
+        "Enoch Wood Perry 🇺🇸", "Ernest Lawson 🇨🇦", "Ernst Ludwig Kirchner 🇩🇪", "Etienne Dinet 🇫🇷", 
+        "Eugene De Blaas 🇦🇹", "Eugene Delacroix 🇫🇷", "Eugene Girardet 🇫🇷", "Eugene Louis Boudin 🇫🇷", 
+        "Federico Zandomeneghi 🇮🇹", "Felix Vallotton 🇨🇭", "Ferdinand Bol 🇳🇱", "Ferdinand Hodler 🇨🇭", 
+        "Fernand Cormon 🇫🇷", "Fernand Leger 🇫🇷", "Fitz Hugh Lane 🇺🇸", "Francesco Guardi 🇮🇹", 
+        "Francis Augustus Silva 🇺🇸", "Francis Luis Mora 🇺🇸", "Francis Picabia 🇫🇷", "Francis William Edmonds 🇺🇸", 
+        "Francisco De Goya 🇪🇸", "Francisco De Zurbaran 🇪🇸", "Francois Boucher 🇫🇷", "Francois Gerard 🇫🇷", 
+        "Francois Hubert Drouais 🇫🇷", "Frank Duveneck 🇺🇸", "Frans Francken 🇧🇪", "Frans Hals 🇳🇱", 
+        "Frans Jansz Post 🇳🇱", "Franz Marc 🇩🇪", "Franz Xavier Winterhalter 🇩🇪", "Frederic Edwin Church 🇺🇸", 
+        "Frederic Remington 🇺🇸", "Frederick Carl Frieseke 🇺🇸", "Friedrich Von Amerling 🇦🇹", "Gabriel Metsu 🇳🇱", 
+        "Gabriele Munter 🇩🇪", "Gaston Bussiere 🇫🇷", "Gaston La Touche 🇫🇷", "Geertgen Tot Sint Jans 🇳🇱", 
+        "George Caleb Bingham 🇺🇸", "George Catlin 🇺🇸", "George Frederic Watts 🇬🇧", "George Gardner Symons 🇺🇸", 
+        "George Garrard 🇬🇧", "George Henry Laporte 🇬🇧", "George Inness 🇺🇸", "George P A Healy 🇺🇸", 
+        "George Romney 🇬🇧", "George Stubbs 🇬🇧", "George Wesley Bellows 🇺🇸", "Georges Braque 🇫🇷", 
+        "Georges De La Tour 🇫🇷", "Georges Despagnat 🇫🇷", "Georges Lemmen 🇧🇪", "Georges Rouault 🇫🇷", 
+        "Georges Seurat 🇫🇷", "Gerard Ter Borch 🇳🇱", "Gerard Van Honthorst 🇳🇱", "Gerrit Berckheyde 🇳🇱", 
+        "Gerrit Dou 🇳🇱", "Giacomo Balla 🇮🇹", "Gilbert Stuart 🇺🇸", "Giorgio Morandi 🇮🇹", 
+        "Giovanni Antionio Canaletto 🇮🇹", "Giovanni Battista Tiepolo 🇮🇹", "Giovanni Boldini 🇮🇹", 
+        "Giuseppe Arcimboldo 🇮🇹", "Grant Wood 🇺🇸", "Guido Reni 🇮🇹", "Guillaumin Armand 🇫🇷", 
+        "Gustaf Wilhelm Palm 🇨🇭", "Gustav Klimt 🇦🇹", "Gustave Caillebotte 🇫🇷", "Gustave Courbet 🇫🇷", 
+        "Gustave Dore 🇫🇷", "Gustave Moreau 🇫🇷", "Gwen John 🇬🇧", "Hans Dahl 🇳🇴", "Hans Holbein 🇩🇪", 
+        "Hans Memling 🇳🇱", "Heinrich Campendonk 🇩🇪", "Hendrick Avercamp 🇳🇱", "Hendrick Dubbels 🇳🇱", 
+        "Hendrick Ter Brugghen 🇳🇱", "Hendrik Voogd 🇳🇱", "Henri De Toulouse Lautrec 🇫🇷", 
+        "Henri Edmond Cross 🇫🇷", "Henri Fantin Latour 🇫🇷", "Henri Le Sidaner 🇫🇷", "Henri Lebasque 🇫🇷", 
+        "Henri Manguin 🇫🇷", "Henri Rousseau 🇫🇷", "Henry Moret 🇫🇷", "Henry Raeburn 🇬🇧", 
+        "Horace Vernet 🇫🇷", "Isaac Van Ostade 🇳🇱", "Isaak Levitan 🇷🇺", "Ivan Aivazovskiy 🇷🇺", 
+        "Ivan Shishkin 🇷🇺", "Jack Butler Yeats 🇮🇪", "Jacob Cornelisz Van Oostsanen 🇳🇱", 
+        "Jacob Van Ruisdael 🇳🇱", "Jacques Laurent Agasse 🇨🇭", "Jacques Louis David 🇫🇷", "James Ensor 🇧🇪", 
+        "James Mcdougal Hart 🇺🇸", "James Mcneill Whistler 🇺🇸", "James Peale 🇺🇸", "James Tissot 🇫🇷", 
+        "Jan Adam Kruseman 🇳🇱", "Jan Both 🇳🇱", "Jan Brueghel 🇧🇪", "Jan Miense Molenaer 🇳🇱", 
+        "Jan Porcellis 🇧🇪", "Jan Portielje 🇳🇱", "Jan Steen 🇳🇱", "Jan Toorop 🇳🇱", "Jan Van Eyck 🇧🇪", 
+        "Jan Van Goyen 🇳🇱", "Jan Van Huysum 🇳🇱", "Jan Van Scorel 🇳🇱", "Jan Vermeer 🇳🇱", 
+        "Jan Willem Pieneman 🇳🇱", "Jean Antoine Watteau 🇫🇷", "Jean Auguste Ingres 🇫🇷", 
+        "Jean Francois Millet 🇫🇷", "Jean Louis David 🇫🇷", "Jean Metzinger 🇫🇷", "Jean Puy 🇫🇷", 
+        "Jean-Baptiste-Camille Corot 🇫🇷", "Jean-Baptiste-Simeon Chardin 🇫🇷", "Johann Zoffany 🇬🇧", 
+        "Johann Christian Dahl 🇩🇪", "Johann Heinrich Füssli 🇨🇭", "Johannes Vermeer 🇳🇱", 
+        "John Cleveley 🇬🇧", "John Constable 🇬🇧", "John Durand 🇺🇸", "John Everett Millais 🇬🇧", 
+        "John Francis Rigaud 🇬🇧", "John Frederick Herring 🇬🇧", "John Frederick Kensett 🇺🇸", 
+        "John French Sloan 🇺🇸", "John Hoppner 🇬🇧", "John James Audubon 🇺🇸", "John Kane 🇺🇸", 
+        "John La Farge 🇺🇸", "John Lynn 🇬🇧", "John Ottis Adams 🇺🇸", "John Russell 🇺🇸", 
+        "John Singer Sargent 🇺🇸", "John Singleton Copley 🇺🇸", "John Trumbull 🇺🇸", "John Vanderbank 🇬🇧", 
+        "John Wesley Jarvis 🇺🇸", "John White Alexander 🇺🇸", "John William Godward 🇬🇧", 
+        "John William Waterhouse 🇬🇧", "John Wollaston 🇬🇧", "Joseph Blackburn 🇺🇸", "Joshua Johnson 🇺🇸", 
+        "Julian Alden Weir 🇺🇸", "Karel Dujardin 🇳🇱", "Louis Apol 🇳🇱", "Ludolf Backhuysen 🇳🇱", 
+        "Ludvig Deutsch 🇦🇹", "Max Pechstein 🇩🇪", "Maxime Maufra 🇫🇷", "Maxine Margolis 🇺🇸", 
+        "Maximilien Luce 🇫🇷", "Michelangelo Buonarroti 🇮🇹", "Nicolaes Berchem 🇳🇱", 
+        "Oswald Achenbach 🇩🇪", "Pieter Bruegel 🇳🇱", "Pieter Claesz 🇳🇱", "Pieter De Hooch 🇳🇱", 
+        "Pieter Jansz Saenredam 🇳🇱", "Pieter Quast 🇳🇱", "Pieter Vermeer 🇳🇱", "Rachel Ruysch 🇳🇱", 
+        "Reinier Nooms 🇳🇱", "Rogier Van der Weyden 🇧🇪", "Simon De Vlieger 🇳🇱", 
+        "Thomas Waterman Wood 🇺🇸", "Thomas Cole 🇺🇸", "Thomas Eakins 🇺🇸", "Thomas Gainsborough 🇬🇧", 
+        "Thomas Hovenden 🇺🇸", "Thomas Jacques Somerscales 🇬🇧", "Thomas Luny 🇬🇧", 
+        "Thomas Moran 🇺🇸", "Thomas Sully 🇺🇸", "Thomas Troger 🇩🇪", "Willem Bartel Van der Kooi 🇳🇱", 
+        "Willem Claesz Heda 🇳🇱", "Willem Duyster 🇳🇱", "Willem Maris 🇳🇱", "Willem Van De Velde 🇳🇱"
+    ],
+      
+  nationalities: [
+    "American", "Austrian", "Belgian", "Canadian", "Dutch", "English", "Flemish",
+    "French", "German", "Irish", "Italian", "Mexican", "Norwegian", "Russian",
+    "Spanish", "Swiss"
+  ],
+  styles: [
+    "American Art", "American Landscape", "Art Nouveau", "Avant-Garde", "Baroque",
+    "Classicism", "Cubism", "Expressionism", "Fauvism", "Impressionism", "Nabi",
+    "Naturalism", "Neo-Classicism", "Orientalism", "Pointillism", 
+    "Post-Impressionism", "Realism", "Renaissance", "Rococo", "Romanticism",
+    "Surrealism", "Symbolism"
+  ],
+  subjects: [
+    "Abstract/Modern Art", "Architectures", "Autumn/Fall", "Bridges", 
+    "Cafes/Bars", "Christianity", "Churches/Temples/Mosques", "Dancers", "Deers",
+    "Dogs", "Flowers", "Gardens", "Horses", "Jesus Christ", "Landscape Art",
+    "Lovers", "Marine Art/Maritime", "Musics", "Nude", "Portraits",
+    "Rivers/Lakes", "Seascapes", "Spring", "Still-Life", "Summer", "Tigers",
+    "U.S. Presidents", "Water Lilies", "Winter"
+  ],
+  countries: [
+    "Brazil", "France", "Germany", "Hungary", "Israel", "Netherlands", "Russia",
+    "Spain", "Switzerland", "UK", "USA", "United Kingdom"
+  ],
+  museums: [
+    "Cleveland Museum Of Art", "Fine Arts Museums of San Francisco Legion of Honor",
+    "Hungarian National Gallery", "Indianapolis Museum of Art", "Israel Museum",
+    "Kunsthaus Zürich", "Los Angeles County Museum of Art", "Mauritshuis Museum",
+    "Museum Folkwang", "Museum of Fine Arts of Nancy", "Museum of Fine Arts, Houston",
+    "Musée d'Orsay", "Musée des Beaux-Arts de Quimper", "Musée du Louvre",
+    "National Gallery", "National Gallery of Art", "National Maritime Museum",
+    "Nelson-Atkins Museum of Art", "Philadelphia Museum of Art",
+    "Pushkin State Museum of Fine Arts", "Rijksmuseum", "Saint Louis Art Museum",
+    "Smithsonian American Art Museum", "Solomon R. Guggenheim Museum",
+    "São Paulo Museum of Art", "The Art Institute of Chicago",
+    "The Barnes Foundation", "The J. Paul Getty Museum",
+    "The Metropolitan Museum of Art", "The Museum of Modern Art",
+    "The Phillips Collection", "The Prado Museum", "The State Hermitage Museum",
+    "The Tate Gallery", "Thussen-Bornemisza Museum", "Toledo Museum of Art"
+  ]
+};
+
+// prettier-ignore
+const nationalityInput = document.querySelector('input[id="nationality-select"]');
+const yearInput = document.querySelector('input[id="year-select"]');
+const artistInput = document.querySelector('input[id="artist-select"]');
 
 // Async function to fetch the artwork data
 async function fetchArtworkData() {
-  const responses = await Promise.all([
-    fetch("./art_data/cleaned_artwork_data.json"),
-    fetch("./art_data/unique_values.json"),
-  ]);
-  const [artworkData, uniqueValues] = await Promise.all(
-    responses.map((res) => res.json())
-  );
+  // Only fetching cleaned_artwork_data.json since unique values are included in ARTWORK_VALUES
+  const response = await fetch("./art_data/cleaned_artwork_data.json");
+  const artworkData = await response.json();
 
   globalartworkData = artworkData;
-
-  // Populate select elements with unique values
-  populateSelect("artist-select", uniqueValues.artists);
-  populateSelect("nationality-select", uniqueValues.nationalities);
 }
 
-// Function to display artwork
+// prettier-ignore
 function displayArtwork(artwork) {
+  /* Function to display artwork */
   console.log(artwork);
   document.getElementById("artwork-image").src = artwork.image_url || "";
   document.getElementById("artwork-image-result").src = artwork.image_url || "";
-  document.getElementById("artwork-artist").textContent = `${
-    artwork.artist || "Unknown Artist"
-  }`;
-  document.getElementById("artwork-title").textContent = `${
-    artwork.title || "Untitled"
-  }`;
+  document.getElementById("artwork-artist").textContent = `${artwork.artist || "Unknown Artist"}`;
+  document.getElementById("artwork-title").textContent = `${artwork.title || "Untitled"}`;
   if (artwork.subject) {
     document.getElementById("subject").textContent = artwork.subject;
     document.getElementById("subject").style.display = "inline";
@@ -125,17 +243,6 @@ function updateTimer() {
   timerText.textContent = timeLeft;
 }
 
-// Function to check answers
-function checkAnswer(input, correctAnswer) {
-  if (typeof correctAnswer === "number") {
-    // For year, allow a 10-year margin of error
-    const yearDiff = Math.abs(parseInt(input) - correctAnswer);
-    return yearDiff <= 10;
-  }
-  // For strings (nationality and artist), case-insensitive comparison
-  return input.toLowerCase() === correctAnswer.toLowerCase();
-}
-
 // Function to move to next question
 function showNextQuestion() {
   questionStep++;
@@ -152,12 +259,12 @@ function showNextQuestion() {
 
 // Function to show final score
 function showFinalScore() {
-//   document.getElementById("score").innerHTML = totalScore;
+  //   document.getElementById("score").innerHTML = totalScore;
   document.getElementById("result").style.display = "inline";
 }
 
 // Function to handle answer submission
-function handleAnswer(value, type) {
+function handleAnswer() {
   const artwork =
     globalartworkData[
       Math.round(
@@ -165,25 +272,29 @@ function handleAnswer(value, type) {
       )
     ];
 
-  let isCorrect = false;
+  switch (questionStep) {
+    case 1:
+      input = nationalityInput.value.toLowerCase();
+      console.log(input);
+      if (input == artwork.artist.toLowerCase()) totalScore++;
 
-  switch (type) {
-    case "nationality":
-      isCorrect = checkAnswer(value, artwork.nationality);
       break;
-    case "year":
-      const birthYear = artwork.artist_born;
-      const deathYear = artwork.artist_dead;
-      isCorrect = value >= birthYear && value <= deathYear;
+    case 2:
+      input = parseInt(yearInput.value);
+      console.log(input);
+      if (input >= artwork.artist_born && input <= artwork.artist_dead)
+        totalScore++;
+
       break;
-    case "artist":
-      isCorrect = checkAnswer(value, artwork.artist);
+    case 3:
+      input = artistInput.value.toLowerCase();
+      console.log(input);
+      if (input == artwork.artist.toLowerCase()) totalScore++;
+
       break;
   }
 
-  if (isCorrect) {
-    totalScore++;
-  }
+  console.log("yes");
 
   if (questionStep < 3) {
     showNextQuestion();
@@ -231,19 +342,6 @@ function hideLoadingOverlays() {
     overlay2.style.display = "none";
   }, 4000);
 }
-
-// Event listeners for input submissions
-nationalityInput.addEventListener("change", (e) => {
-  if (questionStep === 1) handleAnswer(e.target.value, "nationality");
-});
-
-yearInput.addEventListener("change", (e) => {
-  if (questionStep === 2) handleAnswer(e.target.value, "year");
-});
-
-artistInput.addEventListener("change", (e) => {
-  if (questionStep === 3) handleAnswer(e.target.value, "artist");
-});
 
 // Add at the beginning of your script.js
 document.addEventListener("DOMContentLoaded", () => {
