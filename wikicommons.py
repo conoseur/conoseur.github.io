@@ -95,8 +95,10 @@ class WikimediaArtScraper:
             for idx, row in df.iterrows():
                 print(f"\rProcessing: {int((idx + 1) / total_rows * 100)}% complete", end="")
 
-                # Search for artwork
-                file_title = self.search_artwork(row['worktitle'], row['artist'])
+                # Search for artworks
+                file_title = self.search_artwork(row['worktitle'], (row['artist'] + ' ' + (row['museum'] if isinstance(row['museum'], str) else '')))
+
+
                 if not file_title:
                     continue
                     
@@ -107,24 +109,17 @@ class WikimediaArtScraper:
 
                 # Extract image URL, Permission, and UsageTerms from metadata
                 image_url = image_info.get("url", "Not Available")
-                metadata = image_info.get("extmetadata", {})
-                permission = metadata.get("Permission", {}).get("value", "Not Available")
-                usage_terms = metadata.get("UsageTerms", {}).get("value", "Not Available")
+                # metadata = image_info.get("extmetadata", {})
+                # permission = metadata.get("Permission", {}).get("value", "Not Available")
+                # usage_terms = metadata.get("UsageTerms", {}).get("value", "Not Available")
                 
                 # Find Wikipedia article
                 wiki_url = self.find_wikipedia_article(row['artist'], row['worktitle'])
 
                 # Collect all information, including the entire row data
                 artwork_info = {
-                    'title': row['worktitle'],
-                    'artist': row['artist'],
-                    'wikimedia_file': file_title,
                     'image_url': image_url,
                     'wikipedia_url': wiki_url,
-                    'metadata': {
-                        'Permission': permission,
-                        'UsageTerms': usage_terms
-                    },
                     **row.to_dict()  # Add the entire row from the CSV
                 }
                 
@@ -133,7 +128,7 @@ class WikimediaArtScraper:
                 f.write(",\n")  # Add a comma to separate entries
 
                 # Be nice to the API
-                sleep(.1)
+                # sleep(.1)
             
             # Close the JSON array
             f.write("\n]")

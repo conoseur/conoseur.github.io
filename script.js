@@ -1,15 +1,9 @@
 // Initialize global artwork data
 let globalartworkData;
-let startDate = new Date("12/01/2024");
+let startDate = new Date("01/01/2025");
 let currentDate = new Date();
 let totalScore = 0;
 let questionStep = 1;
-
-const shareData = {
-  title: "Do you know this famous piece?",
-  text: "See if you can figure out the artist faster than I did",
-  url: "https://conoseur.github.io",
-};
 
 // prettier-ignore
 const ARTWORK_VALUES = {
@@ -141,10 +135,93 @@ const nationalityInput = document.querySelector('input[id="nationality-select"]'
 const yearInput = document.querySelector('input[id="year-select"]');
 const artistInput = document.querySelector('input[id="artist-select"]');
 
+// 1. Toast Logic
+const toastContainer = document.getElementById("toast-container");
+
+// Function to generate toasts based on the autocomplete suggestions
+function generateToasts(filteredNationalities, isNationality = true) {
+  toastContainer.innerHTML = ""; // Clear previous toasts
+
+  // Generate toasts with nationalities or artists from the autocomplete suggestions
+  filteredNationalities.forEach((suggestion, index) => {
+    if (index < 5) {
+      createToast(suggestion, "neutral", isNationality);
+    }
+  });
+}
+
+function createToast(suggestion, type, isNationality) {
+  // Create the toast element
+  const toast = document.createElement("div");
+  toast.classList.add("toast");
+
+  // Customize based on toast type (e.g., success, error, neutral)
+  if (type === "success") {
+    toast.classList.add("toast-success");
+  } else if (type === "error") {
+    toast.classList.add("toast-error");
+  }
+
+  toast.textContent = suggestion;
+
+  // Add click event to toast
+  toast.addEventListener("click", function () {
+    // Update the input field based on whether it's nationality or artist
+    if (isNationality) {
+      nationalityInput.value = suggestion;
+    } else {
+      artistInput.value = suggestion;
+    }
+  });
+
+  // Append toast to the container
+  if (!toastContainer) {
+    // If the container doesn't exist, create it
+    const container = document.createElement("div");
+    container.id = "toast-container";
+    document.body.appendChild(container);
+  }
+
+  toastContainer.appendChild(toast);
+
+  // Remove toast after 5 seconds
+  setTimeout(() => {
+    toastContainer.removeChild(toast);
+  }, 5000); // Toast disappears after 5 seconds
+}
+
+// 2. Autocomplete Logic
+nationalityInput.addEventListener("input", function () {
+  const query = nationalityInput.value.toLowerCase();
+
+  if (query.length > 0) {
+    const filteredNationalities = ARTWORK_VALUES.nationalities.filter(
+      (nationality) => nationality.toLowerCase().includes(query)
+    );
+
+    // Generate toasts with the filtered nationalities
+    generateToasts(filteredNationalities, true);
+  }
+});
+
+artistInput.addEventListener("input", function () {
+  const query = artistInput.value.toLowerCase();
+
+  if (query.length > 0) {
+    // Filter the artist names based on the input query
+    const filteredArtists = ARTWORK_VALUES.artists.filter((artist) =>
+      artist.toLowerCase().includes(query)
+    );
+
+    // Generate toasts with the filtered artists
+    generateToasts(filteredArtists, false);
+  }
+});
+
 // Async function to fetch the artwork data
 async function fetchArtworkData() {
   // Only fetching cleaned_artwork_data.json since unique values are included in ARTWORK_VALUES
-  const response = await fetch("./art_data/cleaned_artwork_data.json");
+  const response = await fetch("./art_data/cleaned_artwork_data2.json");
   const artworkData = await response.json();
 
   globalartworkData = artworkData;
@@ -157,7 +234,7 @@ function displayArtwork(artwork) {
   document.getElementById("artwork-image").src = artwork.image_url || "";
   document.getElementById("artwork-image-result").src = artwork.image_url || "";
   document.getElementById("artwork-artist").textContent = `${artwork.artist || "Unknown Artist"}`;
-  document.getElementById("artwork-title").textContent = `${artwork.title || "Untitled"}`;
+  document.getElementById("artwork-title").textContent = `${artwork.worktitle || "Untitled"}`;
   if (artwork.subject) {
     document.getElementById("subject").textContent = artwork.subject;
     document.getElementById("subject").style.display = "inline";
@@ -276,7 +353,9 @@ function handleAnswer() {
     case 1:
       input = nationalityInput.value.toLowerCase();
       console.log(input);
-      if (input == artwork.artist.toLowerCase()) totalScore++;
+      if (input == artwork.artist.toLowerCase()) {
+        totalScore++;
+      }
 
       break;
     case 2:
@@ -374,3 +453,19 @@ fetchArtworkData()
     document.getElementById("loading-text").textContent =
       "Failed to load data.";
   });
+
+const shareData = {
+  title: "Do you know this famous piece?",
+  text: "See if you can figure out the artist faster than I did",
+  url: "https://conoseur.github.io",
+};
+
+const sharebtn = document.getElementById("shareBTN");
+
+sharebtn.addEventListener("click", async () => {
+  try {
+    await navigator.share(shareData);
+  } catch (err) {
+    console.log(err);
+  }
+});
