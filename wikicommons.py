@@ -96,8 +96,7 @@ class WikimediaArtScraper:
                 print(f"\rProcessing: {int((idx + 1) / total_rows * 100)}% complete", end="")
 
                 # Search for artworks
-                file_title = self.search_artwork(row['worktitle'], (row['artist'] + ' ' + (row['museum'] if isinstance(row['museum'], str) else '')))
-
+                
 
                 if not file_title:
                     continue
