@@ -1,15 +1,12 @@
 // Initialize global artwork data
 let globalartworkData;
-let startDate = new Date("01/01/2025");
-let currentDate = new Date();
-let totalScore = 0;
-let questionStep = 0;
-
-// Quiz state
-let currentQuestion = 0;
-let timeLeft = 99;
-let score = 0;
-let timerInterval;
+let startDate = new Date("01/01/2025"),
+  currentDate = new Date();
+let Difference_In_Time;
+let totalScore = 0,
+  questionStep = 0;
+let timeLeft = 99,
+  timerInterval;
 let log = "▶";
 
 // prettier-ignore
@@ -82,12 +79,15 @@ nationalityInput.addEventListener("input", function () {
 
 artistInput.addEventListener("input", function () {
   const query = artistInput.value.toLowerCase();
+  const currentNationality = globalartworkData[Difference_In_Time].nationality;
 
   if (query.length > 0) {
-    // Filter the artist names based on the input query
-    const filteredArtists = Object.keys(ARTISTS).filter((artist) =>
-      artist.toLowerCase().includes(query)
-    );
+    // Filter the artist names based on the input query and nationality
+    const filteredArtists = ARTISTS.filter(
+      (artist) =>
+        artist.full_name.toLowerCase().includes(query) &&
+        artist.nationality === currentNationality
+    ).map((artist) => artist.full_name); // Extract names
 
     // Generate toasts with the filtered artists
     generateToasts(filteredArtists, false);
@@ -103,10 +103,24 @@ async function fetchArtworkData() {
   globalartworkData = artworkData;
 }
 
+function updateDifferenceInTime() {
+  Difference_In_Time = Math.round(
+    (currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
+  );
+}
+
 // prettier-ignore
 function displayArtwork(artwork) {
+  // function openArtist() {
+  //   const link = ARTWORK_VALUES.artists[artwork.artist.normalize("NFD").replace(/[\u0300-\u036f]/g, "")];
+  //   window.open(link);
+  // }
+
   function openArtist() {
-    const link = ARTWORK_VALUES.artists[artwork.artist.normalize("NFD").replace(/[\u0300-\u036f]/g, "")];
+    const artist = ARTISTS.find(
+      (a) => a.full_name.toLowerCase() === artwork.artist.toLowerCase()
+    );
+    const link = artist ? artist.wikipedia_url : "#";
     window.open(link);
   }
 
@@ -149,14 +163,11 @@ async function formatDate(date) {
   const dd = String(date.getDate()).padStart(2, "0");
   const yyyy = date.getFullYear();
 
-  let Difference_In_Time = Math.round(
-    (currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
-  );
-
   // Wait for artwork data to load before displaying the artwork
   await fetchArtworkData();
 
   // Ensure artwork data is loaded before calling displayArtwork
+  updateDifferenceInTime();
   displayArtwork(globalartworkData[Difference_In_Time]);
 
   return `${mm}/${dd}/${yyyy}`;
@@ -197,17 +208,6 @@ document.getElementById("randomizer").addEventListener("click", () => {
   updateDateDisplay();
   startTimer();
 });
-
-// Function to populate a select element with options
-function populateSelect(selectId, options) {
-  const select = document.getElementById(selectId);
-  options.forEach((option) => {
-    const optionElement = document.createElement("option");
-    optionElement.value = option;
-    optionElement.textContent = option;
-    select.appendChild(optionElement);
-  });
-}
 
 // DOM elements
 const timerProgress = document.getElementById("timer-progress");
@@ -331,12 +331,8 @@ document.getElementById("popup").addEventListener("click", function () {
 
 // Function to handle answer submission
 function handleAnswer() {
-  const artwork =
-    globalartworkData[
-      Math.round(
-        (currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
-      )
-    ];
+  updateDifferenceInTime();
+  const artwork = globalartworkData[Difference_In_Time];
 
   toastContainer.innerHTML = "";
 
@@ -377,7 +373,9 @@ function handleAnswer() {
         createToast("You didn't type in anything", "error", false);
         return;
       }
-      correct = similarity(input, artwork.artist.toLowerCase()) > 0.6;
+      correct = ARTISTS.some(
+        (artist) => similarity(input, artist.full_name.toLowerCase()) > 0.6
+      );
       if (correct) {
         totalScore++;
         log += "🎨";
@@ -409,7 +407,7 @@ function startTimer() {
   }, 1000);
 
   timeLeft = 99;
-  score = 0;
+  totalScore = 0;
   questionStep = 0;
   log = "▶";
   showNextQuestion();
@@ -443,13 +441,28 @@ function hideLoadingOverlays() {
   }, 4000);
 }
 
-// Fetch data on load
 fetchArtworkData()
   .then(() => {
-    console.log("loaded");
-    // Add at the beginning of your script.js
-    document.addEventListener("DOMContentLoaded", () => {
+    console.log("Data loaded");
+
+    // Wait for all images on the page to fully load
+    const images = Array.from(document.querySelectorAll("img"));
+    const imageLoadPromises = images.map(
+      (img) =>
+        new Promise((resolve) => {
+          if (img.complete) {
+            resolve(); // Already loaded
+          } else {
+            img.addEventListener("load", resolve); // Wait for load
+            img.addEventListener("error", resolve); // Handle errors
+          }
+        })
+    );
+
+    Promise.all(imageLoadPromises).then(() => {
+      console.log("All images loaded");
       hideLoadingOverlays();
+
       const tutorialModal = document.getElementById("tutorial-modal");
       const startGameBtn = document.getElementById("start-game");
 
