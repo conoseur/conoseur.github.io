@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Gradient Card</title>
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <style>
+    /* @tailwind base;
+    @tailwind components;
+    @tailwind utilities; */
+
+    @layer base {
+      @property --color-a {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: transparent;
+      }
+      @property --color-b {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: transparent;
+      }
+      @property --color-c {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: transparent;
+      }
+    }
+
+    @keyframes blob {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      30% {
+        transform: translate(20px, -30px) rotate(40deg);
+      }
+      50% {
+        transform: translate(-40px, 50px) scale(1.1);
+      }
+      80% {
+        transform: translate(30px, -20px) rotate(90deg);
+      }
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+    }
+
+    .wrapper {
+      /* --color-a: #ff6a6a;
+      --color-b: #ffcb6b;
+      --color-c: #42a5f5; */
+      --color-a: #e49c00;
+      --color-b: #ffe66b;
+      --color-c: #e8eff4;
+      position: relative;
+      width: 300px;
+      aspect-ratio: 9 / 16;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(45deg, var(--color-a), var(--color-b), var(--color-c));
+      transition: 500ms ease-in-out;
+      transition-property: --color-a, --color-b, --color-c;
+    }
+
+    .wrapper::before,
+    .wrapper::after {
+      content: "";
+      position: absolute;
+      filter: blur(50px) brightness(1.5);
+      background: linear-gradient(45deg, var(--color-a), var(--color-b));
+      border-radius: 25px;
+    }
+
+    .wrapper::before {
+      width: 70%;
+      height: 50%;
+      top: 10%;
+      left: 20%;
+      animation: blob 8s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    }
+
+    .wrapper::after {
+      width: 70%;
+      height: 80%;
+      top: 30%;
+      left: 40%;
+      animation: blob 10s infinite cubic-bezier(0.215, 0.61, 0.355, 1) reverse;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+  <div class="wrapper">
+    <div class="content p-6">
+      <h1 class="title">Gradient Card</h1>
+      <p class="subtitle">This card has an animated background gradient!</p>
+    </div>
+  </div>
+</body>
+</html>

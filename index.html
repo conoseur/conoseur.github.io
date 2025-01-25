@@ -50,6 +50,7 @@
             Scroll on the image here
         </div>
         <img id="artwork-image" src="" alt="Error">
+        <div class="toast-container" id="toast-container" style="display: fixed;"></div>
     </div>
 
     <div class="content-container">
@@ -114,8 +115,13 @@
     </div>
 
     <!-- Result Modal -->
-    <div id="result" class="modal" style="display: none;">
-        <div class="modal-content">
+    <div id="result" class="modal">
+        <div class="wrapper" id="cheery"
+            style="z-index: 100; display: flex; justify-content: center; align-items: center; font-size: 50px;">
+            <!-- conoseur -->
+            beginner
+        </div>
+        <div class="modal-content" style="display: none;">
 
             <p id="status" class="badge">Beginner &nbsp;
                 <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +139,8 @@
 
             </p>
             <div style="max-width: 400px; max-height: 400px; overflow: hidden;">
-                <img style="max-width: 100%; max-height: 100%; object-fit: contain;"  id="artwork-image-result" src="" alt="" />
+                <img style="max-width: 100%; max-height: 100%; object-fit: contain;" id="artwork-image-result" src=""
+                    alt="" />
             </div>
             <span id="artwork-title"></span><br>
             <span id="artwork-artist" class="artist"></span>&nbsp;&nbsp;&nbsp;
@@ -185,9 +192,6 @@
 
         </div>
     </div>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toast-container" style="display: fixed;"></div>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
