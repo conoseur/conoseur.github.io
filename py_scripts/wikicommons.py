@@ -2,9 +2,7 @@ import pandas as pd
 import requests
 import os
 import json
-from time import sleep
 from urllib.parse import quote
-import sys
 
 class WikimediaArtScraper:
     def __init__(self, output_dir="art_data"):
@@ -84,65 +82,68 @@ class WikimediaArtScraper:
             print(f"Error finding Wikipedia article: {e}")
             return None
 
-    def process_artwork_data(self, df):
-        """Process each artwork row and collect data"""
-        total_rows = len(df)
+    def process_artwork_data(self):
+        """Process artwork data from CSV, skipping already processed items"""
+        # Read the CSV file
+        df = pd.read_csv(f'{self.output_dir}/output.csv')
         
-        # Open the file for writing the results incrementally
-        with open(f"{self.output_dir}/artwork_data.json", 'w') as f:
-            f.write("[\n")  # Start the JSON array
+        # Load existing data if the file exists
+        if os.path.exists(f"{self.output_dir}/cleaned_artwork_data.json"):
+            with open(f"{self.output_dir}/cleaned_artwork_data.json", 'r') as f:
+                existing_data = json.load(f)
+            processed_works = {(entry.get('worktitle'), entry.get('artist')) for entry in existing_data}
+        else:
+            processed_works = set()
 
-            for idx, row in df.iterrows():
-                print(f"\rProcessing: {int((idx + 1) / total_rows * 100)}% complete", end="")
+        # Prepare to write full artwork data
+        full_artwork_data = []
 
-                # Search for artworks
-                
+        # Process each artwork
+        total_rows = len(df)
+        for idx, row in df.iterrows():
+            print(f"\rProcessing: {int((idx + 1) / total_rows * 100)}% complete", end="")
 
-                if not file_title:
-                    continue
-                    
-                # Get image info (we're only interested in metadata here)
-                image_info = self.get_image_info(file_title)
-                if not image_info:
-                    continue
+            # Check if this artwork has already been processed
+            if (row['worktitle'], row['artist']) in processed_works:
+                continue
 
-                # Extract image URL, Permission, and UsageTerms from metadata
-                image_url = image_info.get("url", "Not Available")
-                # metadata = image_info.get("extmetadata", {})
-                # permission = metadata.get("Permission", {}).get("value", "Not Available")
-                # usage_terms = metadata.get("UsageTerms", {}).get("value", "Not Available")
-                
-                # Find Wikipedia article
-                wiki_url = self.find_wikipedia_article(row['artist'], row['worktitle'])
+            # Search for artworks
+            file_title = self.search_artwork(row['worktitle'], row['artist'])
+            if not file_title:
+                continue
 
-                # Collect all information, including the entire row data
-                artwork_info = {
-                    'image_url': image_url,
-                    'wikipedia_url': wiki_url,
-                    **row.to_dict()  # Add the entire row from the CSV
-                }
-                
-                # Write the current result to the JSON file incrementally
-                json.dump(artwork_info, f, indent=2)
-                f.write(",\n")  # Add a comma to separate entries
+            # Get image info
+            image_info = self.get_image_info(file_title)
+            if not image_info:
+                continue
 
-                # Be nice to the API
-                # sleep(.1)
+            # Extract image URL
+            image_url = image_info.get("url", "Not Available")
             
-            # Close the JSON array
-            f.write("\n]")
+            # Find Wikipedia article
+            wiki_url = self.find_wikipedia_article(row['artist'], row['worktitle'])
 
-        return "Processing complete!"
+            # Collect all information
+            artwork_info = {
+                'image_url': image_url,
+                'wikipedia_url': wiki_url,
+                **row.to_dict()
+            }
+            
+            full_artwork_data.append(artwork_info)
+
+        # Write full artwork data to JSON
+        with open(f"{self.output_dir}/full_artwork.json", 'w') as f:
+            json.dump(full_artwork_data, f, indent=2)
+        
+        print("\nProcessing complete!")
 
 def main():
-    # Read CSV file
-    df = pd.read_csv('output.csv')
-    
     # Initialize scraper
     scraper = WikimediaArtScraper()
     
     # Process all artworks
-    scraper.process_artwork_data(df)
+    scraper.process_artwork_data()
     
     print("\nProcessing complete!")
 

@@ -29,11 +29,11 @@ def clean_artwork_data(input_file, output_file):
 
     # Write the cleaned data back to the output file
     with open(output_file, 'w') as file:
-        json.dump(cleaned_artwork_data, file, indent=4)
+        json.dump(cleaned_artwork_data, file, indent=4, ensure_ascii=False)
 
     print(f"Artwork data cleaned and saved to {output_file}")
 
 # Example usage
-input_file = 'art_data/artwork_data.json'  # Replace with your actual input file path
-output_file = 'art_data/cleaned_artwork_data.json'  # Replace with your desired output file path
+input_file = 'art_data/cleaned_artwork_data.json'  # Replace with your actual input file path
+output_file = 'art_data/cleaned_artwork_data2.json'  # Replace with your desired output file path
 clean_artwork_data(input_file, output_file)

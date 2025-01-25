@@ -2,7 +2,7 @@ import json
 import math
 
 # Load the JSON file
-with open("art_data/artwork_data.json", "r", encoding="utf-8") as file:
+with open("art_data/full_artwork.json", "r", encoding="utf-8") as file:
     artwork_data = json.load(file)
 
 # Function to clean up data
@@ -24,7 +24,7 @@ def clean_artwork_data(data):
 cleaned_artwork_data = clean_artwork_data(artwork_data)
 
 # Save the cleaned data back to a JSON file
-with open("art_data/cleaned_artwork_data.json", "w", encoding="utf-8") as file:
+with open("art_data/full_artwork.json", "w", encoding="utf-8") as file:
     json.dump(cleaned_artwork_data, file, indent=4, ensure_ascii=False)
 
-print("Artwork data cleaned and saved to 'cleaned_artwork_data.json'")
+print("Artwork data cleaned and saved to 'full_artwork.json'")
