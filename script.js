@@ -47,7 +47,9 @@ async function fetchData() {
   } catch (err) {
     // error
   } finally {
-    // show the content after image loaded
+    updateValues(question);
+    // TODO: show the content after image loaded
+    hideLoadingOverlays();
   }
 }
 
@@ -56,6 +58,9 @@ fetchData();
 
 const inputBox = document.querySelector('input[id="input-box"]');
 const toastContainer = document.getElementById("toast-container");
+const overlay = document.getElementById("loading-overlay");
+const overlay2 = document.getElementById("loading-overlay2");
+const loadingtext = document.getElementById("loading-text");
 
 // Function to generate toasts based on the autocomplete suggestions
 function generateToasts(filteredNationalities, isNationality = true) {
@@ -119,21 +124,20 @@ function updateValues(question) {
 
   // Remove any existing event listeners by cloning the element
   const newLinkElement = artworkLink.cloneNode(true);
-  newLinkElement.addEventListener("click", openArtist);
   newLinkElement.href = newArtworkLink;
 
   artworkLink.parentNode.replaceChild(newLinkElement, artworkLink);
 
   // Update additional details if present
-  if (artwork.subject) {
-    document.getElementById("subject").textContent = artwork.subject;
+  if (question.subject) {
+    document.getElementById("subject").textContent = question.subject;
     document.getElementById("subject").style.display = "inline";
   } else {
     document.getElementById("subject").style.display = "none";
   }
 
-  if (artwork.style) {
-    document.getElementById("style").textContent = artwork.style;
+  if (question.style) {
+    document.getElementById("style").textContent = question.style;
     document.getElementById("style").style.display = "inline";
   } else {
     document.getElementById("style").style.display = "none";
@@ -223,9 +227,6 @@ function editDistance(s1, s2) {
 
 // Function to handle answer submission
 function handleAnswer() {
-  updateDifferenceInTime();
-  const artwork = globalartworkData[Difference_In_Time];
-
   toastContainer.innerHTML = "";
 
   if (!inputBox.value.toLowerCase()) {
@@ -240,11 +241,13 @@ function handleAnswer() {
     case 1:
       log = similarity(input, question.nationality.toLowerCase()) > 0.6 ? "🌐" : "❌"
       createToast(question.nationality, similarity(input, question.nationality.toLowerCase()) > 0.6 ? "success" : "error", false);
+      inputBox.placeholder = "A year when the artist was alive"
       break;
     case 2:
       input = parseInt(inputBox.value);
       log = input >= artwork.artist_born && input <= artwork.artist_dead ? "🔢" : "❌"
       createToast(input, correct ? "success" : "error", false);
+      inputBox.placeholder = "Name the Artist"
       break;
     case 3:
       log = similarity(input, ARTISTS[question.artist_id].full_name.toLowerCase()) > 0.6 ? "🎨" : "❌"
@@ -257,8 +260,10 @@ function handleAnswer() {
 function startTimer() {
   clearInterval(timerInterval);
   timeLeft = 99;
+  inputBox.placeholder = "Guess the Nationality of the Artist";
+
   updateTimer(); // maybe comment this out
-  
+
   timerInterval = setInterval(() => {
     timeLeft--;
     updateTimer();
@@ -273,34 +278,26 @@ function startTimer() {
   log = "▶";
 }
 
-
 // Simplify this ------------------------------------------------------------------------
 function hideLoadingOverlays() {
-  document.getElementById("loading-text").style.display = "block";
-  document.getElementById("loading-overlay").style.display = "flex";
-  document.getElementById("loading-overlay2").style.display = "flex";
-  document.getElementById("loading-text").style.opacity = "1";
-  document.getElementById("loading-overlay").style.opacity = "1";
-  document.getElementById("loading-overlay2").style.opacity = "1";
+  loadingtext.style.display = "block";
+  overlay.style.display = "flex";
+  overlay2.style.display = "flex";
+  loadingtext.style.opacity = "1";
+  overlay.style.opacity = "1";
+  overlay2.style.opacity = "1";
 
   setTimeout(() => {
-    const overlay = document.getElementById("loading-overlay");
     overlay.style.transition = "opacity 1s ease-out";
     overlay.style.opacity = "0";
   }, 2000);
 
   setTimeout(() => {
-    const overlay = document.getElementById("loading-overlay2");
     overlay.style.transition = "opacity 1s ease-out";
     overlay.style.opacity = "0";
-  }, 3000);
-
-  setTimeout(() => {
-    const overlay = document.getElementById("loading-overlay");
-    const overlay2 = document.getElementById("loading-overlay2");
     overlay.style.display = "none";
     overlay2.style.display = "none";
-  }, 4000);
+  }, 3000);
 }
 // Simplify this ------------------------------------------------------------------------
 

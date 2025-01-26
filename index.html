@@ -5,13 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="description"
+        content="Test your art knowledge with Conoseur! Guess the artist of famous paintings in a fun game!">
+    <meta name="keywords"
+        content="art, game, painting quiz, guess, history, artist identification, online game, trivia, challenge">
+    <meta name="author" content="Conoseur Team">
+    <meta property="og:title" content="Conoseur - Guess the Artist of Famous Paintings">
+    <meta property="og:description"
+        content="Test your art knowledge with Conoseur! Guess the artist of paintings and challenge your friends.">
+    <meta property="og:url" content="https://www.conoseur.com">
+    <meta property="og:image" content="https://www.conoseur.com/images/logo.png">
+    <meta property="og:type" content="website">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"> -->
+    
     <title>conoseur</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Baskerville+SC&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css" />
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9809194945228761"
@@ -30,24 +45,14 @@
 
     <nav class="navbar">
         <img src="images/logo.png" alt="Logo" class="logo">
-        <div id="date-nav" class="date-navigation">
-            <button class="nav-button" id="prevDate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                    <path
-                        d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
-                    <path d="M13.293 7.293 8.586 12l4.707 4.707 1.414-1.414L11.414 12l3.293-3.293-1.414-1.414z" />
-                </svg></button>
-            <span class="date-display" id="currentDate"></span>
-            <button class="nav-button" id="nextDate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                    <path
-                        d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z" />
-                    <path d="M9.293 8.707 12.586 12l-3.293 3.293 1.414 1.414L15.414 12l-4.707-4.707-1.414 1.414z" />
-                </svg></button>
+        <div>
+            login
         </div>
     </nav>
 
     <div class="artwork-container">
         <div style="position: absolute;">
-            Scroll on the image here
+            <!-- scroll gif -->
         </div>
         <img id="artwork-image" src="" alt="Error">
         <div class="toast-container" id="toast-container" style="display: fixed;"></div>
@@ -55,14 +60,13 @@
 
     <div class="content-container">
 
-        <span id="subject" class="badge yellow" style="display: none;">landscape</span>
-        <span id="style" class="badge red" style="display: none;">american art</span>
+        <!-- color change? -->
+        <span id="subject" class="badge yellow" style="display: none;"></span>
+        <span id="style" class="badge red" style="display: none;"></span>
 
         <div style="position: relative; display: flex; max-width: 400px;">
 
             <input type="text" placeholder="Guess the Nationality of the Artist" id="input-box">
-            <!-- <input style="display: none;" type="number" id="year-select" placeholder="A year when the artist was alive">
-            <input style="display: none;" type="text" id="artist-select" placeholder="Name the Artist"> -->
 
             <div class="timer-container" style="margin-right: 5px;" onclick="handleAnswer()">
                 <div id="popup" class="popup">
@@ -86,7 +90,7 @@
             <div class="step">
                 <div class="step-number">1</div>
                 <p class="step-text">
-                    You get 100 seconds to guess the Nationality of the artist,
+                    100 seconds to guess the Nationality of the artist,
                     a year when the artist was alive,
                     and finally the artist name itself
                 </p>
@@ -95,16 +99,15 @@
             <div class="step">
                 <div class="step-number">2</div>
                 <p class="step-text">
-                    Using your fingers pan left, right, up, and down on the image
-                    to get more details to help you narrow it down
+                    Use your fingers to pan left, right, up, and down on the image. Helpful suggestions will pop up from the wordbank of possible answers
+                    You can click on them to autocomplete.
                 </p>
             </div>
 
             <div class="step">
                 <div class="step-number">3</div>
                 <p class="step-text">
-                    Helpful suggestions will pop up from the wordbank of possible answers
-                    Use them to help you not misspell. Click on the timer to submit your answer.
+                    Click on the timer to submit your answers.
                 </p>
             </div>
 
@@ -184,8 +187,6 @@
     <script src="data.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
-
-
 
 </body>
 
