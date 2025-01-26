@@ -1,3 +1,38 @@
+const BADGE_CONOSEUR = `
+Conoseur &nbsp; 
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600" x="0px" y="0px" width="20" height="20">
+    <path fill="rgb(90, 93, 0)" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+  </svg>
+`;
+
+const BADGE_MASTEUR = `
+Masteur &nbsp;
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600" x="0px" y="0px" width="20" height="20">
+    <path fill="rgb(0, 93, 26)" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+  </svg>
+`;
+
+const BADGE_AMATEUR = `
+Amateur &nbsp;
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600" x="0px" y="0px" width="20" height="20">
+    <path fill="rgb(0, 87, 93)" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+  </svg>
+`;
+
+const BADGE_BEGINEUR = `
+Begineur &nbsp;
+  <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px" viewBox="0 0 512 512" xml:space="preserve">
+    <g>
+      <path class="st0" d="M256,120.07L145.016,12.742C131.953,0.102,112.594-3.492,95.844,3.586
+		c-16.734,7.109-27.609,23.531-27.609,41.719v274c0,18.406,7.469,36.031,20.703,48.844L224.5,499.258
+		c17.563,16.984,45.438,16.984,62.984,0l135.578-131.109c13.234-12.813,20.703-30.438,20.703-48.844v-274
+		c0-18.188-10.875-34.609-27.609-41.719c-16.75-7.078-36.109-3.484-49.172,9.156L256,120.07z M379.844,311.414
+		c0,6.141-2.484,12.016-6.906,16.281L256,440.805V209.008l22.219-21.5l82.438-79.719c3.25-3.156,8.109-4.063,12.281-2.281
+		c4.188,1.766,6.906,5.875,6.906,10.422V311.414z" />
+    </g>
+  </svg>
+`
+
 const NATIONALITIES = [
   "American",
   "Austrian",
@@ -128,9 +163,8 @@ const MUSEUMS = [
   "Toledo Museum of Art",
 ];
 
-const ARTISTS = [
-  {
-    artist_id: "c90a24dc-98ca-45b6-bab4-d95a924b10fa",
+const ARTISTS = {
+  "c90a24dc-98ca-45b6-bab4-d95a924b10fa": {
     full_name: "Abraham Mignon",
     first_name: "Abraham",
     middle_names: "",
@@ -141,8 +175,7 @@ const ARTISTS = [
     death: 1679,
     wikipedia_url: "https://en.wikipedia.org/wiki/Abraham_Mignon",
   },
-  {
-    artist_id: "8c295938-ac50-4b10-8976-29b93a511183",
+  "8c295938-ac50-4b10-8976-29b93a511183": {
     full_name: "Adolph Ulrich Wertmuller",
     first_name: "Adolph",
     middle_names: "Ulrich",
@@ -153,8 +186,7 @@ const ARTISTS = [
     death: 1811,
     wikipedia_url: "https://en.wikipedia.org/wiki/Adolf_Ulrik_Wertmüller",
   },
-  {
-    artist_id: "83ae15bd-3de8-40c3-a8eb-1483269090ef",
+  "83ae15bd-3de8-40c3-a8eb-1483269090ef": {
     full_name: "Adriaan De Lelie",
     first_name: "Adriaan",
     middle_names: "",
@@ -165,8 +197,7 @@ const ARTISTS = [
     death: 1820,
     wikipedia_url: "https://en.wikipedia.org/wiki/Adriaan_de_Lelie",
   },
-  {
-    artist_id: "a339770d-1e2a-4387-96df-3fa5674fbc4e",
+  "a339770d-1e2a-4387-96df-3fa5674fbc4e": {
     full_name: "Adriaen Thomasz. Key",
     first_name: "Adriaen",
     middle_names: "Thomasz",
@@ -177,8 +208,7 @@ const ARTISTS = [
     death: 1589,
     wikipedia_url: "https://en.wikipedia.org/wiki/Adriaen_Thomasz_Key",
   },
-  {
-    artist_id: "21e534dd-a340-43b2-88c7-94c775964edf",
+  "21e534dd-a340-43b2-88c7-94c775964edf": {
     full_name: "Adèle Romany",
     first_name: "Adele",
     middle_names: "",
@@ -189,8 +219,7 @@ const ARTISTS = [
     death: 1846,
     wikipedia_url: "https://en.wikipedia.org/wiki/Adèle_Romany",
   },
-  {
-    artist_id: "252fa956-9c5c-4105-bd19-0645c6396971",
+  "252fa956-9c5c-4105-bd19-0645c6396971": {
     full_name: "Adélaïde Labille-Guiard",
     first_name: "Adelaide",
     middle_names: "Labille",
@@ -201,8 +230,7 @@ const ARTISTS = [
     death: 1803,
     wikipedia_url: "https://en.wikipedia.org/wiki/Adélaïde_Labille-Guiard",
   },
-  {
-    artist_id: "733ad22b-4250-40eb-a689-edfde2ebb0ad",
+  "733ad22b-4250-40eb-a689-edfde2ebb0ad": {
     full_name: "Aelbert Cuyp",
     first_name: "Aelbert",
     middle_names: "",
@@ -213,8 +241,7 @@ const ARTISTS = [
     death: 1691,
     wikipedia_url: "https://en.wikipedia.org/wiki/Aelbert_Cuyp",
   },
-  {
-    artist_id: "087652d8-e50c-4e01-b45e-83c73e27df38",
+  "087652d8-e50c-4e01-b45e-83c73e27df38": {
     full_name: "Albert André",
     first_name: "Albert",
     middle_names: "",
@@ -225,8 +252,7 @@ const ARTISTS = [
     death: 1954,
     wikipedia_url: "https://en.wikipedia.org/wiki/Albert_André",
   },
-  {
-    artist_id: "91cb0ac3-3ec5-416b-bf5b-10109a767c9f",
+  "91cb0ac3-3ec5-416b-bf5b-10109a767c9f": {
     full_name: "Albert Bierstadt",
     first_name: "Albert",
     middle_names: "",
@@ -237,8 +263,7 @@ const ARTISTS = [
     death: 1902,
     wikipedia_url: "https://en.wikipedia.org/wiki/Albert_Bierstadt",
   },
-  {
-    artist_id: "376c687e-7733-4e40-bf70-6f1228bd961b",
+  "376c687e-7733-4e40-bf70-6f1228bd961b": {
     full_name: "Albert Marquet",
     first_name: "Albert",
     middle_names: "",
@@ -249,8 +274,7 @@ const ARTISTS = [
     death: 1947,
     wikipedia_url: "https://en.wikipedia.org/wiki/Albert_Marquet",
   },
-  {
-    artist_id: "a09d72ec-2f78-4d1d-a007-78b5950dae1a",
+  "a09d72ec-2f78-4d1d-a007-78b5950dae1a": {
     full_name: "Albrecht Adam",
     first_name: "Adam",
     middle_names: "",
@@ -261,8 +285,7 @@ const ARTISTS = [
     death: 1862,
     wikipedia_url: "https://en.wikipedia.org/wiki/Albrecht_Adam",
   },
-  {
-    artist_id: "a361c90c-aab2-47cd-99df-194aec6c7b8b",
+  "a361c90c-aab2-47cd-99df-194aec6c7b8b": {
     full_name: "Albrecht Durer",
     first_name: "Albrecht",
     middle_names: "",
@@ -273,8 +296,7 @@ const ARTISTS = [
     death: 1528,
     wikipedia_url: "https://en.wikipedia.org/wiki/Albrecht_Dürer",
   },
-  {
-    artist_id: "37e91e34-3df7-40d3-93f1-d3df6be025e0",
+  "37e91e34-3df7-40d3-93f1-d3df6be025e0": {
     full_name: "Alexandre Cabanel",
     first_name: "Alexandre",
     middle_names: "",
@@ -285,8 +307,7 @@ const ARTISTS = [
     death: 1889,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alexandre_Cabanel",
   },
-  {
-    artist_id: "af971d31-c7f8-4ad3-ba87-e9b3e5ff8b3c",
+  "af971d31-c7f8-4ad3-ba87-e9b3e5ff8b3c": {
     full_name: "Alexei Von Jawlensky",
     first_name: "Alexei",
     middle_names: "",
@@ -297,8 +318,7 @@ const ARTISTS = [
     death: 1941,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alexej_von_Jawlensky",
   },
-  {
-    artist_id: "07d0b1d8-3d26-4ce5-b9b1-4f0d7d2c4a30",
+  "07d0b1d8-3d26-4ce5-b9b1-4f0d7d2c4a30": {
     full_name: "Alexey Savrasov",
     first_name: "Alexey",
     middle_names: "",
@@ -309,8 +329,7 @@ const ARTISTS = [
     death: 1897,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alexey",
   },
-  {
-    artist_id: "e81d87df-377a-4505-80d0-7d4829043832",
+  "e81d87df-377a-4505-80d0-7d4829043832": {
     full_name: "Alfred Henry Maurer",
     first_name: "Alfred",
     middle_names: "Henry",
@@ -321,8 +340,7 @@ const ARTISTS = [
     death: 1932,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alfred_Henry_Maurer",
   },
-  {
-    artist_id: "274ca966-9430-417d-9fce-89412f3a5f37",
+  "274ca966-9430-417d-9fce-89412f3a5f37": {
     full_name: "Alfred Sisley",
     first_name: "Alfred",
     middle_names: "",
@@ -333,8 +351,7 @@ const ARTISTS = [
     death: 1899,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alfred_Sisley",
   },
-  {
-    artist_id: "7d173fae-e9bd-462c-9fb5-876065cdf621",
+  "7d173fae-e9bd-462c-9fb5-876065cdf621": {
     full_name: "Alfred Thompson Bricher",
     first_name: "Alfred",
     middle_names: "Thompson",
@@ -345,8 +362,7 @@ const ARTISTS = [
     death: 1908,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alfred_Thompson_Bricher",
   },
-  {
-    artist_id: "3e75a15d-7e54-4e2c-83fe-f45b288fd15c",
+  "3e75a15d-7e54-4e2c-83fe-f45b288fd15c": {
     full_name: "Alice Bailly",
     first_name: "Alice",
     middle_names: "",
@@ -357,8 +373,7 @@ const ARTISTS = [
     death: 1938,
     wikipedia_url: "https://en.wikipedia.org/wiki/Alice_Bailly",
   },
-  {
-    artist_id: "eef643b7-f8d5-4375-b6b9-c4af280129ff",
+  "eef643b7-f8d5-4375-b6b9-c4af280129ff": {
     full_name: "Amadeo De Souza-Cardoso",
     first_name: "Amadeo",
     middle_names: "de Souza",
@@ -369,8 +384,7 @@ const ARTISTS = [
     death: 1918,
     wikipedia_url: "https://en.wikipedia.org/wiki/Amadeo_de_Souza-Cardoso",
   },
-  {
-    artist_id: "ca6962ea-df33-4fc2-9ec0-f67293a661fb",
+  "ca6962ea-df33-4fc2-9ec0-f67293a661fb": {
     full_name: "Ambrosius Bosschaert",
     first_name: "Ambrosius",
     middle_names: "",
@@ -381,8 +395,7 @@ const ARTISTS = [
     death: 1621,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ambrosius_Bosschaert",
   },
-  {
-    artist_id: "c2741351-8f15-49e8-b7c3-78e3cd061d94",
+  "c2741351-8f15-49e8-b7c3-78e3cd061d94": {
     full_name: "Amedeo Modigliani",
     first_name: "Amedeo",
     middle_names: "",
@@ -393,8 +406,7 @@ const ARTISTS = [
     death: 1920,
     wikipedia_url: "https://en.wikipedia.org/wiki/Amedeo_Modigliani",
   },
-  {
-    artist_id: "9fe53765-e047-4339-8b16-0991bb5a21bf",
+  "9fe53765-e047-4339-8b16-0991bb5a21bf": {
     full_name: "Anders Zorn",
     first_name: "Anders",
     middle_names: "",
@@ -405,8 +417,7 @@ const ARTISTS = [
     death: 1920,
     wikipedia_url: "https://en.wikipedia.org/wiki/Anders_Zorn",
   },
-  {
-    artist_id: "5fd96e98-69fe-478f-a906-e7c556b2e1df",
+  "5fd96e98-69fe-478f-a906-e7c556b2e1df": {
     full_name: "Andrea Mantegna",
     first_name: "Andrea",
     middle_names: "",
@@ -417,8 +428,7 @@ const ARTISTS = [
     death: 1506,
     wikipedia_url: "https://en.wikipedia.org/wiki/Andrea_Mantegna",
   },
-  {
-    artist_id: "d85cd3f1-8f2b-45f9-b8a5-5a5676539eb1",
+  "d85cd3f1-8f2b-45f9-b8a5-5a5676539eb1": {
     full_name: "André Derain",
     first_name: "Andre",
     middle_names: "",
@@ -429,8 +439,7 @@ const ARTISTS = [
     death: 1954,
     wikipedia_url: "https://en.wikipedia.org/wiki/André_Derain",
   },
-  {
-    artist_id: "7e5e208a-627e-4fe2-9cb9-de1966d9274b",
+  "7e5e208a-627e-4fe2-9cb9-de1966d9274b": {
     full_name: "Angel Zárraga",
     first_name: "Angel",
     middle_names: "",
@@ -441,8 +450,7 @@ const ARTISTS = [
     death: 1946,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ángel_Zárraga",
   },
-  {
-    artist_id: "f6eaa1f3-0ed6-4204-a348-894e3a8db7c8",
+  "f6eaa1f3-0ed6-4204-a348-894e3a8db7c8": {
     full_name: "Anne Vallayer-Coster",
     first_name: "Anne",
     middle_names: "Vallayer",
@@ -453,8 +461,7 @@ const ARTISTS = [
     death: 1818,
     wikipedia_url: "https://en.wikipedia.org/wiki/Anne_Vallayer-Coster",
   },
-  {
-    artist_id: "cc03fc80-6bd3-4853-8b97-53924b99c37b",
+  "cc03fc80-6bd3-4853-8b97-53924b99c37b": {
     full_name: "Antoine Bouvard",
     first_name: "Antoine",
     middle_names: "",
@@ -465,8 +472,7 @@ const ARTISTS = [
     death: 1956,
     wikipedia_url: "https://en.wikipedia.org/wiki/Parque_Dom_Pedro_II",
   },
-  {
-    artist_id: "43b487c1-00f8-48c3-9faf-dbc4499a1859",
+  "43b487c1-00f8-48c3-9faf-dbc4499a1859": {
     full_name: "Antoine-Jean Gros",
     first_name: "Antoine",
     middle_names: "Jean",
@@ -477,8 +483,7 @@ const ARTISTS = [
     death: 1835,
     wikipedia_url: "https://en.wikipedia.org/wiki/Antoine-Jean_Gros",
   },
-  {
-    artist_id: "c7d42f2a-4f07-428b-9ca2-7a8382552814",
+  "c7d42f2a-4f07-428b-9ca2-7a8382552814": {
     full_name: "Anton Raphael Mengs",
     first_name: "Anton",
     middle_names: "Raphael",
@@ -489,8 +494,7 @@ const ARTISTS = [
     death: 1779,
     wikipedia_url: "https://en.wikipedia.org/wiki/Anton_Raphael_Mengs",
   },
-  {
-    artist_id: "2256cd8a-c233-4cb6-a116-68df6d57c433",
+  "2256cd8a-c233-4cb6-a116-68df6d57c433": {
     full_name: "Aristide Maillol",
     first_name: "Aristide",
     middle_names: "",
@@ -501,8 +505,7 @@ const ARTISTS = [
     death: 1944,
     wikipedia_url: "https://en.wikipedia.org/wiki/Aristide_Maillol",
   },
-  {
-    artist_id: "d4b07159-620d-47d5-b945-f5927b7315d9",
+  "d4b07159-620d-47d5-b945-f5927b7315d9": {
     full_name: "Armand Guillaumin",
     first_name: "Guillaumin",
     middle_names: "",
@@ -513,8 +516,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/Armand_Guillaumin",
   },
-  {
-    artist_id: "086ee112-b115-45c6-beff-78242078db1d",
+  "086ee112-b115-45c6-beff-78242078db1d": {
     full_name: "Arnold Böcklin",
     first_name: "Arnold",
     middle_names: "",
@@ -525,8 +527,7 @@ const ARTISTS = [
     death: 1901,
     wikipedia_url: "https://en.wikipedia.org/wiki/Arnold_Böcklin",
   },
-  {
-    artist_id: "91be75d1-6576-491f-bd63-d38a83fd4e6e",
+  "91be75d1-6576-491f-bd63-d38a83fd4e6e": {
     full_name: "Arthur Bowen Davies",
     first_name: "Arthur",
     middle_names: "Bowen",
@@ -537,8 +538,7 @@ const ARTISTS = [
     death: 1928,
     wikipedia_url: "https://en.wikipedia.org/wiki/Arthur_Bowen_Davies",
   },
-  {
-    artist_id: "258a5f3e-0630-4e63-87e9-8d1ac7d75051",
+  "258a5f3e-0630-4e63-87e9-8d1ac7d75051": {
     full_name: "Arthur Fitzwilliam Tait",
     first_name: "Arthur",
     middle_names: "Fitzwilliam",
@@ -549,8 +549,7 @@ const ARTISTS = [
     death: 1905,
     wikipedia_url: "https://en.wikipedia.org/wiki/Arthur_Fitzwilliam_Tait",
   },
-  {
-    artist_id: "77545833-f638-40c9-b031-0ae37839a8a2",
+  "77545833-f638-40c9-b031-0ae37839a8a2": {
     full_name: "Asher Brown Durand",
     first_name: "Asher",
     middle_names: "Brown",
@@ -561,8 +560,7 @@ const ARTISTS = [
     death: 1886,
     wikipedia_url: "https://en.wikipedia.org/wiki/Asher_Brown_Durand",
   },
-  {
-    artist_id: "8a99edb8-cb85-4bbb-967f-825a889763ca",
+  "8a99edb8-cb85-4bbb-967f-825a889763ca": {
     full_name: "August Macke",
     first_name: "August",
     middle_names: "",
@@ -573,8 +571,7 @@ const ARTISTS = [
     death: 1914,
     wikipedia_url: "https://en.wikipedia.org/wiki/August_Macke",
   },
-  {
-    artist_id: "da3d8d67-04d3-4c19-9187-7273dd73bd51",
+  "da3d8d67-04d3-4c19-9187-7273dd73bd51": {
     full_name: "Bartholomeus Van Der Helst",
     first_name: "Bartholomeus",
     middle_names: "",
@@ -585,8 +582,7 @@ const ARTISTS = [
     death: 1670,
     wikipedia_url: "https://en.wikipedia.org/wiki/Bartholomeus_van_der_Helst",
   },
-  {
-    artist_id: "93dc5997-feb1-4e86-a876-a80688148836",
+  "93dc5997-feb1-4e86-a876-a80688148836": {
     full_name: "Bartolomé Esteban Murillo",
     first_name: "Bartolome",
     middle_names: "Esteban",
@@ -597,8 +593,7 @@ const ARTISTS = [
     death: 1682,
     wikipedia_url: "https://en.wikipedia.org/wiki/Bartolomé_Esteban_Murillo",
   },
-  {
-    artist_id: "1a2512e0-1d38-42fc-9702-913571ef268d",
+  "1a2512e0-1d38-42fc-9702-913571ef268d": {
     full_name: "Benjamin Marshall",
     first_name: "Benjamin",
     middle_names: "",
@@ -609,8 +604,7 @@ const ARTISTS = [
     death: 1835,
     wikipedia_url: "https://en.wikipedia.org/wiki/Benjamin_Marshall",
   },
-  {
-    artist_id: "488d2630-2b60-41b7-ac10-f349dce6d900",
+  "488d2630-2b60-41b7-ac10-f349dce6d900": {
     full_name: "Benjamin West",
     first_name: "Benjamin",
     middle_names: "",
@@ -621,8 +615,7 @@ const ARTISTS = [
     death: 1820,
     wikipedia_url: "https://en.wikipedia.org/wiki/Benjamin_West",
   },
-  {
-    artist_id: "d6e6a740-6333-4e5f-80ab-9ca73fc50152",
+  "d6e6a740-6333-4e5f-80ab-9ca73fc50152": {
     full_name: "Benvenuto Garofalo",
     first_name: "Benvenuto",
     middle_names: "",
@@ -633,8 +626,7 @@ const ARTISTS = [
     death: 1559,
     wikipedia_url: "https://en.wikipedia.org/wiki/Benvenuto_Tisi",
   },
-  {
-    artist_id: "d2193596-f771-4871-8a70-75e0ca3d6733",
+  "d2193596-f771-4871-8a70-75e0ca3d6733": {
     full_name: "Berthe Morisot",
     first_name: "Berthe",
     middle_names: "",
@@ -645,8 +637,7 @@ const ARTISTS = [
     death: 1895,
     wikipedia_url: "https://en.wikipedia.org/wiki/Berthe_Morisot",
   },
-  {
-    artist_id: "3303b25e-18bd-43d0-be0a-3e7cbec81347",
+  "3303b25e-18bd-43d0-be0a-3e7cbec81347": {
     full_name: "Buonarroti Michelangelo",
     first_name: "Buonarroti",
     middle_names: "",
@@ -657,8 +648,7 @@ const ARTISTS = [
     death: 1564,
     wikipedia_url: "https://en.wikipedia.org/wiki/Michelangelo",
   },
-  {
-    artist_id: "b0f2a130-6ea6-4441-9bd3-24608f11e854",
+  "b0f2a130-6ea6-4441-9bd3-24608f11e854": {
     full_name: "Caesar Van Everdingen",
     first_name: "Caesar",
     middle_names: "Boetius",
@@ -669,8 +659,7 @@ const ARTISTS = [
     death: 1678,
     wikipedia_url: "https://en.wikipedia.org/wiki/Caesar_van_Everdingen",
   },
-  {
-    artist_id: "0b71355d-b1f9-4d2b-8312-352331d23769",
+  "0b71355d-b1f9-4d2b-8312-352331d23769": {
     full_name: "Camille Bombois",
     first_name: "Camille",
     middle_names: "",
@@ -681,8 +670,7 @@ const ARTISTS = [
     death: 1970,
     wikipedia_url: "https://en.wikipedia.org/wiki/Camille_Bombois",
   },
-  {
-    artist_id: "7db22866-5360-49e5-a5e7-970b7fa7cb00",
+  "7db22866-5360-49e5-a5e7-970b7fa7cb00": {
     full_name: "Camille Pissarro",
     first_name: "Camille",
     middle_names: "",
@@ -693,8 +681,7 @@ const ARTISTS = [
     death: 1903,
     wikipedia_url: "https://en.wikipedia.org/wiki/Camille_Pissarro",
   },
-  {
-    artist_id: "07fb9ab7-f01d-4966-854d-c19ec0905551",
+  "07fb9ab7-f01d-4966-854d-c19ec0905551": {
     full_name: "Canaletto",
     first_name: "Giovanni",
     middle_names: "Antionio",
@@ -705,8 +692,7 @@ const ARTISTS = [
     death: 1768,
     wikipedia_url: "https://en.wikipedia.org/wiki/Canaletto",
   },
-  {
-    artist_id: "5b388fe8-bcc8-49d6-82ce-b639a85ecbda",
+  "5b388fe8-bcc8-49d6-82ce-b639a85ecbda": {
     full_name: "Caravaggio",
     first_name: "Michelangelo",
     middle_names: "Merisi",
@@ -717,8 +703,7 @@ const ARTISTS = [
     death: 1610,
     wikipedia_url: "https://en.wikipedia.org/wiki/Caravaggio",
   },
-  {
-    artist_id: "a6435bac-c99a-4720-be88-be6ef09c459f",
+  "a6435bac-c99a-4720-be88-be6ef09c459f": {
     full_name: "Carel Fabritius",
     first_name: "Carel",
     middle_names: "",
@@ -729,8 +714,7 @@ const ARTISTS = [
     death: 1654,
     wikipedia_url: "https://en.wikipedia.org/wiki/Carel_Fabritius",
   },
-  {
-    artist_id: "51459b7a-5267-4631-825c-fd79130d86a6",
+  "51459b7a-5267-4631-825c-fd79130d86a6": {
     full_name: "Carl Larsson",
     first_name: "Carl",
     middle_names: "",
@@ -741,8 +725,7 @@ const ARTISTS = [
     death: 1919,
     wikipedia_url: "https://en.wikipedia.org/wiki/Carl_Larsson",
   },
-  {
-    artist_id: "cca14ab1-ce9f-4122-9367-0a848bf0bce3",
+  "cca14ab1-ce9f-4122-9367-0a848bf0bce3": {
     full_name: "Carlo Brancaccio",
     first_name: "Carlo",
     middle_names: "",
@@ -753,8 +736,7 @@ const ARTISTS = [
     death: 1920,
     wikipedia_url: "https://en.wikipedia.org/wiki/Carlo_Brancaccio",
   },
-  {
-    artist_id: "7fe81a8e-068a-4ffb-83d3-ec4a2019423d",
+  "7fe81a8e-068a-4ffb-83d3-ec4a2019423d": {
     full_name: "Carlo Carra",
     first_name: "Carlo",
     middle_names: "",
@@ -765,8 +747,7 @@ const ARTISTS = [
     death: 1966,
     wikipedia_url: "https://en.wikipedia.org/wiki/Carlo_Carrà",
   },
-  {
-    artist_id: "12d60b6d-aef8-4c4b-a9d3-793af6aa61c3",
+  "12d60b6d-aef8-4c4b-a9d3-793af6aa61c3": {
     full_name: "Caspar David Friedrich",
     first_name: "Caspar",
     middle_names: "David",
@@ -777,8 +758,7 @@ const ARTISTS = [
     death: 1840,
     wikipedia_url: "https://en.wikipedia.org/wiki/Caspar_David_Friedrich",
   },
-  {
-    artist_id: "17da0d3e-09f3-477b-a9cb-f6dfb2940245",
+  "17da0d3e-09f3-477b-a9cb-f6dfb2940245": {
     full_name: "Cecilia Beaux",
     first_name: "Cecilia",
     middle_names: "",
@@ -789,8 +769,7 @@ const ARTISTS = [
     death: 1942,
     wikipedia_url: "https://en.wikipedia.org/wiki/Cecilia_Beaux",
   },
-  {
-    artist_id: "46073cf8-a5a4-4f3a-8df1-6be020683d35",
+  "46073cf8-a5a4-4f3a-8df1-6be020683d35": {
     full_name: "Charles Brooking",
     first_name: "Charles",
     middle_names: "",
@@ -801,8 +780,7 @@ const ARTISTS = [
     death: 1759,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Brooking",
   },
-  {
-    artist_id: "13e08cde-e68f-4a7c-9d3e-5d9243b80856",
+  "13e08cde-e68f-4a7c-9d3e-5d9243b80856": {
     full_name: "Charles Caleb Ward",
     first_name: "Charles",
     middle_names: "Caleb",
@@ -813,8 +791,7 @@ const ARTISTS = [
     death: 1879,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Caleb_Ward",
   },
-  {
-    artist_id: "1de308f4-5e5b-4019-b0f7-0e7c330acec8",
+  "1de308f4-5e5b-4019-b0f7-0e7c330acec8": {
     full_name: "Charles Courtney Curran",
     first_name: "Charles",
     middle_names: "Courtney",
@@ -825,8 +802,7 @@ const ARTISTS = [
     death: 1942,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Courtney_Curran",
   },
-  {
-    artist_id: "d7450da0-2987-485e-8ed9-048411a8e0bb",
+  "d7450da0-2987-485e-8ed9-048411a8e0bb": {
     full_name: "Charles Cromwell Ingham",
     first_name: "Charles",
     middle_names: "Cromwell",
@@ -837,8 +813,7 @@ const ARTISTS = [
     death: 1863,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_C._Ingham",
   },
-  {
-    artist_id: "cdb78c39-fbe9-4e26-b253-30ed94fc1a4e",
+  "cdb78c39-fbe9-4e26-b253-30ed94fc1a4e": {
     full_name: "Charles Demuth",
     first_name: "Charles",
     middle_names: "",
@@ -849,8 +824,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Demuth",
   },
-  {
-    artist_id: "6a4a5180-a996-4886-9911-f7f6239d929f",
+  "6a4a5180-a996-4886-9911-f7f6239d929f": {
     full_name: "Charles Marion Russell",
     first_name: "Charles",
     middle_names: "Marion",
@@ -861,8 +835,7 @@ const ARTISTS = [
     death: 1926,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Marion_Russell",
   },
-  {
-    artist_id: "8a8fd9a0-c62c-4cf3-ba5e-0a6434c724b9",
+  "8a8fd9a0-c62c-4cf3-ba5e-0a6434c724b9": {
     full_name: "Charles Peale Polk",
     first_name: "Charles",
     middle_names: "Peale",
@@ -873,8 +846,7 @@ const ARTISTS = [
     death: 1822,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Peale_Polk",
   },
-  {
-    artist_id: "39e2253e-6e5b-4c77-b000-0baaff40220c",
+  "39e2253e-6e5b-4c77-b000-0baaff40220c": {
     full_name: "Charles Sprague Pearce",
     first_name: "Charles",
     middle_names: "Sprague",
@@ -885,8 +857,7 @@ const ARTISTS = [
     death: 1914,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Sprague_Pearce",
   },
-  {
-    artist_id: "061c058d-d609-4dfb-a5bf-30cbaca4223a",
+  "061c058d-d609-4dfb-a5bf-30cbaca4223a": {
     full_name: "Charles Towne",
     first_name: "Charles",
     middle_names: "",
@@ -897,8 +868,7 @@ const ARTISTS = [
     death: 1840,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Towne",
   },
-  {
-    artist_id: "1f4c8013-2f5e-4689-8ea6-1f6829e9a82f",
+  "1f4c8013-2f5e-4689-8ea6-1f6829e9a82f": {
     full_name: "Charles Willson Peale",
     first_name: "Charles",
     middle_names: "Willson",
@@ -909,8 +879,7 @@ const ARTISTS = [
     death: 1827,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles_Willson_Peale",
   },
-  {
-    artist_id: "0f8ea201-8523-4bce-a04f-c64d6acd8242",
+  "0f8ea201-8523-4bce-a04f-c64d6acd8242": {
     full_name: "Charles-Francois Daubigny",
     first_name: "Charles",
     middle_names: "Francois",
@@ -921,8 +890,7 @@ const ARTISTS = [
     death: 1878,
     wikipedia_url: "https://en.wikipedia.org/wiki/Charles-François_Daubigny",
   },
-  {
-    artist_id: "2cfb7306-b100-4d7c-a219-9bb7be1706a6",
+  "2cfb7306-b100-4d7c-a219-9bb7be1706a6": {
     full_name: "Chaïm Soutine",
     first_name: "Chaim",
     middle_names: "",
@@ -933,8 +901,7 @@ const ARTISTS = [
     death: 1943,
     wikipedia_url: "https://en.wikipedia.org/wiki/Chaïm_Soutine",
   },
-  {
-    artist_id: "4e961380-b197-44ff-aa39-ea7eba1199ea",
+  "4e961380-b197-44ff-aa39-ea7eba1199ea": {
     full_name: "Childe Hassam",
     first_name: "Childe",
     middle_names: "",
@@ -945,8 +912,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Childe_Hassam",
   },
-  {
-    artist_id: "e143c850-300a-4154-948a-1d4429a368b4",
+  "e143c850-300a-4154-948a-1d4429a368b4": {
     full_name: "Christian Rohlfs",
     first_name: "Christian",
     middle_names: "",
@@ -957,8 +923,7 @@ const ARTISTS = [
     death: 1938,
     wikipedia_url: "https://en.wikipedia.org/wiki/Christian_Rohlfs",
   },
-  {
-    artist_id: "9e120233-bc22-4144-a7b8-2243ebbf9014",
+  "9e120233-bc22-4144-a7b8-2243ebbf9014": {
     full_name: "Cima Da Conegliano",
     first_name: "Cima",
     middle_names: "",
@@ -969,8 +934,7 @@ const ARTISTS = [
     death: 1517,
     wikipedia_url: "https://en.wikipedia.org/wiki/Cima_da_Conegliano",
   },
-  {
-    artist_id: "32f31321-8a8c-4704-8a58-156f6a92c99a",
+  "32f31321-8a8c-4704-8a58-156f6a92c99a": {
     full_name: "Claude Lorrain",
     first_name: "Claude",
     middle_names: "",
@@ -981,8 +945,7 @@ const ARTISTS = [
     death: 1682,
     wikipedia_url: "https://en.wikipedia.org/wiki/Claude_Lorrain",
   },
-  {
-    artist_id: "88f72e6a-cb2f-405e-a5ab-180e24ce7522",
+  "88f72e6a-cb2f-405e-a5ab-180e24ce7522": {
     full_name: "Claude Monet",
     first_name: "Claude",
     middle_names: "",
@@ -993,8 +956,7 @@ const ARTISTS = [
     death: 1926,
     wikipedia_url: "https://en.wikipedia.org/wiki/Claude_Monet",
   },
-  {
-    artist_id: "c2b1c193-2c52-4c5a-b389-16ed951bf029",
+  "c2b1c193-2c52-4c5a-b389-16ed951bf029": {
     full_name: "Claude-Joseph Vernet",
     first_name: "Claude",
     middle_names: "Joseph",
@@ -1005,8 +967,7 @@ const ARTISTS = [
     death: 1789,
     wikipedia_url: "https://en.wikipedia.org/wiki/Claude-Joseph_Vernet",
   },
-  {
-    artist_id: "24aea284-ff93-4aa2-9fd3-3395920f9bf2",
+  "24aea284-ff93-4aa2-9fd3-3395920f9bf2": {
     full_name: "Constantin A. Westchiloff",
     first_name: "Constantin",
     middle_names: "A",
@@ -1017,8 +978,7 @@ const ARTISTS = [
     death: 1945,
     wikipedia_url: "https://en.wikipedia.org/wiki/Constantin_Westchiloff",
   },
-  {
-    artist_id: "153f082c-c9a0-4ed4-b907-ac56feb57d46",
+  "153f082c-c9a0-4ed4-b907-ac56feb57d46": {
     full_name: "Cornelis Springer",
     first_name: "Cornelis",
     middle_names: "",
@@ -1029,8 +989,7 @@ const ARTISTS = [
     death: 1891,
     wikipedia_url: "https://en.wikipedia.org/wiki/Cornelis_Springer",
   },
-  {
-    artist_id: "b3b47a4c-db8f-4a29-ba5a-ae47ab1d8a55",
+  "b3b47a4c-db8f-4a29-ba5a-ae47ab1d8a55": {
     full_name: "Cornelis Troost",
     first_name: "Cornelis",
     middle_names: "",
@@ -1041,8 +1000,7 @@ const ARTISTS = [
     death: 1750,
     wikipedia_url: "https://en.wikipedia.org/wiki/Cornelis_Troost",
   },
-  {
-    artist_id: "c76b69a7-bd6b-4128-98ef-4fad052c01ac",
+  "c76b69a7-bd6b-4128-98ef-4fad052c01ac": {
     full_name: "Cornelis Van Haarlem",
     first_name: "Cornelis",
     middle_names: "",
@@ -1053,8 +1011,7 @@ const ARTISTS = [
     death: 1638,
     wikipedia_url: "https://en.wikipedia.org/wiki/Cornelis_van_Haarlem",
   },
-  {
-    artist_id: "93aa4947-eb60-43a2-bdf3-b56f296ba3e7",
+  "93aa4947-eb60-43a2-bdf3-b56f296ba3e7": {
     full_name: "Daniel Ridgway Knight",
     first_name: "Daniel",
     middle_names: "Ridgway",
@@ -1065,8 +1022,7 @@ const ARTISTS = [
     death: 1924,
     wikipedia_url: "https://en.wikipedia.org/wiki/Daniel_Ridgway_Knight",
   },
-  {
-    artist_id: "4d31454b-dbc3-4c05-8468-39a5def97875",
+  "4d31454b-dbc3-4c05-8468-39a5def97875": {
     full_name: "David Teniers",
     first_name: "David",
     middle_names: "",
@@ -1077,8 +1033,7 @@ const ARTISTS = [
     death: 1690,
     wikipedia_url: "https://en.wikipedia.org/wiki/David_Teniers_the_Younger",
   },
-  {
-    artist_id: "90413d54-68a5-41c3-b3f2-7fa552dfe1cd",
+  "90413d54-68a5-41c3-b3f2-7fa552dfe1cd": {
     full_name: "Diego Velázquez",
     first_name: "Diego",
     middle_names: "",
@@ -1089,8 +1044,7 @@ const ARTISTS = [
     death: 1660,
     wikipedia_url: "https://en.wikipedia.org/wiki/Diego_Velázquez",
   },
-  {
-    artist_id: "dfefb208-84d2-4fc7-95fc-19d6eecc861c",
+  "dfefb208-84d2-4fc7-95fc-19d6eecc861c": {
     full_name: "Dominic Serres",
     first_name: "Dominic",
     middle_names: "",
@@ -1101,8 +1055,7 @@ const ARTISTS = [
     death: 1793,
     wikipedia_url: "https://en.wikipedia.org/wiki/Dominic_Serres",
   },
-  {
-    artist_id: "e15be2d5-5c6f-428c-97ef-4ddb4f9d1908",
+  "e15be2d5-5c6f-428c-97ef-4ddb4f9d1908": {
     full_name: "Edgar Degas",
     first_name: "Edgar",
     middle_names: "",
@@ -1113,8 +1066,7 @@ const ARTISTS = [
     death: 1917,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edgar_Degas",
   },
-  {
-    artist_id: "06661e66-d5d3-4897-b862-2a7576c6ef1b",
+  "06661e66-d5d3-4897-b862-2a7576c6ef1b": {
     full_name: "Edgar William",
     first_name: "Edgar",
     middle_names: "",
@@ -1125,8 +1077,7 @@ const ARTISTS = [
     death: 1918,
     wikipedia_url: "https://en.wikipedia.org/wiki/List_of_Watchmen_characters",
   },
-  {
-    artist_id: "d9c815fd-060c-48f3-aaa9-23bb887f81a4",
+  "d9c815fd-060c-48f3-aaa9-23bb887f81a4": {
     full_name: "Edmond Aman-Jean",
     first_name: "Edmond",
     middle_names: "Francois Aman",
@@ -1137,8 +1088,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edmond_Aman-Jean",
   },
-  {
-    artist_id: "6aa5e29f-ec3c-4434-9eef-27892755350c",
+  "6aa5e29f-ec3c-4434-9eef-27892755350c": {
     full_name: "Edmund Charles Tarbell",
     first_name: "Edmund",
     middle_names: "Charles",
@@ -1149,8 +1099,7 @@ const ARTISTS = [
     death: 1938,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edmund_C._Tarbell",
   },
-  {
-    artist_id: "2b671bd6-93fc-4edd-9491-d1613906c431",
+  "2b671bd6-93fc-4edd-9491-d1613906c431": {
     full_name: "Eduard Von Grützner",
     first_name: "Eduard",
     middle_names: "",
@@ -1161,8 +1110,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/Eduard_von_Grützner",
   },
-  {
-    artist_id: "60f3eb21-176a-459c-bfa0-599f71dab4be",
+  "60f3eb21-176a-459c-bfa0-599f71dab4be": {
     full_name: "Edvard Munch",
     first_name: "Edvard",
     middle_names: "",
@@ -1173,8 +1121,7 @@ const ARTISTS = [
     death: 1944,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edvard_Munch",
   },
-  {
-    artist_id: "2a745e34-358b-4faf-b019-7f72c3bba9fe",
+  "2a745e34-358b-4faf-b019-7f72c3bba9fe": {
     full_name: "Edward Burne-Jones",
     first_name: "Edward",
     middle_names: "Burne",
@@ -1185,8 +1132,7 @@ const ARTISTS = [
     death: 1898,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edward_Burne-Jones",
   },
-  {
-    artist_id: "20c2f1aa-26a3-44e3-a083-9a946a9d895a",
+  "20c2f1aa-26a3-44e3-a083-9a946a9d895a": {
     full_name: "Edward Henry Potthast",
     first_name: "Edward",
     middle_names: "",
@@ -1197,8 +1143,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edward_Henry_Potthast",
   },
-  {
-    artist_id: "f317b355-d9cc-4ec7-95e3-f149ff15e1d8",
+  "f317b355-d9cc-4ec7-95e3-f149ff15e1d8": {
     full_name: "Edward Hicks",
     first_name: "Edward",
     middle_names: "",
@@ -1209,8 +1154,7 @@ const ARTISTS = [
     death: 1849,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edward_Hicks",
   },
-  {
-    artist_id: "99235928-6f87-4294-9275-535e3aaf79bb",
+  "99235928-6f87-4294-9275-535e3aaf79bb": {
     full_name: "Edward William Cooke",
     first_name: "Edward",
     middle_names: "William",
@@ -1221,8 +1165,7 @@ const ARTISTS = [
     death: 1880,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edward_William_Cooke",
   },
-  {
-    artist_id: "7e9e141e-30e9-4f30-9201-bb4d1fb2e94e",
+  "7e9e141e-30e9-4f30-9201-bb4d1fb2e94e": {
     full_name: "Edwin Lord Weeks",
     first_name: "Edwin",
     middle_names: "Lord",
@@ -1233,8 +1176,7 @@ const ARTISTS = [
     death: 1903,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edwin_Lord_Weeks",
   },
-  {
-    artist_id: "1ff09a3e-6046-4520-b9ab-e7f16eb23c18",
+  "1ff09a3e-6046-4520-b9ab-e7f16eb23c18": {
     full_name: "Egon Schiele",
     first_name: "Egon",
     middle_names: "",
@@ -1245,8 +1187,7 @@ const ARTISTS = [
     death: 1918,
     wikipedia_url: "https://en.wikipedia.org/wiki/Egon_Schiele",
   },
-  {
-    artist_id: "a9c9e6f5-75e1-4b83-b117-e4c150decb06",
+  "a9c9e6f5-75e1-4b83-b117-e4c150decb06": {
     full_name: "El Greco",
     first_name: "Dom?nikos",
     middle_names: "",
@@ -1257,8 +1198,7 @@ const ARTISTS = [
     death: 1614,
     wikipedia_url: "https://en.wikipedia.org/wiki/El_Greco",
   },
-  {
-    artist_id: "8cda06a4-a403-4405-a524-b0195a3c7d97",
+  "8cda06a4-a403-4405-a524-b0195a3c7d97": {
     full_name: "Enoch Wood Perry",
     first_name: "Enoch",
     middle_names: "Wood",
@@ -1269,8 +1209,7 @@ const ARTISTS = [
     death: 1915,
     wikipedia_url: "https://en.wikipedia.org/wiki/Enoch_Wood_Perry_Jr.",
   },
-  {
-    artist_id: "a6854f12-5fa0-40ca-8e19-4c86d277cdbf",
+  "a6854f12-5fa0-40ca-8e19-4c86d277cdbf": {
     full_name: "Ernest Lawson",
     first_name: "Ernest",
     middle_names: "",
@@ -1281,8 +1220,7 @@ const ARTISTS = [
     death: 1939,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ernest_Lawson",
   },
-  {
-    artist_id: "e064cce9-a87c-4bd5-986a-def9bc4a4aba",
+  "e064cce9-a87c-4bd5-986a-def9bc4a4aba": {
     full_name: "Ernst Ludwig Kirchner",
     first_name: "Ernst",
     middle_names: "Ludwig",
@@ -1293,8 +1231,7 @@ const ARTISTS = [
     death: 1938,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ernst_Ludwig_Kirchner",
   },
-  {
-    artist_id: "64f9382a-2455-4bdd-afee-40d2321cafa9",
+  "64f9382a-2455-4bdd-afee-40d2321cafa9": {
     full_name: "Eugene De Blaas",
     first_name: "Eugene",
     middle_names: "",
@@ -1305,8 +1242,7 @@ const ARTISTS = [
     death: 1931,
     wikipedia_url: "https://en.wikipedia.org/wiki/Eugene_de_Blaas",
   },
-  {
-    artist_id: "9d45aca6-79ee-416a-806b-52f5d0ce7c9d",
+  "9d45aca6-79ee-416a-806b-52f5d0ce7c9d": {
     full_name: "Eugène Delacroix",
     first_name: "Eugene",
     middle_names: "",
@@ -1317,8 +1253,7 @@ const ARTISTS = [
     death: 1863,
     wikipedia_url: "https://en.wikipedia.org/wiki/Eugène_Delacroix",
   },
-  {
-    artist_id: "8d006b6f-8d7b-4ecc-969d-6fa0675f7633",
+  "8d006b6f-8d7b-4ecc-969d-6fa0675f7633": {
     full_name: "Eugène Girardet",
     first_name: "Eugene",
     middle_names: "",
@@ -1329,8 +1264,7 @@ const ARTISTS = [
     death: 1907,
     wikipedia_url: "https://en.wikipedia.org/wiki/Eugène_Girardet",
   },
-  {
-    artist_id: "3baefe63-13bc-4ebb-95f0-bffcc56fd73f",
+  "3baefe63-13bc-4ebb-95f0-bffcc56fd73f": {
     full_name: "Eugène-Louis Boudin",
     first_name: "Eugene",
     middle_names: "Louis",
@@ -1341,8 +1275,7 @@ const ARTISTS = [
     death: 1898,
     wikipedia_url: "https://en.wikipedia.org/wiki/Eugène_Boudin",
   },
-  {
-    artist_id: "18abe067-eb07-4d1c-89f0-bbc30c7b5364",
+  "18abe067-eb07-4d1c-89f0-bbc30c7b5364": {
     full_name: "Federico Zandomeneghi",
     first_name: "Federico",
     middle_names: "",
@@ -1353,8 +1286,7 @@ const ARTISTS = [
     death: 1917,
     wikipedia_url: "https://en.wikipedia.org/wiki/Federico_Zandomeneghi",
   },
-  {
-    artist_id: "69d751dc-4ab7-4965-8df7-f27854c80986",
+  "69d751dc-4ab7-4965-8df7-f27854c80986": {
     full_name: "Ferdinand Bol",
     first_name: "Ferdinand",
     middle_names: "",
@@ -1365,8 +1297,7 @@ const ARTISTS = [
     death: 1680,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ferdinand_Bol",
   },
-  {
-    artist_id: "74512728-505d-4943-9f3a-ed10db71c205",
+  "74512728-505d-4943-9f3a-ed10db71c205": {
     full_name: "Ferdinand Hodler",
     first_name: "Ferdinand",
     middle_names: "",
@@ -1377,8 +1308,7 @@ const ARTISTS = [
     death: 1918,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ferdinand_Hodler",
   },
-  {
-    artist_id: "0cfa2c3b-c365-47f5-8ef6-d01b54c0c2e3",
+  "0cfa2c3b-c365-47f5-8ef6-d01b54c0c2e3": {
     full_name: "Fernand Cormon",
     first_name: "Fernand",
     middle_names: "",
@@ -1389,8 +1319,7 @@ const ARTISTS = [
     death: 1924,
     wikipedia_url: "https://en.wikipedia.org/wiki/Fernand_Cormon",
   },
-  {
-    artist_id: "b04f452f-302e-405a-b160-300224f48232",
+  "b04f452f-302e-405a-b160-300224f48232": {
     full_name: "Fernand Léger",
     first_name: "Fernand",
     middle_names: "",
@@ -1401,8 +1330,7 @@ const ARTISTS = [
     death: 1955,
     wikipedia_url: "https://en.wikipedia.org/wiki/Fernand_Léger",
   },
-  {
-    artist_id: "39c23205-9b2e-47cd-bc93-d75153eb55b5",
+  "39c23205-9b2e-47cd-bc93-d75153eb55b5": {
     full_name: "Fitz Hugh Lane",
     first_name: "Fitz",
     middle_names: "Hugh",
@@ -1413,8 +1341,7 @@ const ARTISTS = [
     death: 1865,
     wikipedia_url: "https://en.wikipedia.org/wiki/Fitz_Henry_Lane",
   },
-  {
-    artist_id: "4c33a779-ac0c-49b4-9913-12c6e3d6a1f8",
+  "4c33a779-ac0c-49b4-9913-12c6e3d6a1f8": {
     full_name: "Francesco Guardi",
     first_name: "Francesco",
     middle_names: "",
@@ -1425,8 +1352,7 @@ const ARTISTS = [
     death: 1793,
     wikipedia_url: "https://en.wikipedia.org/wiki/Francesco_Guardi",
   },
-  {
-    artist_id: "cafc6f79-1dbb-42e9-8a85-3b113cf2d679",
+  "cafc6f79-1dbb-42e9-8a85-3b113cf2d679": {
     full_name: "Francis Augustus Silva",
     first_name: "Francis",
     middle_names: "Augustus",
@@ -1437,8 +1363,7 @@ const ARTISTS = [
     death: 1886,
     wikipedia_url: "https://en.wikipedia.org/wiki/Francis_Augustus_Silva",
   },
-  {
-    artist_id: "cbaacbd2-b209-489f-bc8c-8cff080b3eb5",
+  "cbaacbd2-b209-489f-bc8c-8cff080b3eb5": {
     full_name: "Francis Luis Mora",
     first_name: "Francis",
     middle_names: "Luis",
@@ -1449,8 +1374,7 @@ const ARTISTS = [
     death: 1940,
     wikipedia_url: "https://en.wikipedia.org/wiki/F._Luis_Mora",
   },
-  {
-    artist_id: "fe7a4cf6-033a-46c8-8fcb-362b0e56eea6",
+  "fe7a4cf6-033a-46c8-8fcb-362b0e56eea6": {
     full_name: "Francis Picabia",
     first_name: "Francis",
     middle_names: "",
@@ -1461,8 +1385,7 @@ const ARTISTS = [
     death: 1953,
     wikipedia_url: "https://en.wikipedia.org/wiki/Francis_Picabia",
   },
-  {
-    artist_id: "e12d3890-a31a-440b-bb6a-2c695ef3f20e",
+  "e12d3890-a31a-440b-bb6a-2c695ef3f20e": {
     full_name: "Francis William Edmonds",
     first_name: "Francis",
     middle_names: "William",
@@ -1473,8 +1396,7 @@ const ARTISTS = [
     death: 1863,
     wikipedia_url: "https://en.wikipedia.org/wiki/Francis_William_Edmonds",
   },
-  {
-    artist_id: "49249a90-4e82-4925-ad85-8979a53d5fd8",
+  "49249a90-4e82-4925-ad85-8979a53d5fd8": {
     full_name: "Francisco De Goya",
     first_name: "Francisco",
     middle_names: "",
@@ -1485,8 +1407,7 @@ const ARTISTS = [
     death: 1828,
     wikipedia_url: "https://en.wikipedia.org/wiki/Francisco_Goya",
   },
-  {
-    artist_id: "b2a70ea0-861b-4de1-b0e7-c704d9d42608",
+  "b2a70ea0-861b-4de1-b0e7-c704d9d42608": {
     full_name: "Francisco De Zurbarán",
     first_name: "Francisco",
     middle_names: "",
@@ -1497,8 +1418,7 @@ const ARTISTS = [
     death: 1664,
     wikipedia_url: "https://en.wikipedia.org/wiki/Francisco_de_Zurbarán",
   },
-  {
-    artist_id: "9c14c766-ee7c-4151-99f7-ef752f71dfc3",
+  "9c14c766-ee7c-4151-99f7-ef752f71dfc3": {
     full_name: "Francois Boucher",
     first_name: "Francois",
     middle_names: "",
@@ -1509,8 +1429,7 @@ const ARTISTS = [
     death: 1770,
     wikipedia_url: "https://en.wikipedia.org/wiki/François_Boucher",
   },
-  {
-    artist_id: "cdacd2a6-0820-42cc-8879-9fcc086ff6a6",
+  "cdacd2a6-0820-42cc-8879-9fcc086ff6a6": {
     full_name: "Francois Gérard",
     first_name: "Francois",
     middle_names: "",
@@ -1521,8 +1440,7 @@ const ARTISTS = [
     death: 1837,
     wikipedia_url: "https://en.wikipedia.org/wiki/François_Gérard",
   },
-  {
-    artist_id: "0618bd55-7228-4e03-b9c5-3051aa3cab32",
+  "0618bd55-7228-4e03-b9c5-3051aa3cab32": {
     full_name: "Francois-Hubert Drouais",
     first_name: "Francois",
     middle_names: "Hubert",
@@ -1533,8 +1451,7 @@ const ARTISTS = [
     death: 1775,
     wikipedia_url: "https://en.wikipedia.org/wiki/François-Hubert_Drouais",
   },
-  {
-    artist_id: "b30314f8-fe31-4dbc-af0c-0f2f5fb8e82f",
+  "b30314f8-fe31-4dbc-af0c-0f2f5fb8e82f": {
     full_name: "Frank Duveneck",
     first_name: "Frank",
     middle_names: "",
@@ -1545,8 +1462,7 @@ const ARTISTS = [
     death: 1919,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frank_Duveneck",
   },
-  {
-    artist_id: "a143d873-4784-4ebf-a548-d026c27380a5",
+  "a143d873-4784-4ebf-a548-d026c27380a5": {
     full_name: "Frank Weston Benson",
     first_name: "Benson",
     middle_names: "Frank",
@@ -1557,8 +1473,7 @@ const ARTISTS = [
     death: 1951,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frank_Weston_Benson",
   },
-  {
-    artist_id: "7b0f1033-9d62-4906-8982-9f2fde75f9ec",
+  "7b0f1033-9d62-4906-8982-9f2fde75f9ec": {
     full_name: "Frans Francken",
     first_name: "Frans",
     middle_names: "",
@@ -1569,8 +1484,7 @@ const ARTISTS = [
     death: 1642,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frans_Francken_the_Younger",
   },
-  {
-    artist_id: "4413cf4a-e21c-405c-9bf8-15bce63ea20a",
+  "4413cf4a-e21c-405c-9bf8-15bce63ea20a": {
     full_name: "Frans Hals",
     first_name: "Frans",
     middle_names: "",
@@ -1581,8 +1495,7 @@ const ARTISTS = [
     death: 1666,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frans_Hals",
   },
-  {
-    artist_id: "d4726cef-bad8-459f-a155-a02209bbc42b",
+  "d4726cef-bad8-459f-a155-a02209bbc42b": {
     full_name: "Frans Jansz Post",
     first_name: "Frans",
     middle_names: "Jansz",
@@ -1593,8 +1506,7 @@ const ARTISTS = [
     death: 1680,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frans_Post",
   },
-  {
-    artist_id: "8f0e4dc3-a9a5-4fc4-afc7-174ec0cf1e10",
+  "8f0e4dc3-a9a5-4fc4-afc7-174ec0cf1e10": {
     full_name: "Franz Marc",
     first_name: "Franz",
     middle_names: "",
@@ -1605,8 +1517,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/Franz_Marc",
   },
-  {
-    artist_id: "d242e927-ccc9-4a70-9da8-862fb8de69fe",
+  "d242e927-ccc9-4a70-9da8-862fb8de69fe": {
     full_name: "Franz Xavier Winterhalter",
     first_name: "Franz",
     middle_names: "Xavier",
@@ -1617,8 +1528,7 @@ const ARTISTS = [
     death: 1873,
     wikipedia_url: "https://en.wikipedia.org/wiki/Franz_Xaver_Winterhalter",
   },
-  {
-    artist_id: "04df9326-6278-4168-9462-f0e881debe70",
+  "04df9326-6278-4168-9462-f0e881debe70": {
     full_name: "Frederic Edwin Church",
     first_name: "Frederic",
     middle_names: "Edwin",
@@ -1629,8 +1539,7 @@ const ARTISTS = [
     death: 1900,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frederic_Edwin_Church",
   },
-  {
-    artist_id: "efd986b1-ebea-4e18-8da4-b4b079d396cb",
+  "efd986b1-ebea-4e18-8da4-b4b079d396cb": {
     full_name: "Frederic Remington",
     first_name: "Frederic",
     middle_names: "",
@@ -1641,8 +1550,7 @@ const ARTISTS = [
     death: 1909,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frederic_Remington",
   },
-  {
-    artist_id: "fb0bc351-8d98-4bd5-a362-e2c9ea0cfbd0",
+  "fb0bc351-8d98-4bd5-a362-e2c9ea0cfbd0": {
     full_name: "Frederick Carl Frieseke",
     first_name: "Frederick",
     middle_names: "Carl",
@@ -1653,8 +1561,7 @@ const ARTISTS = [
     death: 1939,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frederick_Carl_Frieseke",
   },
-  {
-    artist_id: "77c41664-fe7a-4aa7-8b12-591d7370c9b8",
+  "77c41664-fe7a-4aa7-8b12-591d7370c9b8": {
     full_name: "Friedrich Von Amerling",
     first_name: "Friedrich",
     middle_names: "",
@@ -1665,8 +1572,7 @@ const ARTISTS = [
     death: 1887,
     wikipedia_url: "https://en.wikipedia.org/wiki/Friedrich_von_Amerling",
   },
-  {
-    artist_id: "7bc99249-16d4-4ce0-848b-be1c06be6dcd",
+  "7bc99249-16d4-4ce0-848b-be1c06be6dcd": {
     full_name: "Félix Vallotton",
     first_name: "Felix",
     middle_names: "",
@@ -1677,8 +1583,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/Félix_Vallotton",
   },
-  {
-    artist_id: "75620412-dd03-4a48-984d-5b720ffa14ae",
+  "75620412-dd03-4a48-984d-5b720ffa14ae": {
     full_name: "Gabriele Münter",
     first_name: "Gabriele",
     middle_names: "",
@@ -1689,8 +1594,7 @@ const ARTISTS = [
     death: 1962,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gabriele_Münter",
   },
-  {
-    artist_id: "21c70315-fe66-48b6-b0a7-3aa602295059",
+  "21c70315-fe66-48b6-b0a7-3aa602295059": {
     full_name: "Gabrie¨l Metsu",
     first_name: "Gabriel",
     middle_names: "",
@@ -1701,8 +1605,7 @@ const ARTISTS = [
     death: 1667,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gabri%C3%ABl_Metsu",
   },
-  {
-    artist_id: "287b8043-7d5a-4924-be7d-e52b47006e77",
+  "287b8043-7d5a-4924-be7d-e52b47006e77": {
     full_name: "Gaston Bussière",
     first_name: "Gaston",
     middle_names: "",
@@ -1713,8 +1616,7 @@ const ARTISTS = [
     death: 1928,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gaston_Bussière",
   },
-  {
-    artist_id: "32542957-5dae-4646-850a-f5521b2ef678",
+  "32542957-5dae-4646-850a-f5521b2ef678": {
     full_name: "Gaston La Touche",
     first_name: "Gaston",
     middle_names: "",
@@ -1725,8 +1627,7 @@ const ARTISTS = [
     death: 1913,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gaston_La_Touche",
   },
-  {
-    artist_id: "b383227c-b1f7-45f5-9a1e-65165d990bdc",
+  "b383227c-b1f7-45f5-9a1e-65165d990bdc": {
     full_name: "Geertgen tot Sint Jans",
     first_name: "Geertgen",
     middle_names: "Tot",
@@ -1737,8 +1638,7 @@ const ARTISTS = [
     death: 1495,
     wikipedia_url: "https://en.wikipedia.org/wiki/Geertgen_tot_Sint_Jans",
   },
-  {
-    artist_id: "84d20c46-9d6e-477f-aeef-0a0e333d4e75",
+  "84d20c46-9d6e-477f-aeef-0a0e333d4e75": {
     full_name: "George Caleb Bingham",
     first_name: "George",
     middle_names: "Caleb",
@@ -1749,8 +1649,7 @@ const ARTISTS = [
     death: 1879,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Caleb_Bingham",
   },
-  {
-    artist_id: "e98251ad-8d53-4566-be9e-bb16dd5be4e1",
+  "e98251ad-8d53-4566-be9e-bb16dd5be4e1": {
     full_name: "George Catlin",
     first_name: "George",
     middle_names: "",
@@ -1761,8 +1660,7 @@ const ARTISTS = [
     death: 1872,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Catlin",
   },
-  {
-    artist_id: "781783ae-4fe0-4345-8e26-50a550b2879f",
+  "781783ae-4fe0-4345-8e26-50a550b2879f": {
     full_name: "George Frederic Watts",
     first_name: "George",
     middle_names: "Frederic",
@@ -1773,8 +1671,7 @@ const ARTISTS = [
     death: 1904,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Frederic_Watts",
   },
-  {
-    artist_id: "6b88640d-212b-427c-8a3f-eaeb8e07c574",
+  "6b88640d-212b-427c-8a3f-eaeb8e07c574": {
     full_name: "George Gardner Symons",
     first_name: "George",
     middle_names: "Gardner",
@@ -1785,8 +1682,7 @@ const ARTISTS = [
     death: 1930,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Gardner_Symons",
   },
-  {
-    artist_id: "7049a663-9a3c-4eeb-9d3f-d567b045613c",
+  "7049a663-9a3c-4eeb-9d3f-d567b045613c": {
     full_name: "George Garrard",
     first_name: "George",
     middle_names: "",
@@ -1797,8 +1693,7 @@ const ARTISTS = [
     death: 1826,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Garrard",
   },
-  {
-    artist_id: "b3303d9e-07ab-4dba-8e0a-5dca92d518bd",
+  "b3303d9e-07ab-4dba-8e0a-5dca92d518bd": {
     full_name: "George Henry Laporte",
     first_name: "George",
     middle_names: "Henry",
@@ -1809,8 +1704,7 @@ const ARTISTS = [
     death: 1873,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Henry_Laporte",
   },
-  {
-    artist_id: "c87f2883-91f1-4e3b-b378-967c3e410339",
+  "c87f2883-91f1-4e3b-b378-967c3e410339": {
     full_name: "George Inness",
     first_name: "George",
     middle_names: "",
@@ -1821,8 +1715,7 @@ const ARTISTS = [
     death: 1894,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Inness",
   },
-  {
-    artist_id: "de0cfa01-3b3b-46ec-86c1-887acde18e37",
+  "de0cfa01-3b3b-46ec-86c1-887acde18e37": {
     full_name: "George P. A. Healy",
     first_name: "George",
     middle_names: "P A",
@@ -1833,8 +1726,7 @@ const ARTISTS = [
     death: 1894,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Peter_Alexander_Healy",
   },
-  {
-    artist_id: "078f124b-4f46-4a07-8018-0adc99dabe67",
+  "078f124b-4f46-4a07-8018-0adc99dabe67": {
     full_name: "George Romney",
     first_name: "George",
     middle_names: "",
@@ -1845,8 +1737,7 @@ const ARTISTS = [
     death: 1802,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_W._Romney",
   },
-  {
-    artist_id: "2e44b66c-2e4f-41c7-bc53-45b5e07791b7",
+  "2e44b66c-2e4f-41c7-bc53-45b5e07791b7": {
     full_name: "George Stubbs",
     first_name: "George",
     middle_names: "",
@@ -1857,8 +1748,7 @@ const ARTISTS = [
     death: 1806,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Stubbs",
   },
-  {
-    artist_id: "5a98c2e9-2b3b-40f3-b2e2-4d0608838085",
+  "5a98c2e9-2b3b-40f3-b2e2-4d0608838085": {
     full_name: "George Wesley Bellows",
     first_name: "George",
     middle_names: "Wesley",
@@ -1869,8 +1759,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Bellows",
   },
-  {
-    artist_id: "b941a610-5599-4949-ba56-a06cf5a486b2",
+  "b941a610-5599-4949-ba56-a06cf5a486b2": {
     full_name: "Georges Braque",
     first_name: "Georges",
     middle_names: "",
@@ -1881,8 +1770,7 @@ const ARTISTS = [
     death: 1963,
     wikipedia_url: "https://en.wikipedia.org/wiki/Georges_Braque",
   },
-  {
-    artist_id: "2300db1c-a373-4a15-8091-ab6e0df159ed",
+  "2300db1c-a373-4a15-8091-ab6e0df159ed": {
     full_name: "Georges D'Espagnat",
     first_name: "Georges",
     middle_names: "",
@@ -1893,8 +1781,7 @@ const ARTISTS = [
     death: 1950,
     wikipedia_url: "https://en.wikipedia.org/wiki/Bernard_d'Espagnat",
   },
-  {
-    artist_id: "7b6cb445-d38c-45da-ad0a-c5d1a2bbfc11",
+  "7b6cb445-d38c-45da-ad0a-c5d1a2bbfc11": {
     full_name: "Georges De La Tour",
     first_name: "Georges",
     middle_names: "",
@@ -1905,8 +1792,7 @@ const ARTISTS = [
     death: 1652,
     wikipedia_url: "https://en.wikipedia.org/wiki/Georges_de_La_Tour",
   },
-  {
-    artist_id: "1fda0b93-98c7-46ee-aff9-941d76a72fc7",
+  "1fda0b93-98c7-46ee-aff9-941d76a72fc7": {
     full_name: "Georges Lemmen",
     first_name: "Georges",
     middle_names: "",
@@ -1917,8 +1803,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/Georges_Lemmen",
   },
-  {
-    artist_id: "ff3344cd-356d-41ce-8830-9b588541358b",
+  "ff3344cd-356d-41ce-8830-9b588541358b": {
     full_name: "Georges Rouault",
     first_name: "Georges",
     middle_names: "",
@@ -1929,8 +1814,7 @@ const ARTISTS = [
     death: 1958,
     wikipedia_url: "https://en.wikipedia.org/wiki/Georges_Rouault",
   },
-  {
-    artist_id: "4a9e1220-5117-4492-82eb-5a8ad02ac456",
+  "4a9e1220-5117-4492-82eb-5a8ad02ac456": {
     full_name: "Georges Seurat",
     first_name: "Georges",
     middle_names: "",
@@ -1941,8 +1825,7 @@ const ARTISTS = [
     death: 1891,
     wikipedia_url: "https://en.wikipedia.org/wiki/Georges_Seurat",
   },
-  {
-    artist_id: "127f4653-bff2-46f3-8340-72f79bac2d07",
+  "127f4653-bff2-46f3-8340-72f79bac2d07": {
     full_name: "Gerard Ter Borch",
     first_name: "Gerard",
     middle_names: "",
@@ -1953,8 +1836,7 @@ const ARTISTS = [
     death: 1681,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gerard_ter_Borch",
   },
-  {
-    artist_id: "c5e83c0b-78f2-4a6c-a13d-9eda6df0dd8f",
+  "c5e83c0b-78f2-4a6c-a13d-9eda6df0dd8f": {
     full_name: "Gerard Van Honthorst",
     first_name: "Gerard",
     middle_names: "Van",
@@ -1965,8 +1847,7 @@ const ARTISTS = [
     death: 1656,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gerard_van_Honthorst",
   },
-  {
-    artist_id: "9c35ae2f-2c35-4bc1-b0b0-16ff8260703e",
+  "9c35ae2f-2c35-4bc1-b0b0-16ff8260703e": {
     full_name: "Gerrit Berckheyde",
     first_name: "Gerrit",
     middle_names: "",
@@ -1977,8 +1858,7 @@ const ARTISTS = [
     death: 1698,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gerrit_Berckheyde",
   },
-  {
-    artist_id: "a3f061b1-5797-4603-9cad-b4e70b029fe1",
+  "a3f061b1-5797-4603-9cad-b4e70b029fe1": {
     full_name: "Gerrit Dou",
     first_name: "Gerrit",
     middle_names: "",
@@ -1989,8 +1869,7 @@ const ARTISTS = [
     death: 1675,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gerrit_Dou",
   },
-  {
-    artist_id: "37a093dd-1e57-4021-afc7-68377850bc9d",
+  "37a093dd-1e57-4021-afc7-68377850bc9d": {
     full_name: "Giacomo Balla",
     first_name: "Giacomo",
     middle_names: "",
@@ -2001,8 +1880,7 @@ const ARTISTS = [
     death: 1958,
     wikipedia_url: "https://en.wikipedia.org/wiki/Giacomo_Balla",
   },
-  {
-    artist_id: "5a47e003-0ab2-4d06-b1cf-d8e280cf6556",
+  "5a47e003-0ab2-4d06-b1cf-d8e280cf6556": {
     full_name: "Gilbert Stuart",
     first_name: "Gilbert",
     middle_names: "",
@@ -2013,8 +1891,7 @@ const ARTISTS = [
     death: 1828,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gilbert_Stuart",
   },
-  {
-    artist_id: "f700158d-96cb-4221-9bf9-d4967d1d290f",
+  "f700158d-96cb-4221-9bf9-d4967d1d290f": {
     full_name: "Giorgio Morandi",
     first_name: "Giorgio",
     middle_names: "",
@@ -2025,8 +1902,7 @@ const ARTISTS = [
     death: 1964,
     wikipedia_url: "https://en.wikipedia.org/wiki/Giorgio_Morandi",
   },
-  {
-    artist_id: "25d1e94b-9b23-42c3-ae6d-d03bf0fd2b47",
+  "25d1e94b-9b23-42c3-ae6d-d03bf0fd2b47": {
     full_name: "Giovanni Battista Tiepolo",
     first_name: "Giovanni",
     middle_names: "Battista",
@@ -2037,8 +1913,7 @@ const ARTISTS = [
     death: 1770,
     wikipedia_url: "https://en.wikipedia.org/wiki/Giovanni_Battista_Tiepolo",
   },
-  {
-    artist_id: "ef6d4fbe-23f4-4bd9-b373-382734c1dbf3",
+  "ef6d4fbe-23f4-4bd9-b373-382734c1dbf3": {
     full_name: "Giovanni Boldini",
     first_name: "Giovanni",
     middle_names: "",
@@ -2049,8 +1924,7 @@ const ARTISTS = [
     death: 1931,
     wikipedia_url: "https://en.wikipedia.org/wiki/Giovanni_Boldini",
   },
-  {
-    artist_id: "f4497f81-cada-4bec-a568-9ffda7cbf1cb",
+  "f4497f81-cada-4bec-a568-9ffda7cbf1cb": {
     full_name: "Giuseppe Arcimboldo",
     first_name: "Giuseppe",
     middle_names: "",
@@ -2061,8 +1935,7 @@ const ARTISTS = [
     death: 1593,
     wikipedia_url: "https://en.wikipedia.org/wiki/Giuseppe_Arcimboldo",
   },
-  {
-    artist_id: "7f792917-46ae-4238-bb42-bd3591685e47",
+  "7f792917-46ae-4238-bb42-bd3591685e47": {
     full_name: "Grant Wood",
     first_name: "Grant",
     middle_names: "",
@@ -2073,8 +1946,7 @@ const ARTISTS = [
     death: 1942,
     wikipedia_url: "https://en.wikipedia.org/wiki/Grant_Wood",
   },
-  {
-    artist_id: "353d91ee-daa2-4ec1-88be-b8d6843c080f",
+  "353d91ee-daa2-4ec1-88be-b8d6843c080f": {
     full_name: "Guido Reni",
     first_name: "Guido",
     middle_names: "",
@@ -2085,8 +1957,7 @@ const ARTISTS = [
     death: 1642,
     wikipedia_url: "https://en.wikipedia.org/wiki/Guido_Reni",
   },
-  {
-    artist_id: "c7310864-65da-478e-be36-fe1a2f5f416c",
+  "c7310864-65da-478e-be36-fe1a2f5f416c": {
     full_name: "Gustaf Wilhelm Palm",
     first_name: "Gustaf",
     middle_names: "Wilhelm",
@@ -2097,8 +1968,7 @@ const ARTISTS = [
     death: 1890,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gustaf_Wilhelm_Palm",
   },
-  {
-    artist_id: "fe6dca6d-6dc3-4898-aa70-7bd7cfcffe5b",
+  "fe6dca6d-6dc3-4898-aa70-7bd7cfcffe5b": {
     full_name: "Gustav Klimt",
     first_name: "Gustav",
     middle_names: "",
@@ -2109,8 +1979,7 @@ const ARTISTS = [
     death: 1918,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gustav_Klimt",
   },
-  {
-    artist_id: "8ed33c00-a747-4552-8d53-76580b6da764",
+  "8ed33c00-a747-4552-8d53-76580b6da764": {
     full_name: "Gustave Caillebotte",
     first_name: "Gustave",
     middle_names: "",
@@ -2121,8 +1990,7 @@ const ARTISTS = [
     death: 1894,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gustave_Caillebotte",
   },
-  {
-    artist_id: "ea4109b7-4554-45d7-a75c-81c991a21b34",
+  "ea4109b7-4554-45d7-a75c-81c991a21b34": {
     full_name: "Gustave Courbet",
     first_name: "Gustave",
     middle_names: "",
@@ -2133,8 +2001,7 @@ const ARTISTS = [
     death: 1877,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gustave_Courbet",
   },
-  {
-    artist_id: "6e5276a2-d396-4951-8677-34088ae77cb7",
+  "6e5276a2-d396-4951-8677-34088ae77cb7": {
     full_name: "Gustave Doré",
     first_name: "Gustave",
     middle_names: "",
@@ -2145,8 +2012,7 @@ const ARTISTS = [
     death: 1883,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gustave_Doré",
   },
-  {
-    artist_id: "187cadfe-611f-4db3-8fd3-d96e1f4a465b",
+  "187cadfe-611f-4db3-8fd3-d96e1f4a465b": {
     full_name: "Gustave Moreau",
     first_name: "Gustave",
     middle_names: "",
@@ -2157,8 +2023,7 @@ const ARTISTS = [
     death: 1898,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gustave_Moreau",
   },
-  {
-    artist_id: "0b366964-d25d-47f5-9d96-1338a362fc17",
+  "0b366964-d25d-47f5-9d96-1338a362fc17": {
     full_name: "Gwen John",
     first_name: "Gwen",
     middle_names: "",
@@ -2169,8 +2034,7 @@ const ARTISTS = [
     death: 1939,
     wikipedia_url: "https://en.wikipedia.org/wiki/Gwen_John",
   },
-  {
-    artist_id: "d7d6e19f-7fe3-4828-a44b-6c3019ba3d7b",
+  "d7d6e19f-7fe3-4828-a44b-6c3019ba3d7b": {
     full_name: "Hans Dahl",
     first_name: "Hans",
     middle_names: "",
@@ -2181,8 +2045,7 @@ const ARTISTS = [
     death: 1937,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hans_Dahl",
   },
-  {
-    artist_id: "4d4f39cf-39cd-480c-acd5-5ba9904b72b6",
+  "4d4f39cf-39cd-480c-acd5-5ba9904b72b6": {
     full_name: "Hans Holbein",
     first_name: "Hans",
     middle_names: "",
@@ -2193,8 +2056,7 @@ const ARTISTS = [
     death: 1524,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hans_Holbein_the_Younger",
   },
-  {
-    artist_id: "c240e5e4-4966-441d-9d60-26da2ed7f5f6",
+  "c240e5e4-4966-441d-9d60-26da2ed7f5f6": {
     full_name: "Hans Memling",
     first_name: "Hans",
     middle_names: "",
@@ -2205,8 +2067,7 @@ const ARTISTS = [
     death: 1494,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hans_Memling",
   },
-  {
-    artist_id: "c7434e48-4087-4820-b754-4961104ed31a",
+  "c7434e48-4087-4820-b754-4961104ed31a": {
     full_name: "Heinrich Campendonk",
     first_name: "Heinrich",
     middle_names: "",
@@ -2217,8 +2078,7 @@ const ARTISTS = [
     death: 1957,
     wikipedia_url: "https://en.wikipedia.org/wiki/Heinrich_Campendonk",
   },
-  {
-    artist_id: "b05cb635-1190-42dc-9c47-f90671d27cb5",
+  "b05cb635-1190-42dc-9c47-f90671d27cb5": {
     full_name: "Hendrick Avercamp",
     first_name: "Hendrick",
     middle_names: "",
@@ -2229,8 +2089,7 @@ const ARTISTS = [
     death: 1634,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hendrick_Avercamp",
   },
-  {
-    artist_id: "0334d1fe-560d-45f4-a493-7ef3a2374750",
+  "0334d1fe-560d-45f4-a493-7ef3a2374750": {
     full_name: "Hendrick Dubbels",
     first_name: "Hendrick",
     middle_names: "",
@@ -2241,8 +2100,7 @@ const ARTISTS = [
     death: 1676,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hendrick_Dubbels",
   },
-  {
-    artist_id: "f62b0b7e-0a57-4866-9c30-d7a278fb83de",
+  "f62b0b7e-0a57-4866-9c30-d7a278fb83de": {
     full_name: "Hendrick Ter Brugghen",
     first_name: "Hendrick",
     middle_names: "",
@@ -2253,8 +2111,7 @@ const ARTISTS = [
     death: 1629,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hendrick_ter_Brugghen",
   },
-  {
-    artist_id: "a366fbb9-9ce5-40cf-96fe-ca6cfbf18f10",
+  "a366fbb9-9ce5-40cf-96fe-ca6cfbf18f10": {
     full_name: "Hendrik Voogd",
     first_name: "Hendrik",
     middle_names: "",
@@ -2265,8 +2122,7 @@ const ARTISTS = [
     death: 1839,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hendrik_Voogd",
   },
-  {
-    artist_id: "0586ebeb-90e1-4e67-914c-08512827c9c6",
+  "0586ebeb-90e1-4e67-914c-08512827c9c6": {
     full_name: "Henri De Toulouse-Lautrec",
     first_name: "Henri",
     middle_names: "De Toulouse",
@@ -2277,8 +2133,7 @@ const ARTISTS = [
     death: 1901,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri_de_Toulouse-Lautrec",
   },
-  {
-    artist_id: "9b8540a0-767c-4102-a61a-c31e1b970299",
+  "9b8540a0-767c-4102-a61a-c31e1b970299": {
     full_name: "Henri Edmond Cross",
     first_name: "Henri",
     middle_names: "Edmond",
@@ -2289,8 +2144,7 @@ const ARTISTS = [
     death: 1910,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri-Edmond_Cross",
   },
-  {
-    artist_id: "928d2c48-6ca4-4329-b815-297b37a15ba8",
+  "928d2c48-6ca4-4329-b815-297b37a15ba8": {
     full_name: "Henri Fantin-Latour",
     first_name: "Henri",
     middle_names: "Fantin",
@@ -2301,8 +2155,7 @@ const ARTISTS = [
     death: 1904,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri_Fantin-Latour",
   },
-  {
-    artist_id: "ab0973d2-7187-49cc-9b56-e9e961f18348",
+  "ab0973d2-7187-49cc-9b56-e9e961f18348": {
     full_name: "Henri Le Sidaner",
     first_name: "Henri",
     middle_names: "",
@@ -2313,8 +2166,7 @@ const ARTISTS = [
     death: 1939,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri_Le_Sidaner",
   },
-  {
-    artist_id: "bc9583d6-1bdd-4b62-9060-f1ba538a043b",
+  "bc9583d6-1bdd-4b62-9060-f1ba538a043b": {
     full_name: "Henri Lebasque",
     first_name: "Henri",
     middle_names: "",
@@ -2325,8 +2177,7 @@ const ARTISTS = [
     death: 1937,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri_Lebasque",
   },
-  {
-    artist_id: "5a247d61-675f-49d8-bd05-a3d7e736137d",
+  "5a247d61-675f-49d8-bd05-a3d7e736137d": {
     full_name: "Henri Manguin",
     first_name: "Henri",
     middle_names: "",
@@ -2337,8 +2188,7 @@ const ARTISTS = [
     death: 1949,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri_Manguin",
   },
-  {
-    artist_id: "0d6689c3-7f70-43a6-a5fb-48faaeff49ac",
+  "0d6689c3-7f70-43a6-a5fb-48faaeff49ac": {
     full_name: "Henri Rousseau",
     first_name: "Henri",
     middle_names: "",
@@ -2349,8 +2199,7 @@ const ARTISTS = [
     death: 1910,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henri_Rousseau",
   },
-  {
-    artist_id: "e3730b43-c212-4b9a-a0d0-1afc622390c1",
+  "e3730b43-c212-4b9a-a0d0-1afc622390c1": {
     full_name: "Henry Moret",
     first_name: "Henry",
     middle_names: "",
@@ -2361,8 +2210,7 @@ const ARTISTS = [
     death: 1913,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henry_Moret",
   },
-  {
-    artist_id: "d328c1db-71a7-459c-a942-d3ddd98365c1",
+  "d328c1db-71a7-459c-a942-d3ddd98365c1": {
     full_name: "Horace Vernet",
     first_name: "Horace",
     middle_names: "",
@@ -2373,8 +2221,7 @@ const ARTISTS = [
     death: 1863,
     wikipedia_url: "https://en.wikipedia.org/wiki/Horace_Vernet",
   },
-  {
-    artist_id: "e9301901-d89c-438c-82f8-da88e3297394",
+  "e9301901-d89c-438c-82f8-da88e3297394": {
     full_name: "Isaac Van Ostade",
     first_name: "Isaac",
     middle_names: "",
@@ -2385,8 +2232,7 @@ const ARTISTS = [
     death: 1649,
     wikipedia_url: "https://en.wikipedia.org/wiki/Isaac_van_Ostade",
   },
-  {
-    artist_id: "41e2c7c8-a6cc-4e9d-9aaf-0f9a9ad69b5e",
+  "41e2c7c8-a6cc-4e9d-9aaf-0f9a9ad69b5e": {
     full_name: "Isaak Levitan",
     first_name: "Isaak",
     middle_names: "",
@@ -2397,8 +2243,7 @@ const ARTISTS = [
     death: 1900,
     wikipedia_url: "https://en.wikipedia.org/wiki/Isaac_Levitan",
   },
-  {
-    artist_id: "713ba60f-ec03-47cc-8591-0cd9775f6151",
+  "713ba60f-ec03-47cc-8591-0cd9775f6151": {
     full_name: "Ivan Aivazovskiy",
     first_name: "Ivan",
     middle_names: "",
@@ -2409,8 +2254,7 @@ const ARTISTS = [
     death: 1900,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ivan_Aivazovsky",
   },
-  {
-    artist_id: "da4d5390-95b0-4a1a-8e67-69b02804f113",
+  "da4d5390-95b0-4a1a-8e67-69b02804f113": {
     full_name: "Ivan Shishkin",
     first_name: "Ivan",
     middle_names: "",
@@ -2421,8 +2265,7 @@ const ARTISTS = [
     death: 1898,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ivan_Shishkin",
   },
-  {
-    artist_id: "dd5101b3-c90f-4102-bca4-c9a034b88d76",
+  "dd5101b3-c90f-4102-bca4-c9a034b88d76": {
     full_name: "Jack Butler Yeats",
     first_name: "Jack",
     middle_names: "Butler",
@@ -2433,8 +2276,7 @@ const ARTISTS = [
     death: 1957,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jack_B._Yeats",
   },
-  {
-    artist_id: "5c89ca31-52f5-4860-ae91-fecc6a7ce061",
+  "5c89ca31-52f5-4860-ae91-fecc6a7ce061": {
     full_name: "Jacob Cornelisz Van Oostsanen",
     first_name: "Jacob",
     middle_names: "Cornelisz",
@@ -2446,8 +2288,7 @@ const ARTISTS = [
     wikipedia_url:
       "https://en.wikipedia.org/wiki/Jacob_Cornelisz_van_Oostsanen",
   },
-  {
-    artist_id: "f9b54678-0624-4f0c-ade7-ad650c4f4571",
+  "f9b54678-0624-4f0c-ade7-ad650c4f4571": {
     full_name: "Jacob Van Ruisdael",
     first_name: "Jacob",
     middle_names: "Van",
@@ -2458,8 +2299,7 @@ const ARTISTS = [
     death: 1682,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jacob_van_Ruisdael",
   },
-  {
-    artist_id: "97328d68-40e4-4bf2-8fc2-4141724ab205",
+  "97328d68-40e4-4bf2-8fc2-4141724ab205": {
     full_name: "Jacques Laurent Agasse",
     first_name: "Jacques",
     middle_names: "Laurent",
@@ -2470,8 +2310,7 @@ const ARTISTS = [
     death: 1849,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jacques-Laurent_Agasse",
   },
-  {
-    artist_id: "cce37955-58d0-4a19-b449-8cef540f8594",
+  "cce37955-58d0-4a19-b449-8cef540f8594": {
     full_name: "Jacques-Louis David",
     first_name: "Jacques",
     middle_names: "Louis",
@@ -2482,8 +2321,7 @@ const ARTISTS = [
     death: 1825,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jacques-Louis_David",
   },
-  {
-    artist_id: "edfc8ed5-aa3e-4680-a0e6-fad1f8a6e3f1",
+  "edfc8ed5-aa3e-4680-a0e6-fad1f8a6e3f1": {
     full_name: "James Ensor",
     first_name: "James",
     middle_names: "",
@@ -2494,8 +2332,7 @@ const ARTISTS = [
     death: 1949,
     wikipedia_url: "https://en.wikipedia.org/wiki/James_Ensor",
   },
-  {
-    artist_id: "dd9dfcb5-380e-4db4-82ff-26affe1a39ae",
+  "dd9dfcb5-380e-4db4-82ff-26affe1a39ae": {
     full_name: "James McDougal Hart",
     first_name: "James",
     middle_names: "Mcdougal",
@@ -2506,8 +2343,7 @@ const ARTISTS = [
     death: 1901,
     wikipedia_url: "https://en.wikipedia.org/wiki/James_McDougal_Hart",
   },
-  {
-    artist_id: "3b52de1f-4f9f-45bb-9443-dec82b1de7f7",
+  "3b52de1f-4f9f-45bb-9443-dec82b1de7f7": {
     full_name: "James McNeill Whistler",
     first_name: "James",
     middle_names: "Mcneill",
@@ -2518,8 +2354,7 @@ const ARTISTS = [
     death: 1903,
     wikipedia_url: "https://en.wikipedia.org/wiki/James_McNeill_Whistler",
   },
-  {
-    artist_id: "9e5ca935-9ca4-48d4-b3eb-f3e1f9e29f47",
+  "9e5ca935-9ca4-48d4-b3eb-f3e1f9e29f47": {
     full_name: "James Peale",
     first_name: "James",
     middle_names: "",
@@ -2530,8 +2365,7 @@ const ARTISTS = [
     death: 1831,
     wikipedia_url: "https://en.wikipedia.org/wiki/James_Peale",
   },
-  {
-    artist_id: "39d637d8-256b-4afc-ad30-01b2b268b701",
+  "39d637d8-256b-4afc-ad30-01b2b268b701": {
     full_name: "James Tissot",
     first_name: "James",
     middle_names: "",
@@ -2542,8 +2376,7 @@ const ARTISTS = [
     death: 1902,
     wikipedia_url: "https://en.wikipedia.org/wiki/James_Tissot",
   },
-  {
-    artist_id: "67d005bc-e775-4d1e-bf81-9ec1246f372b",
+  "67d005bc-e775-4d1e-bf81-9ec1246f372b": {
     full_name: "Jan Adam Kruseman",
     first_name: "Jan",
     middle_names: "Adam",
@@ -2554,8 +2387,7 @@ const ARTISTS = [
     death: 1862,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Adam_Kruseman",
   },
-  {
-    artist_id: "ba75fe09-4e9e-4486-8573-d33d507d57d0",
+  "ba75fe09-4e9e-4486-8573-d33d507d57d0": {
     full_name: "Jan Both",
     first_name: "Jan",
     middle_names: "",
@@ -2566,8 +2398,7 @@ const ARTISTS = [
     death: 1652,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Dirksz_Both",
   },
-  {
-    artist_id: "3e71a256-e5b4-496e-9024-eb34ca6a3d8f",
+  "3e71a256-e5b4-496e-9024-eb34ca6a3d8f": {
     full_name: "Jan Brueghel",
     first_name: "Jan",
     middle_names: "",
@@ -2578,8 +2409,7 @@ const ARTISTS = [
     death: 1625,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Brueghel_the_Elder",
   },
-  {
-    artist_id: "229dc580-208a-4360-8d55-1c8abe1ca19f",
+  "229dc580-208a-4360-8d55-1c8abe1ca19f": {
     full_name: "Jan Miense Molenaer",
     first_name: "Jan",
     middle_names: "Miense",
@@ -2590,8 +2420,7 @@ const ARTISTS = [
     death: 1668,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Miense_Molenaer",
   },
-  {
-    artist_id: "084e7c5d-68f2-4949-8dc6-103c6a0b4efb",
+  "084e7c5d-68f2-4949-8dc6-103c6a0b4efb": {
     full_name: "Jan Porcellis",
     first_name: "Jan",
     middle_names: "",
@@ -2602,8 +2431,7 @@ const ARTISTS = [
     death: 1632,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Porcellis",
   },
-  {
-    artist_id: "dcc7bcbc-ac20-44f7-bc10-b69abcc7a6de",
+  "dcc7bcbc-ac20-44f7-bc10-b69abcc7a6de": {
     full_name: "Jan Portielje",
     first_name: "Jan",
     middle_names: "",
@@ -2614,8 +2442,7 @@ const ARTISTS = [
     death: 1908,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Portielje",
   },
-  {
-    artist_id: "c867286b-0a10-4b82-8027-2efaed9d4354",
+  "c867286b-0a10-4b82-8027-2efaed9d4354": {
     full_name: "Jan Steen",
     first_name: "Jan",
     middle_names: "",
@@ -2626,8 +2453,7 @@ const ARTISTS = [
     death: 1679,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Steen",
   },
-  {
-    artist_id: "f26b52b7-c462-4d0a-a52f-835fb2ef9cca",
+  "f26b52b7-c462-4d0a-a52f-835fb2ef9cca": {
     full_name: "Jan Toorop",
     first_name: "Jan",
     middle_names: "",
@@ -2638,8 +2464,7 @@ const ARTISTS = [
     death: 1928,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Toorop",
   },
-  {
-    artist_id: "4b22eef3-5db7-46ab-ab89-20cd42157a1e",
+  "4b22eef3-5db7-46ab-ab89-20cd42157a1e": {
     full_name: "Jan Van Eyck",
     first_name: "Jan",
     middle_names: "Van",
@@ -2650,8 +2475,7 @@ const ARTISTS = [
     death: 1441,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_van_Eyck",
   },
-  {
-    artist_id: "25316213-7e54-4533-836d-c5eddcf38251",
+  "25316213-7e54-4533-836d-c5eddcf38251": {
     full_name: "Jan Van Goyen",
     first_name: "Jan",
     middle_names: "",
@@ -2662,8 +2486,7 @@ const ARTISTS = [
     death: 1656,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_van_Goyen",
   },
-  {
-    artist_id: "149c1ea1-3c92-4225-9861-3eaf2da4aa7f",
+  "149c1ea1-3c92-4225-9861-3eaf2da4aa7f": {
     full_name: "Jan Van Huysum",
     first_name: "Jan",
     middle_names: "",
@@ -2674,8 +2497,7 @@ const ARTISTS = [
     death: 1749,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_van_Huysum",
   },
-  {
-    artist_id: "b8b3fad2-334f-4b6d-9b55-db2f800f5607",
+  "b8b3fad2-334f-4b6d-9b55-db2f800f5607": {
     full_name: "Jan Van Scorel",
     first_name: "Jan",
     middle_names: "",
@@ -2686,8 +2508,7 @@ const ARTISTS = [
     death: 1562,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_van_Scorel",
   },
-  {
-    artist_id: "7fd54af7-e0d8-41ed-9b5a-79c988b59073",
+  "7fd54af7-e0d8-41ed-9b5a-79c988b59073": {
     full_name: "Jan Willem Pieneman",
     first_name: "Jan",
     middle_names: "Willem",
@@ -2698,8 +2519,7 @@ const ARTISTS = [
     death: 1853,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jan_Willem_Pieneman",
   },
-  {
-    artist_id: "5977fbbf-ffe4-46be-baa3-02d2153d2f15",
+  "5977fbbf-ffe4-46be-baa3-02d2153d2f15": {
     full_name: "Jean Auguste Ingres",
     first_name: "Jean",
     middle_names: "Auguste",
@@ -2711,8 +2531,7 @@ const ARTISTS = [
     wikipedia_url:
       "https://en.wikipedia.org/wiki/Jean-Auguste-Dominique_Ingres",
   },
-  {
-    artist_id: "07bf29b3-9787-49d6-9526-cc176f815987",
+  "07bf29b3-9787-49d6-9526-cc176f815987": {
     full_name: "Jean Baptiste Vanmour",
     first_name: "Jean",
     middle_names: "Baptiste",
@@ -2723,8 +2542,7 @@ const ARTISTS = [
     death: 1737,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean_Baptiste_Vanmour",
   },
-  {
-    artist_id: "5e157cdb-f99e-4724-9042-d9b125556e20",
+  "5e157cdb-f99e-4724-9042-d9b125556e20": {
     full_name: "Jean Béraud",
     first_name: "Jean",
     middle_names: "",
@@ -2735,8 +2553,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean_Béraud",
   },
-  {
-    artist_id: "f63f82d2-5fe2-4c70-9546-e44777614fdf",
+  "f63f82d2-5fe2-4c70-9546-e44777614fdf": {
     full_name: "Jean Discart",
     first_name: "Jean",
     middle_names: "",
@@ -2747,8 +2564,7 @@ const ARTISTS = [
     death: 1944,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean_Discart",
   },
-  {
-    artist_id: "afc5e0cb-a164-4419-8538-15dd59aa5040",
+  "afc5e0cb-a164-4419-8538-15dd59aa5040": {
     full_name: "Jean Frédéric Bazille",
     first_name: "Jean",
     middle_names: "Frederic",
@@ -2759,8 +2575,7 @@ const ARTISTS = [
     death: 1870,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frédéric_Bazille",
   },
-  {
-    artist_id: "4d1a4fb7-18bd-4f9b-ba36-fdb3debed071",
+  "4d1a4fb7-18bd-4f9b-ba36-fdb3debed071": {
     full_name: "Jean Ranc",
     first_name: "Jean",
     middle_names: "",
@@ -2771,8 +2586,7 @@ const ARTISTS = [
     death: 1735,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean_Ranc",
   },
-  {
-    artist_id: "e37433e4-0ee6-4c59-a9d3-57be49ab5db7",
+  "e37433e4-0ee6-4c59-a9d3-57be49ab5db7": {
     full_name: "Jean Raoux",
     first_name: "Jean",
     middle_names: "",
@@ -2783,8 +2597,7 @@ const ARTISTS = [
     death: 1734,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean_Raoux",
   },
-  {
-    artist_id: "b7d332a5-3b56-4ede-8460-781d55d75692",
+  "b7d332a5-3b56-4ede-8460-781d55d75692": {
     full_name: "Jean-Antoine Watteau",
     first_name: "Jean",
     middle_names: "Antoine",
@@ -2795,8 +2608,7 @@ const ARTISTS = [
     death: 1721,
     wikipedia_url: "https://en.wikipedia.org/wiki/Antoine_Watteau",
   },
-  {
-    artist_id: "a2e5773e-aa4d-451e-9108-eb8089829a9d",
+  "a2e5773e-aa4d-451e-9108-eb8089829a9d": {
     full_name: "Jean-Baptiste Greuze",
     first_name: "Jean",
     middle_names: "Baptiste",
@@ -2807,8 +2619,7 @@ const ARTISTS = [
     death: 1805,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Baptiste_Greuze",
   },
-  {
-    artist_id: "9f5d4f63-c557-4aa3-a2f6-176b39789ff0",
+  "9f5d4f63-c557-4aa3-a2f6-176b39789ff0": {
     full_name: "Jean-Baptiste Oudry",
     first_name: "Jean",
     middle_names: "Baptiste",
@@ -2819,8 +2630,7 @@ const ARTISTS = [
     death: 1755,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Baptiste_Oudry",
   },
-  {
-    artist_id: "b28736e7-6693-4a04-b809-25808b57b25d",
+  "b28736e7-6693-4a04-b809-25808b57b25d": {
     full_name: "Jean-Baptiste Perronneau",
     first_name: "Jean",
     middle_names: "Baptiste",
@@ -2831,8 +2641,7 @@ const ARTISTS = [
     death: 1783,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Baptiste_Perronneau",
   },
-  {
-    artist_id: "aaa3cb71-478c-4c3d-be8e-9539a686834b",
+  "aaa3cb71-478c-4c3d-be8e-9539a686834b": {
     full_name: "Jean-Baptiste-Camille Corot",
     first_name: "Jean",
     middle_names: "Baptiste Camille",
@@ -2843,8 +2652,7 @@ const ARTISTS = [
     death: 1875,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Baptiste-Camille_Corot",
   },
-  {
-    artist_id: "5bf3b4a9-7d00-4cb4-a42c-89138283234a",
+  "5bf3b4a9-7d00-4cb4-a42c-89138283234a": {
     full_name: "Jean-Baptiste-Siméon Chardin",
     first_name: "Jean",
     middle_names: "Simeon",
@@ -2855,8 +2663,7 @@ const ARTISTS = [
     death: 1779,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean_Siméon_Chardin",
   },
-  {
-    artist_id: "b7cf15c4-c304-43c4-9c8d-16df425dd860",
+  "b7cf15c4-c304-43c4-9c8d-16df425dd860": {
     full_name: "Jean-Francois Millet",
     first_name: "Jean",
     middle_names: "Francois",
@@ -2867,8 +2674,7 @@ const ARTISTS = [
     death: 1875,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-François_Millet",
   },
-  {
-    artist_id: "cc82be18-897c-4b72-a2c8-32fac9a8d736",
+  "cc82be18-897c-4b72-a2c8-32fac9a8d736": {
     full_name: "Jean-Francois Portaels",
     first_name: "Jean",
     middle_names: "Francois",
@@ -2879,8 +2685,7 @@ const ARTISTS = [
     death: 1895,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-François_Portaels",
   },
-  {
-    artist_id: "2cc91e16-469a-46f5-b0fb-ad563d4da646",
+  "2cc91e16-469a-46f5-b0fb-ad563d4da646": {
     full_name: "Jean-Francois Raffaelli",
     first_name: "Jean",
     middle_names: "Francois",
@@ -2891,8 +2696,7 @@ const ARTISTS = [
     death: 1924,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-François_Raffaëlli",
   },
-  {
-    artist_id: "d0ff0424-d428-4246-a3c8-a5144c43f3ef",
+  "d0ff0424-d428-4246-a3c8-a5144c43f3ef": {
     full_name: "Jean-Hippolyte Flandrin",
     first_name: "Jean",
     middle_names: "Hippolyte",
@@ -2903,8 +2707,7 @@ const ARTISTS = [
     death: 1864,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hippolyte_Flandrin",
   },
-  {
-    artist_id: "75b05ed1-f278-46ce-9894-41bbcba1a1df",
+  "75b05ed1-f278-46ce-9894-41bbcba1a1df": {
     full_name: "Jean-Honoré Fragonard",
     first_name: "Jean",
     middle_names: "Honore",
@@ -2915,8 +2718,7 @@ const ARTISTS = [
     death: 1806,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Honoré_Fragonard",
   },
-  {
-    artist_id: "fa3bede1-5685-4920-8210-302586260251",
+  "fa3bede1-5685-4920-8210-302586260251": {
     full_name: "Jean-Louis Forain",
     first_name: "Jean",
     middle_names: "Louis",
@@ -2927,8 +2729,7 @@ const ARTISTS = [
     death: 1931,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Louis_Forain",
   },
-  {
-    artist_id: "5fe4f935-66a8-4df7-bdd5-c75302411563",
+  "5fe4f935-66a8-4df7-bdd5-c75302411563": {
     full_name: "Jean-Léon Gérôme",
     first_name: "Jean",
     middle_names: "Leon",
@@ -2939,8 +2740,7 @@ const ARTISTS = [
     death: 1904,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Léon_Gérôme",
   },
-  {
-    artist_id: "2f260b32-32f2-4f1c-b3cd-2f44015ec91d",
+  "2f260b32-32f2-4f1c-b3cd-2f44015ec91d": {
     full_name: "Jean-Marc Nattier",
     first_name: "Jean",
     middle_names: "Marc",
@@ -2951,8 +2751,7 @@ const ARTISTS = [
     death: 1766,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Marc_Nattier",
   },
-  {
-    artist_id: "bd48be64-f33a-489d-8da5-ca04d7a95ec1",
+  "bd48be64-f33a-489d-8da5-ca04d7a95ec1": {
     full_name: "Jean-Étienne Liotard",
     first_name: "Jean",
     middle_names: "Etienne",
@@ -2963,8 +2762,7 @@ const ARTISTS = [
     death: 1789,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jean-Étienne_Liotard",
   },
-  {
-    artist_id: "f399aedd-4257-497e-972e-f6b559249742",
+  "f399aedd-4257-497e-972e-f6b559249742": {
     full_name: "Joachim Beuckelaer",
     first_name: "Joachim",
     middle_names: "",
@@ -2975,8 +2773,7 @@ const ARTISTS = [
     death: 1574,
     wikipedia_url: "https://en.wikipedia.org/wiki/Joachim_Beuckelaer",
   },
-  {
-    artist_id: "5602c7ad-60f8-4426-9e6f-c3024b84759f",
+  "5602c7ad-60f8-4426-9e6f-c3024b84759f": {
     full_name: "Joaquín Sorolla",
     first_name: "Joaquin",
     middle_names: "",
@@ -2987,8 +2784,7 @@ const ARTISTS = [
     death: 1923,
     wikipedia_url: "https://en.wikipedia.org/wiki/Joaquín_Sorolla",
   },
-  {
-    artist_id: "3bc98e70-05da-4070-8894-3806f01eb1d9",
+  "3bc98e70-05da-4070-8894-3806f01eb1d9": {
     full_name: "Johan Barthold Jongkind",
     first_name: "Johan",
     middle_names: "Barthold",
@@ -2999,8 +2795,7 @@ const ARTISTS = [
     death: 1891,
     wikipedia_url: "https://en.wikipedia.org/wiki/Johan_Jongkind",
   },
-  {
-    artist_id: "6aec0557-65af-4e2f-bc73-6b0d68c326c8",
+  "6aec0557-65af-4e2f-bc73-6b0d68c326c8": {
     full_name: "Johannes Vermeer",
     first_name: "Jan",
     middle_names: "",
@@ -3011,8 +2806,7 @@ const ARTISTS = [
     death: 1675,
     wikipedia_url: "https://en.wikipedia.org/wiki/Johannes_Vermeer",
   },
-  {
-    artist_id: "d9771a00-9777-483d-ae3f-3e09871c68d9",
+  "d9771a00-9777-483d-ae3f-3e09871c68d9": {
     full_name: "John Cleveley",
     first_name: "John",
     middle_names: "",
@@ -3023,8 +2817,7 @@ const ARTISTS = [
     death: 1777,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Cleveley",
   },
-  {
-    artist_id: "f9970a6a-a281-43c2-af4b-f1343877dc64",
+  "f9970a6a-a281-43c2-af4b-f1343877dc64": {
     full_name: "John Constable",
     first_name: "John",
     middle_names: "",
@@ -3035,8 +2828,7 @@ const ARTISTS = [
     death: 1837,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Constable",
   },
-  {
-    artist_id: "533408ac-8533-4392-ba1d-6c2da2496950",
+  "533408ac-8533-4392-ba1d-6c2da2496950": {
     full_name: "John Durand",
     first_name: "John",
     middle_names: "",
@@ -3047,8 +2839,7 @@ const ARTISTS = [
     death: 1805,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Durand",
   },
-  {
-    artist_id: "db4dd489-6ffd-43fd-a975-35fd35ab7f2b",
+  "db4dd489-6ffd-43fd-a975-35fd35ab7f2b": {
     full_name: "John Everett Millais",
     first_name: "John",
     middle_names: "Everett",
@@ -3059,8 +2850,7 @@ const ARTISTS = [
     death: 1896,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Everett_Millais",
   },
-  {
-    artist_id: "f733b9db-d817-48da-873a-5fc483e0a87e",
+  "f733b9db-d817-48da-873a-5fc483e0a87e": {
     full_name: "John Francis Rigaud",
     first_name: "John",
     middle_names: "Francis",
@@ -3071,8 +2861,7 @@ const ARTISTS = [
     death: 1810,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Francis_Rigaud",
   },
-  {
-    artist_id: "aef7c966-6795-438c-8e40-2c1c2dd7b68d",
+  "aef7c966-6795-438c-8e40-2c1c2dd7b68d": {
     full_name: "John Frederick Herring",
     first_name: "John",
     middle_names: "Frederick",
@@ -3083,8 +2872,7 @@ const ARTISTS = [
     death: 1865,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Frederick_Herring_Sr.",
   },
-  {
-    artist_id: "896fd30b-e8de-4b1d-a64e-d2be69114391",
+  "896fd30b-e8de-4b1d-a64e-d2be69114391": {
     full_name: "John Frederick Kensett",
     first_name: "John",
     middle_names: "Frederick",
@@ -3095,8 +2883,7 @@ const ARTISTS = [
     death: 1872,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Frederick_Kensett",
   },
-  {
-    artist_id: "2982c32b-d8dc-440e-91bf-a5e3237eac8a",
+  "2982c32b-d8dc-440e-91bf-a5e3237eac8a": {
     full_name: "John French Sloan",
     first_name: "John",
     middle_names: "French",
@@ -3107,8 +2894,7 @@ const ARTISTS = [
     death: 1951,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Sloan",
   },
-  {
-    artist_id: "456dc41f-8058-43ad-a855-c24228307e6d",
+  "456dc41f-8058-43ad-a855-c24228307e6d": {
     full_name: "John Hoppner",
     first_name: "John",
     middle_names: "",
@@ -3119,8 +2905,7 @@ const ARTISTS = [
     death: 1810,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Hoppner",
   },
-  {
-    artist_id: "76681bd7-40b9-4f86-924f-34493a444ea1",
+  "76681bd7-40b9-4f86-924f-34493a444ea1": {
     full_name: "John James Audubon",
     first_name: "John",
     middle_names: "James",
@@ -3131,8 +2916,7 @@ const ARTISTS = [
     death: 1851,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_James_Audubon",
   },
-  {
-    artist_id: "6799e68f-6a71-4603-84bb-2eabf7c0dda1",
+  "6799e68f-6a71-4603-84bb-2eabf7c0dda1": {
     full_name: "John Kane",
     first_name: "John",
     middle_names: "",
@@ -3143,8 +2927,7 @@ const ARTISTS = [
     death: 1934,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Kane",
   },
-  {
-    artist_id: "8794d7ee-aabd-4ac8-8179-8741c0b7fbb9",
+  "8794d7ee-aabd-4ac8-8179-8741c0b7fbb9": {
     full_name: "John La Farge",
     first_name: "John",
     middle_names: "",
@@ -3155,8 +2938,7 @@ const ARTISTS = [
     death: 1924,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_La_Farge",
   },
-  {
-    artist_id: "8ae08e79-7316-4e34-95c4-815d2027eb46",
+  "8ae08e79-7316-4e34-95c4-815d2027eb46": {
     full_name: "John Lynn",
     first_name: "John",
     middle_names: "",
@@ -3167,8 +2949,7 @@ const ARTISTS = [
     death: 1869,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Lynn",
   },
-  {
-    artist_id: "a4b773f0-6194-4b24-898e-d17fe529da80",
+  "a4b773f0-6194-4b24-898e-d17fe529da80": {
     full_name: "John Ottis Adams",
     first_name: "John",
     middle_names: "Ottis",
@@ -3179,8 +2960,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/J._Ottis_Adams",
   },
-  {
-    artist_id: "a0719999-cf16-456a-a9c9-3ac2152eed6d",
+  "a0719999-cf16-456a-a9c9-3ac2152eed6d": {
     full_name: "John Russell",
     first_name: "John",
     middle_names: "",
@@ -3191,8 +2971,7 @@ const ARTISTS = [
     death: 1806,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Russell",
   },
-  {
-    artist_id: "b3dbf4f0-51c2-4733-8b49-28b50946577b",
+  "b3dbf4f0-51c2-4733-8b49-28b50946577b": {
     full_name: "John Singer Sargent",
     first_name: "John",
     middle_names: "Singer",
@@ -3203,8 +2982,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Singer_Sargent",
   },
-  {
-    artist_id: "07475c37-7a57-4d2d-83f1-f231a9ce765d",
+  "07475c37-7a57-4d2d-83f1-f231a9ce765d": {
     full_name: "John Singleton Copley",
     first_name: "John",
     middle_names: "Singleton",
@@ -3215,8 +2993,7 @@ const ARTISTS = [
     death: 1815,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Singleton_Copley",
   },
-  {
-    artist_id: "eb6f8f03-f0bf-41e6-be75-29044949b331",
+  "eb6f8f03-f0bf-41e6-be75-29044949b331": {
     full_name: "John Trumbull",
     first_name: "John",
     middle_names: "",
@@ -3227,8 +3004,7 @@ const ARTISTS = [
     death: 1843,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Trumbull",
   },
-  {
-    artist_id: "942e027a-edbb-4fb4-a979-7c73f405db6d",
+  "942e027a-edbb-4fb4-a979-7c73f405db6d": {
     full_name: "John Vanderbank",
     first_name: "John",
     middle_names: "",
@@ -3239,8 +3015,7 @@ const ARTISTS = [
     death: 1739,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Vanderbank",
   },
-  {
-    artist_id: "e8c133cb-ddf5-44d0-9a36-f20c9797a7ef",
+  "e8c133cb-ddf5-44d0-9a36-f20c9797a7ef": {
     full_name: "John Wesley Jarvis",
     first_name: "John",
     middle_names: "Wesley",
@@ -3251,8 +3026,7 @@ const ARTISTS = [
     death: 1840,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Wesley_Jarvis",
   },
-  {
-    artist_id: "e48f39dc-ac44-4f26-80a6-ccd0a21fa34b",
+  "e48f39dc-ac44-4f26-80a6-ccd0a21fa34b": {
     full_name: "John White Alexander",
     first_name: "John",
     middle_names: "White",
@@ -3263,8 +3037,7 @@ const ARTISTS = [
     death: 1915,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_White_Alexander",
   },
-  {
-    artist_id: "994969e3-a27b-450b-80e1-46c413beaca7",
+  "994969e3-a27b-450b-80e1-46c413beaca7": {
     full_name: "John William Godward",
     first_name: "John",
     middle_names: "William",
@@ -3275,8 +3048,7 @@ const ARTISTS = [
     death: 1922,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_William_Godward",
   },
-  {
-    artist_id: "e9249ee7-bde4-4274-b4f2-fe7f348e73f0",
+  "e9249ee7-bde4-4274-b4f2-fe7f348e73f0": {
     full_name: "John William Waterhouse",
     first_name: "John",
     middle_names: "William",
@@ -3287,8 +3059,7 @@ const ARTISTS = [
     death: 1917,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_William_Waterhouse",
   },
-  {
-    artist_id: "750cc047-b384-4b17-a59f-f29b9a4b3eff",
+  "750cc047-b384-4b17-a59f-f29b9a4b3eff": {
     full_name: "John Wollaston",
     first_name: "John",
     middle_names: "",
@@ -3299,8 +3070,7 @@ const ARTISTS = [
     death: 1775,
     wikipedia_url: "https://en.wikipedia.org/wiki/John_Wollaston",
   },
-  {
-    artist_id: "a55a1fff-af78-4240-93be-3f8fcc2533a9",
+  "a55a1fff-af78-4240-93be-3f8fcc2533a9": {
     full_name: "Joseph Blackburn",
     first_name: "Joseph",
     middle_names: "",
@@ -3311,8 +3081,7 @@ const ARTISTS = [
     death: 1780,
     wikipedia_url: "https://en.wikipedia.org/wiki/Joseph_Blackburn",
   },
-  {
-    artist_id: "6fe5731e-71b0-4ec7-aa41-95e7e9730e33",
+  "6fe5731e-71b0-4ec7-aa41-95e7e9730e33": {
     full_name: "Joseph Ducreux",
     first_name: "Joseph",
     middle_names: "",
@@ -3323,8 +3092,7 @@ const ARTISTS = [
     death: 1802,
     wikipedia_url: "https://en.wikipedia.org/wiki/Joseph_Ducreux",
   },
-  {
-    artist_id: "97cc2e11-2752-4a54-acdd-1b6e09238ac3",
+  "97cc2e11-2752-4a54-acdd-1b6e09238ac3": {
     full_name: "Joseph M. W. Turner",
     first_name: "Joseph",
     middle_names: "Mallord William",
@@ -3335,8 +3103,7 @@ const ARTISTS = [
     death: 1851,
     wikipedia_url: "https://en.wikipedia.org/wiki/J._M._W._Turner",
   },
-  {
-    artist_id: "90a545b1-497d-424f-8fa7-9e641e918533",
+  "90a545b1-497d-424f-8fa7-9e641e918533": {
     full_name: "Joshua Johnson",
     first_name: "Joshua",
     middle_names: "",
@@ -3347,8 +3114,7 @@ const ARTISTS = [
     death: 1824,
     wikipedia_url: "https://en.wikipedia.org/wiki/Joshua_Johnson",
   },
-  {
-    artist_id: "65800bcb-f7fc-4c1d-bf33-143dc088635b",
+  "65800bcb-f7fc-4c1d-bf33-143dc088635b": {
     full_name: "Juan Gris",
     first_name: "Juan",
     middle_names: "",
@@ -3359,8 +3125,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/Juan_Gris",
   },
-  {
-    artist_id: "b9f6a2d3-4cc2-4b52-9929-1a6e343adffc",
+  "b9f6a2d3-4cc2-4b52-9929-1a6e343adffc": {
     full_name: "Judith Leyster",
     first_name: "Judith",
     middle_names: "",
@@ -3371,8 +3136,7 @@ const ARTISTS = [
     death: 1660,
     wikipedia_url: "https://en.wikipedia.org/wiki/Judith_Leyster",
   },
-  {
-    artist_id: "a2644f51-4334-43f4-8ccd-c7d66eea3873",
+  "a2644f51-4334-43f4-8ccd-c7d66eea3873": {
     full_name: "Jules Bastien-Lepage",
     first_name: "Jules",
     middle_names: "Bastien",
@@ -3383,8 +3147,7 @@ const ARTISTS = [
     death: 1884,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jules_Bastien-Lepage",
   },
-  {
-    artist_id: "a755b1f8-e8f7-4376-8644-1d57142ea4ba",
+  "a755b1f8-e8f7-4376-8644-1d57142ea4ba": {
     full_name: "Jules Breton",
     first_name: "Jules",
     middle_names: "",
@@ -3395,8 +3158,7 @@ const ARTISTS = [
     death: 1906,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jules_Breton",
   },
-  {
-    artist_id: "46a7ba18-2f85-4ff8-a693-08446453df68",
+  "46a7ba18-2f85-4ff8-a693-08446453df68": {
     full_name: "Jules Pascin",
     first_name: "Jules",
     middle_names: "",
@@ -3407,8 +3169,7 @@ const ARTISTS = [
     death: 1930,
     wikipedia_url: "https://en.wikipedia.org/wiki/Jules_Pascin",
   },
-  {
-    artist_id: "f43efbb9-46dc-4191-a12c-b9c28c8fd278",
+  "f43efbb9-46dc-4191-a12c-b9c28c8fd278": {
     full_name: "Julian Alden Weir",
     first_name: "Julian",
     middle_names: "Alden",
@@ -3419,8 +3180,7 @@ const ARTISTS = [
     death: 1919,
     wikipedia_url: "https://en.wikipedia.org/wiki/J._Alden_Weir",
   },
-  {
-    artist_id: "7ae9fa3f-4888-4291-8ff9-ed72c81bf454",
+  "7ae9fa3f-4888-4291-8ff9-ed72c81bf454": {
     full_name: "Julien Dupré",
     first_name: "Julien",
     middle_names: "",
@@ -3431,8 +3191,7 @@ const ARTISTS = [
     death: 1910,
     wikipedia_url: "https://en.wikipedia.org/wiki/Julien_Dupré",
   },
-  {
-    artist_id: "c1b2782b-6fbf-40a8-b9f0-9b098f819398",
+  "c1b2782b-6fbf-40a8-b9f0-9b098f819398": {
     full_name: "Karel Dujardin",
     first_name: "Karel",
     middle_names: "",
@@ -3443,8 +3202,7 @@ const ARTISTS = [
     death: 1678,
     wikipedia_url: "https://en.wikipedia.org/wiki/Karel_Dujardin",
   },
-  {
-    artist_id: "9522e1ed-a058-44c5-a7e7-0964e5abf0e8",
+  "9522e1ed-a058-44c5-a7e7-0964e5abf0e8": {
     full_name: "Kasimir Malevich",
     first_name: "Kasimir",
     middle_names: "",
@@ -3455,8 +3213,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Kazimir_Malevich",
   },
-  {
-    artist_id: "37682d0a-f447-4912-ae1a-e989da2337ff",
+  "37682d0a-f447-4912-ae1a-e989da2337ff": {
     full_name: "Katsushika Hokusai",
     first_name: "Katsushika",
     middle_names: "",
@@ -3467,8 +3224,7 @@ const ARTISTS = [
     death: 1849,
     wikipedia_url: "https://en.wikipedia.org/wiki/Hokusai",
   },
-  {
-    artist_id: "820290b0-c529-489f-b3d8-f781088e252d",
+  "820290b0-c529-489f-b3d8-f781088e252d": {
     full_name: "Kees Van Dongen",
     first_name: "Kees",
     middle_names: "",
@@ -3479,8 +3235,7 @@ const ARTISTS = [
     death: 1968,
     wikipedia_url: "https://en.wikipedia.org/wiki/Kees_van_Dongen",
   },
-  {
-    artist_id: "eb72bcfb-4dc6-4fba-8e13-f19069379303",
+  "eb72bcfb-4dc6-4fba-8e13-f19069379303": {
     full_name: "Kitagawa Utamaro",
     first_name: "Kitagawa",
     middle_names: "",
@@ -3491,8 +3246,7 @@ const ARTISTS = [
     death: 1806,
     wikipedia_url: "https://en.wikipedia.org/wiki/Utamaro",
   },
-  {
-    artist_id: "4ddd9213-a5ce-4826-86e2-ef6ac2f54beb",
+  "4ddd9213-a5ce-4826-86e2-ef6ac2f54beb": {
     full_name: "Konstantin A. Korovin",
     first_name: "Konstantin",
     middle_names: "A",
@@ -3503,8 +3257,7 @@ const ARTISTS = [
     death: 1939,
     wikipedia_url: "https://en.wikipedia.org/wiki/Konstantin_Korovin",
   },
-  {
-    artist_id: "2ad5e9b6-b15d-47e9-8fec-b6b1dcdf5965",
+  "2ad5e9b6-b15d-47e9-8fec-b6b1dcdf5965": {
     full_name: "Konstantin Gorbatov",
     first_name: "Konstantin",
     middle_names: "",
@@ -3515,8 +3268,7 @@ const ARTISTS = [
     death: 1945,
     wikipedia_url: "https://en.wikipedia.org/wiki/Konstantin_Gorbatov",
   },
-  {
-    artist_id: "d0e80e26-afbb-4e04-8b4a-6ac01334f249",
+  "d0e80e26-afbb-4e04-8b4a-6ac01334f249": {
     full_name: "Laurent de La Hyre",
     first_name: "Laurent",
     middle_names: "",
@@ -3527,8 +3279,7 @@ const ARTISTS = [
     death: 1656,
     wikipedia_url: "https://en.wikipedia.org/wiki/Laurent_de_La_Hyre",
   },
-  {
-    artist_id: "9ecc7f28-839b-4cba-9ff8-c33e9297cbf5",
+  "9ecc7f28-839b-4cba-9ff8-c33e9297cbf5": {
     full_name: "Lemuel Francis Abbott",
     first_name: "Lemuel",
     middle_names: "Francis",
@@ -3539,8 +3290,7 @@ const ARTISTS = [
     death: 1803,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lemuel_Francis_Abbott",
   },
-  {
-    artist_id: "1991f098-488e-4dd3-95dd-7f81c47fbf2f",
+  "1991f098-488e-4dd3-95dd-7f81c47fbf2f": {
     full_name: "Leonardo Da Vinci",
     first_name: "Leonardo",
     middle_names: "",
@@ -3551,8 +3301,7 @@ const ARTISTS = [
     death: 1519,
     wikipedia_url: "https://en.wikipedia.org/wiki/Leonardo_da_Vinci",
   },
-  {
-    artist_id: "569afd8b-6e2a-4c4e-b030-109de2543426",
+  "569afd8b-6e2a-4c4e-b030-109de2543426": {
     full_name: "Lev Feliksovich Lagorio",
     first_name: "Lev",
     middle_names: "Feliksovich",
@@ -3563,8 +3312,7 @@ const ARTISTS = [
     death: 1905,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lev_Lagorio",
   },
-  {
-    artist_id: "54cf8d96-3006-47b5-991b-da840206d20f",
+  "54cf8d96-3006-47b5-991b-da840206d20f": {
     full_name: "Liubov Popova",
     first_name: "Liubov",
     middle_names: "",
@@ -3575,8 +3323,7 @@ const ARTISTS = [
     death: 1924,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lyubov_Popova",
   },
-  {
-    artist_id: "3e75db0d-d063-4816-9250-3d0a8abee72a",
+  "3e75db0d-d063-4816-9250-3d0a8abee72a": {
     full_name: "Lord Frederic Leighton",
     first_name: "Lord",
     middle_names: "Frederic",
@@ -3587,8 +3334,7 @@ const ARTISTS = [
     death: 1896,
     wikipedia_url: "https://en.wikipedia.org/wiki/Frederic_Leighton",
   },
-  {
-    artist_id: "6642bb2a-9bdc-4810-bad2-baf079d54490",
+  "6642bb2a-9bdc-4810-bad2-baf079d54490": {
     full_name: "Lorenzo Lotto",
     first_name: "Lorenzo",
     middle_names: "",
@@ -3599,8 +3345,7 @@ const ARTISTS = [
     death: 1556,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lorenzo_Lotto",
   },
-  {
-    artist_id: "d834a984-17af-42e5-8956-c75988f6af3f",
+  "d834a984-17af-42e5-8956-c75988f6af3f": {
     full_name: "Louis Apol",
     first_name: "Louis",
     middle_names: "",
@@ -3611,8 +3356,7 @@ const ARTISTS = [
     death: 1936,
     wikipedia_url: "https://en.wikipedia.org/wiki/Louis_Apol",
   },
-  {
-    artist_id: "1cb13ef9-f854-483a-b9cd-865c02d89118",
+  "1cb13ef9-f854-483a-b9cd-865c02d89118": {
     full_name: "Louis Comfort Tiffany",
     first_name: "Louis",
     middle_names: "Comfort",
@@ -3623,8 +3367,7 @@ const ARTISTS = [
     death: 1933,
     wikipedia_url: "https://en.wikipedia.org/wiki/Louis_Comfort_Tiffany",
   },
-  {
-    artist_id: "5f79b50d-6257-41be-8d0a-ac2c3c9c2650",
+  "5f79b50d-6257-41be-8d0a-ac2c3c9c2650": {
     full_name: "Louis Valtat",
     first_name: "Louis",
     middle_names: "",
@@ -3635,8 +3378,7 @@ const ARTISTS = [
     death: 1952,
     wikipedia_url: "https://en.wikipedia.org/wiki/Louis_Valtat",
   },
-  {
-    artist_id: "74bd52f7-9c91-46e8-8d2f-bfc93c351e12",
+  "74bd52f7-9c91-46e8-8d2f-bfc93c351e12": {
     full_name: "Louis Vivin",
     first_name: "Louis",
     middle_names: "",
@@ -3647,8 +3389,7 @@ const ARTISTS = [
     death: 1936,
     wikipedia_url: "https://en.wikipedia.org/wiki/Louis_Vivin",
   },
-  {
-    artist_id: "3e15f446-7768-4846-a4c5-cc279579e900",
+  "3e15f446-7768-4846-a4c5-cc279579e900": {
     full_name: "Lovis Corinth",
     first_name: "Lovis",
     middle_names: "",
@@ -3659,8 +3400,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lovis_Corinth",
   },
-  {
-    artist_id: "ecbf9733-194f-4cc1-bdc3-c37d997d98a7",
+  "ecbf9733-194f-4cc1-bdc3-c37d997d98a7": {
     full_name: "Lucas Cranach",
     first_name: "Lucas",
     middle_names: "",
@@ -3671,8 +3411,7 @@ const ARTISTS = [
     death: 1553,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lucas_Cranach_the_Elder",
   },
-  {
-    artist_id: "53eb82f6-c753-4ea8-b71b-588e261cf4e0",
+  "53eb82f6-c753-4ea8-b71b-588e261cf4e0": {
     full_name: "Ludolf Backhuysen",
     first_name: "Ludolf",
     middle_names: "",
@@ -3683,8 +3422,7 @@ const ARTISTS = [
     death: 1708,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ludolf_Bakhuizen",
   },
-  {
-    artist_id: "248b1e4a-ae56-46ea-b72e-97bb081954d5",
+  "248b1e4a-ae56-46ea-b72e-97bb081954d5": {
     full_name: "Ludwig Deutsch",
     first_name: "Ludwig",
     middle_names: "",
@@ -3695,8 +3433,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Ludwig_Deutsch",
   },
-  {
-    artist_id: "049e4138-e3a3-4038-a589-63bd8acd5222",
+  "049e4138-e3a3-4038-a589-63bd8acd5222": {
     full_name: "Lyonel Feininger",
     first_name: "Lyonel",
     middle_names: "",
@@ -3707,8 +3444,7 @@ const ARTISTS = [
     death: 1956,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lyonel_Feininger",
   },
-  {
-    artist_id: "514059e3-1977-4910-8a92-67008057c63b",
+  "514059e3-1977-4910-8a92-67008057c63b": {
     full_name: "Léon Augustin Lhermitte",
     first_name: "Leon",
     middle_names: "Augustin",
@@ -3719,8 +3455,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/Léon_Lhermitte",
   },
-  {
-    artist_id: "e3bec5a9-21e4-49ae-a750-61702d1d8e76",
+  "e3bec5a9-21e4-49ae-a750-61702d1d8e76": {
     full_name: "Marie-Guillemine Benoist",
     first_name: "Marie",
     middle_names: "Guillemine",
@@ -3731,8 +3466,7 @@ const ARTISTS = [
     death: 1826,
     wikipedia_url: "https://en.wikipedia.org/wiki/Marie-Guillemine_Benoist",
   },
-  {
-    artist_id: "ac00f01c-db03-4315-aac7-dc1b4af0e5d7",
+  "ac00f01c-db03-4315-aac7-dc1b4af0e5d7": {
     full_name: "Mark Rothko",
     first_name: "Mark",
     middle_names: "",
@@ -3743,8 +3477,7 @@ const ARTISTS = [
     death: 1970,
     wikipedia_url: "https://en.wikipedia.org/wiki/Mark_Rothko",
   },
-  {
-    artist_id: "3d3a8c6e-6818-462c-8ace-9a107b9aa587",
+  "3d3a8c6e-6818-462c-8ace-9a107b9aa587": {
     full_name: "Martin Johnson Heade",
     first_name: "Martin",
     middle_names: "Johnson",
@@ -3755,8 +3488,7 @@ const ARTISTS = [
     death: 1904,
     wikipedia_url: "https://en.wikipedia.org/wiki/Martin_Johnson_Heade",
   },
-  {
-    artist_id: "a11473f3-c96a-4a93-8cd3-ea3c198ff05f",
+  "a11473f3-c96a-4a93-8cd3-ea3c198ff05f": {
     full_name: "Mary Cassatt",
     first_name: "Mary",
     middle_names: "",
@@ -3767,8 +3499,7 @@ const ARTISTS = [
     death: 1926,
     wikipedia_url: "https://en.wikipedia.org/wiki/Mary_Cassatt",
   },
-  {
-    artist_id: "56968862-9c12-4a18-8bf8-0a0977ca5ba7",
+  "56968862-9c12-4a18-8bf8-0a0977ca5ba7": {
     full_name: "Matthew Pratt",
     first_name: "Matthew",
     middle_names: "",
@@ -3779,8 +3510,7 @@ const ARTISTS = [
     death: 1805,
     wikipedia_url: "https://en.wikipedia.org/wiki/Matthew_Pratt",
   },
-  {
-    artist_id: "071af081-c095-49ff-8a5b-fcfa6f14261b",
+  "071af081-c095-49ff-8a5b-fcfa6f14261b": {
     full_name: "Maurice De Vlaminck",
     first_name: "Maurice",
     middle_names: "",
@@ -3791,8 +3521,7 @@ const ARTISTS = [
     death: 1958,
     wikipedia_url: "https://en.wikipedia.org/wiki/Maurice_de_Vlaminck",
   },
-  {
-    artist_id: "7fc6e238-e942-4cc9-82d3-edd694cb9463",
+  "7fc6e238-e942-4cc9-82d3-edd694cb9463": {
     full_name: "Maurice Denis",
     first_name: "Maurice",
     middle_names: "",
@@ -3803,8 +3532,7 @@ const ARTISTS = [
     death: 1943,
     wikipedia_url: "https://en.wikipedia.org/wiki/Maurice_Denis",
   },
-  {
-    artist_id: "fc8d02df-4db6-4876-bd85-b6f02aa80b4f",
+  "fc8d02df-4db6-4876-bd85-b6f02aa80b4f": {
     full_name: "Maurice Prendergast",
     first_name: "Maurice",
     middle_names: "",
@@ -3815,8 +3543,7 @@ const ARTISTS = [
     death: 1924,
     wikipedia_url: "https://en.wikipedia.org/wiki/Maurice_Prendergast",
   },
-  {
-    artist_id: "c144810a-44b1-4a0f-be53-145e672e35de",
+  "c144810a-44b1-4a0f-be53-145e672e35de": {
     full_name: "Maurice Utrillo",
     first_name: "Maurice",
     middle_names: "",
@@ -3827,8 +3554,7 @@ const ARTISTS = [
     death: 1955,
     wikipedia_url: "https://en.wikipedia.org/wiki/Maurice_Utrillo",
   },
-  {
-    artist_id: "8b0e163f-3b80-44ab-ab20-4c1dc4e3ad4a",
+  "8b0e163f-3b80-44ab-ab20-4c1dc4e3ad4a": {
     full_name: "Max Pechstein",
     first_name: "Max",
     middle_names: "",
@@ -3839,8 +3565,7 @@ const ARTISTS = [
     death: 1955,
     wikipedia_url: "https://en.wikipedia.org/wiki/Max_Pechstein",
   },
-  {
-    artist_id: "4cb5b613-25f5-45b3-8f58-748cdc2d60de",
+  "4cb5b613-25f5-45b3-8f58-748cdc2d60de": {
     full_name: "Maxime Maufra",
     first_name: "Maxime",
     middle_names: "",
@@ -3851,8 +3576,7 @@ const ARTISTS = [
     death: 1918,
     wikipedia_url: "https://en.wikipedia.org/wiki/Maxime_Maufra",
   },
-  {
-    artist_id: "77668393-9b6e-40e0-869c-f28d9604d383",
+  "77668393-9b6e-40e0-869c-f28d9604d383": {
     full_name: "Maximilien Luce",
     first_name: "Maximilien",
     middle_names: "",
@@ -3863,8 +3587,7 @@ const ARTISTS = [
     death: 1941,
     wikipedia_url: "https://en.wikipedia.org/wiki/Maximilien_Luce",
   },
-  {
-    artist_id: "8776ee5b-772c-4231-a666-0f8e12cdbac9",
+  "8776ee5b-772c-4231-a666-0f8e12cdbac9": {
     full_name: "Nicholas Pocock",
     first_name: "Nicholas",
     middle_names: "",
@@ -3875,8 +3598,7 @@ const ARTISTS = [
     death: 1821,
     wikipedia_url: "https://en.wikipedia.org/wiki/Nicholas_Pocock",
   },
-  {
-    artist_id: "580900c3-0f66-4d94-9db0-4838b5256bbc",
+  "580900c3-0f66-4d94-9db0-4838b5256bbc": {
     full_name: "Nicolaes Berchem",
     first_name: "Nicolaes",
     middle_names: "",
@@ -3887,8 +3609,7 @@ const ARTISTS = [
     death: 1683,
     wikipedia_url: "https://en.wikipedia.org/wiki/Nicolaes_Pieterszoon_Berchem",
   },
-  {
-    artist_id: "358f99ff-5d79-4282-9a88-b2c4a85dae25",
+  "358f99ff-5d79-4282-9a88-b2c4a85dae25": {
     full_name: "Nicolas Poussin",
     first_name: "Nicolas",
     middle_names: "",
@@ -3899,8 +3620,7 @@ const ARTISTS = [
     death: 1665,
     wikipedia_url: "https://en.wikipedia.org/wiki/Nicolas_Poussin",
   },
-  {
-    artist_id: "8190e0d8-d67e-4414-9d9a-a729069aa2c2",
+  "8190e0d8-d67e-4414-9d9a-a729069aa2c2": {
     full_name: "Odilon Redon",
     first_name: "Odilon",
     middle_names: "",
@@ -3911,8 +3631,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/Odilon_Redon",
   },
-  {
-    artist_id: "321cd4b5-07cb-4765-98a1-a4a4a6d5aaf1",
+  "321cd4b5-07cb-4765-98a1-a4a4a6d5aaf1": {
     full_name: "Orazio Gentileschi",
     first_name: "Orazio",
     middle_names: "",
@@ -3923,8 +3642,7 @@ const ARTISTS = [
     death: 1639,
     wikipedia_url: "https://en.wikipedia.org/wiki/Orazio_Gentileschi",
   },
-  {
-    artist_id: "43da4969-e284-4118-8dbd-40d6e0cf5feb",
+  "43da4969-e284-4118-8dbd-40d6e0cf5feb": {
     full_name: "Oswald Achenbach",
     first_name: "Oswald",
     middle_names: "",
@@ -3935,8 +3653,7 @@ const ARTISTS = [
     death: 1905,
     wikipedia_url: "https://en.wikipedia.org/wiki/Oswald_Achenbach",
   },
-  {
-    artist_id: "4c68c642-1d89-4a4a-975a-cd13c3511afd",
+  "4c68c642-1d89-4a4a-975a-cd13c3511afd": {
     full_name: "Otto Mueller",
     first_name: "Otto",
     middle_names: "",
@@ -3947,8 +3664,7 @@ const ARTISTS = [
     death: 1930,
     wikipedia_url: "https://en.wikipedia.org/wiki/Otto_Mueller",
   },
-  {
-    artist_id: "66228126-d94b-4587-9312-8c66b9941d6e",
+  "66228126-d94b-4587-9312-8c66b9941d6e": {
     full_name: "Paul Cézanne",
     first_name: "Paul",
     middle_names: "",
@@ -3959,8 +3675,7 @@ const ARTISTS = [
     death: 1906,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Cézanne",
   },
-  {
-    artist_id: "a56f6d56-50e2-481d-8b23-e4e8f209e206",
+  "a56f6d56-50e2-481d-8b23-e4e8f209e206": {
     full_name: "Paul Gabriël",
     first_name: "Paul",
     middle_names: "",
@@ -3971,8 +3686,7 @@ const ARTISTS = [
     death: 1903,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Gabriël",
   },
-  {
-    artist_id: "aed1482c-d709-4a3f-aa53-eea96adb3df0",
+  "aed1482c-d709-4a3f-aa53-eea96adb3df0": {
     full_name: "Paul Gauguin",
     first_name: "Paul",
     middle_names: "",
@@ -3983,8 +3697,7 @@ const ARTISTS = [
     death: 1903,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Gauguin",
   },
-  {
-    artist_id: "0dc740cb-ef32-4aef-aea9-3c0e08d33a66",
+  "0dc740cb-ef32-4aef-aea9-3c0e08d33a66": {
     full_name: "Paul Kane",
     first_name: "Paul",
     middle_names: "",
@@ -3995,8 +3708,7 @@ const ARTISTS = [
     death: 1871,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Kane",
   },
-  {
-    artist_id: "047764b0-8876-402c-962b-9d26390920b9",
+  "047764b0-8876-402c-962b-9d26390920b9": {
     full_name: "Paul Klee",
     first_name: "Paul",
     middle_names: "",
@@ -4007,8 +3719,7 @@ const ARTISTS = [
     death: 1940,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Klee",
   },
-  {
-    artist_id: "06eeda5e-c588-4ce3-a4ab-5fcdc8cbc224",
+  "06eeda5e-c588-4ce3-a4ab-5fcdc8cbc224": {
     full_name: "Paul Ranson",
     first_name: "Paul",
     middle_names: "",
@@ -4019,8 +3730,7 @@ const ARTISTS = [
     death: 1909,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Ranson",
   },
-  {
-    artist_id: "7467b01a-5d7c-4216-ac33-76efcfd0d5a1",
+  "7467b01a-5d7c-4216-ac33-76efcfd0d5a1": {
     full_name: "Paul Signac",
     first_name: "Paul",
     middle_names: "",
@@ -4031,8 +3741,7 @@ const ARTISTS = [
     death: 1935,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Signac",
   },
-  {
-    artist_id: "2c37f847-75e2-436e-b669-5e41731be2a4",
+  "2c37f847-75e2-436e-b669-5e41731be2a4": {
     full_name: "Paul Sérusier",
     first_name: "Paul",
     middle_names: "",
@@ -4043,8 +3752,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paul_Sérusier",
   },
-  {
-    artist_id: "d12a45ed-295c-4e9f-af9f-f2897c29ca8e",
+  "d12a45ed-295c-4e9f-af9f-f2897c29ca8e": {
     full_name: "Paula Modersohn-Becker",
     first_name: "Becker",
     middle_names: "Paula",
@@ -4055,8 +3763,7 @@ const ARTISTS = [
     death: 1907,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paula_Modersohn-Becker",
   },
-  {
-    artist_id: "0efd48c8-6edd-45a3-91f3-d49e08fdbad0",
+  "0efd48c8-6edd-45a3-91f3-d49e08fdbad0": {
     full_name: "Paulus Potter",
     first_name: "Paulus",
     middle_names: "",
@@ -4067,8 +3774,7 @@ const ARTISTS = [
     death: 1654,
     wikipedia_url: "https://en.wikipedia.org/wiki/Paulus_Potter",
   },
-  {
-    artist_id: "80f44b81-90bf-4879-ab72-ebf7317d3be6",
+  "80f44b81-90bf-4879-ab72-ebf7317d3be6": {
     full_name: "Peder Severin Kroyer",
     first_name: "Peder",
     middle_names: "Severin",
@@ -4079,8 +3785,7 @@ const ARTISTS = [
     death: 1909,
     wikipedia_url: "https://en.wikipedia.org/wiki/Peder_Severin_Krøyer",
   },
-  {
-    artist_id: "93d205e3-31e5-431f-8e56-c8c6e8fa02f1",
+  "93d205e3-31e5-431f-8e56-c8c6e8fa02f1": {
     full_name: "Peter Monamy",
     first_name: "Peter",
     middle_names: "",
@@ -4091,8 +3796,7 @@ const ARTISTS = [
     death: 1749,
     wikipedia_url: "https://en.wikipedia.org/wiki/Peter_Monamy",
   },
-  {
-    artist_id: "f588c45d-fa9d-4643-a0c9-f6a745e14b53",
+  "f588c45d-fa9d-4643-a0c9-f6a745e14b53": {
     full_name: "Peter Paul Rubens",
     first_name: "Peter",
     middle_names: "Paul",
@@ -4103,8 +3807,7 @@ const ARTISTS = [
     death: 1640,
     wikipedia_url: "https://en.wikipedia.org/wiki/Peter_Paul_Rubens",
   },
-  {
-    artist_id: "a1caac5a-e953-46c8-b2ea-0686a49a5c76",
+  "a1caac5a-e953-46c8-b2ea-0686a49a5c76": {
     full_name: "Philippe De Champaigne",
     first_name: "Philippe",
     middle_names: "De",
@@ -4115,8 +3818,7 @@ const ARTISTS = [
     death: 1674,
     wikipedia_url: "https://en.wikipedia.org/wiki/Philippe_de_Champaigne",
   },
-  {
-    artist_id: "1dd70838-5803-4684-be55-b1ee30d9161c",
+  "1dd70838-5803-4684-be55-b1ee30d9161c": {
     full_name: "Pierre Auguste Cot",
     first_name: "Pierre",
     middle_names: "Auguste",
@@ -4127,8 +3829,7 @@ const ARTISTS = [
     death: 1883,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pierre_Auguste_Cot",
   },
-  {
-    artist_id: "bda155a9-0392-4412-97f0-cb1f48557c1c",
+  "bda155a9-0392-4412-97f0-cb1f48557c1c": {
     full_name: "Pierre Bonnard",
     first_name: "Pierre",
     middle_names: "",
@@ -4139,8 +3840,7 @@ const ARTISTS = [
     death: 1947,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pierre_Bonnard",
   },
-  {
-    artist_id: "30e146e0-a04d-4530-9949-9a7c3ff989d6",
+  "30e146e0-a04d-4530-9949-9a7c3ff989d6": {
     full_name: "Pierre Puvis De Chavannes",
     first_name: "Pierre",
     middle_names: "Puvis",
@@ -4151,8 +3851,7 @@ const ARTISTS = [
     death: 1898,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pierre_Puvis_de_Chavannes",
   },
-  {
-    artist_id: "16779cd7-4b37-455b-a111-26f0429ed1c2",
+  "16779cd7-4b37-455b-a111-26f0429ed1c2": {
     full_name: "Pierre-Auguste Renoir",
     first_name: "Pierre",
     middle_names: "Auguste",
@@ -4163,8 +3862,7 @@ const ARTISTS = [
     death: 1919,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pierre-Auguste_Renoir",
   },
-  {
-    artist_id: "967fc022-f183-4208-be5f-e80d2a26bf9f",
+  "967fc022-f183-4208-be5f-e80d2a26bf9f": {
     full_name: "Pierre-Henri De Valenciennes",
     first_name: "Pierre",
     middle_names: "Henri",
@@ -4175,8 +3873,7 @@ const ARTISTS = [
     death: 1819,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pierre-Henri_de_Valenciennes",
   },
-  {
-    artist_id: "173e9469-7ab2-456e-8b64-af3f21e54427",
+  "173e9469-7ab2-456e-8b64-af3f21e54427": {
     full_name: "Piet Mondrian",
     first_name: "Piet",
     middle_names: "",
@@ -4187,8 +3884,7 @@ const ARTISTS = [
     death: 1944,
     wikipedia_url: "https://en.wikipedia.org/wiki/Piet_Mondrian",
   },
-  {
-    artist_id: "43e4641d-d76d-42aa-a37b-48c540fcee0f",
+  "43e4641d-d76d-42aa-a37b-48c540fcee0f": {
     full_name: "Pieter Bruegel",
     first_name: "Pieter",
     middle_names: "",
@@ -4199,8 +3895,7 @@ const ARTISTS = [
     death: 1530,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pieter_Bruegel_the_Elder",
   },
-  {
-    artist_id: "3227d983-ee88-4160-89a9-4319b35972dc",
+  "3227d983-ee88-4160-89a9-4319b35972dc": {
     full_name: "Pieter Claesz",
     first_name: "Pieter",
     middle_names: "",
@@ -4211,8 +3906,7 @@ const ARTISTS = [
     death: 1660,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pieter_Claesz",
   },
-  {
-    artist_id: "8f9d668e-2754-41e6-9fba-faf3460c0c7d",
+  "8f9d668e-2754-41e6-9fba-faf3460c0c7d": {
     full_name: "Pieter De Hooch",
     first_name: "Pieter",
     middle_names: "",
@@ -4223,8 +3917,7 @@ const ARTISTS = [
     death: 1684,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pieter_de_Hooch",
   },
-  {
-    artist_id: "456475f4-45a2-46e9-a91b-ddacf4180475",
+  "456475f4-45a2-46e9-a91b-ddacf4180475": {
     full_name: "Pieter Jansz. Saenredam",
     first_name: "Pieter",
     middle_names: "Jansz",
@@ -4235,8 +3928,7 @@ const ARTISTS = [
     death: 1665,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pieter_Jansz._Saenredam",
   },
-  {
-    artist_id: "a7dd87df-56a2-4612-9ebd-eef91e63a36d",
+  "a7dd87df-56a2-4612-9ebd-eef91e63a36d": {
     full_name: "Pieter Quast",
     first_name: "Pieter",
     middle_names: "",
@@ -4247,8 +3939,7 @@ const ARTISTS = [
     death: 1647,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pieter_Quast",
   },
-  {
-    artist_id: "002e7d6d-c39e-42f0-95d9-0eb4914df83d",
+  "002e7d6d-c39e-42f0-95d9-0eb4914df83d": {
     full_name: "Pietro Longhi",
     first_name: "Pietro",
     middle_names: "",
@@ -4259,8 +3950,7 @@ const ARTISTS = [
     death: 1785,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pietro_Longhi",
   },
-  {
-    artist_id: "264dc9b8-65f9-4860-b1d3-a6d9f97e5d5b",
+  "264dc9b8-65f9-4860-b1d3-a6d9f97e5d5b": {
     full_name: "Pompeo Girolamo Batoni",
     first_name: "Pompeo",
     middle_names: "Girolamo",
@@ -4271,8 +3961,7 @@ const ARTISTS = [
     death: 1787,
     wikipedia_url: "https://en.wikipedia.org/wiki/Pompeo_Batoni",
   },
-  {
-    artist_id: "4ead0f8a-d2a6-44a5-a0d0-10f40170c3ba",
+  "4ead0f8a-d2a6-44a5-a0d0-10f40170c3ba": {
     full_name: "Rachel Ruysch",
     first_name: "Rachel",
     middle_names: "",
@@ -4283,8 +3972,7 @@ const ARTISTS = [
     death: 1750,
     wikipedia_url: "https://en.wikipedia.org/wiki/Rachel_Ruysch",
   },
-  {
-    artist_id: "5fd754d2-976e-4b7d-9252-940bbff83797",
+  "5fd754d2-976e-4b7d-9252-940bbff83797": {
     full_name: "Raoul Dufy",
     first_name: "Raoul",
     middle_names: "",
@@ -4295,8 +3983,7 @@ const ARTISTS = [
     death: 1953,
     wikipedia_url: "https://en.wikipedia.org/wiki/Raoul_Dufy",
   },
-  {
-    artist_id: "992bb670-6cf4-4dd8-974e-0d81db9b8e77",
+  "992bb670-6cf4-4dd8-974e-0d81db9b8e77": {
     full_name: "Reinier Nooms",
     first_name: "Reinier",
     middle_names: "",
@@ -4307,8 +3994,7 @@ const ARTISTS = [
     death: 1664,
     wikipedia_url: "https://en.wikipedia.org/wiki/Reinier_Nooms",
   },
-  {
-    artist_id: "2d7e547b-035e-411d-bed0-496308171030",
+  "2d7e547b-035e-411d-bed0-496308171030": {
     full_name: "Rembrandt Peale",
     first_name: "Rembrandt",
     middle_names: "",
@@ -4319,8 +4005,7 @@ const ARTISTS = [
     death: 1860,
     wikipedia_url: "https://en.wikipedia.org/wiki/Rembrandt_Peale",
   },
-  {
-    artist_id: "13042cc7-c70c-4a04-bf42-c6b4d1696eb6",
+  "13042cc7-c70c-4a04-bf42-c6b4d1696eb6": {
     full_name: "Rembrandt Van Rijn",
     first_name: "Rembrandt",
     middle_names: "",
@@ -4331,8 +4016,7 @@ const ARTISTS = [
     death: 1669,
     wikipedia_url: "https://en.wikipedia.org/wiki/Rembrandt",
   },
-  {
-    artist_id: "8b8c3f25-389b-43b3-ac61-698c92e25cb1",
+  "8b8c3f25-389b-43b3-ac61-698c92e25cb1": {
     full_name: "Richard Ansdell",
     first_name: "Richard",
     middle_names: "",
@@ -4343,8 +4027,7 @@ const ARTISTS = [
     death: 1885,
     wikipedia_url: "https://en.wikipedia.org/wiki/Richard_Ansdell",
   },
-  {
-    artist_id: "a2223700-6a03-4db4-953f-b310640eac2c",
+  "a2223700-6a03-4db4-953f-b310640eac2c": {
     full_name: "Robert Delaunay",
     first_name: "Robert",
     middle_names: "",
@@ -4355,8 +4038,7 @@ const ARTISTS = [
     death: 1941,
     wikipedia_url: "https://en.wikipedia.org/wiki/Robert_Delaunay",
   },
-  {
-    artist_id: "d032446a-f1b9-4f59-8b9f-5d5f8f3c8604",
+  "d032446a-f1b9-4f59-8b9f-5d5f8f3c8604": {
     full_name: "Robert Henri",
     first_name: "Robert",
     middle_names: "",
@@ -4367,8 +4049,7 @@ const ARTISTS = [
     death: 1929,
     wikipedia_url: "https://en.wikipedia.org/wiki/Robert_Henri",
   },
-  {
-    artist_id: "40277aa3-a478-4605-b634-7e699d6f6f50",
+  "40277aa3-a478-4605-b634-7e699d6f6f50": {
     full_name: "Robert William Vonnoh",
     first_name: "Robert",
     middle_names: "William",
@@ -4379,8 +4060,7 @@ const ARTISTS = [
     death: 1933,
     wikipedia_url: "https://en.wikipedia.org/wiki/Robert_Vonnoh",
   },
-  {
-    artist_id: "a816617b-0a07-4570-b03d-d03c49ae305f",
+  "a816617b-0a07-4570-b03d-d03c49ae305f": {
     full_name: "Roger De La Fresnaye",
     first_name: "Roger",
     middle_names: "",
@@ -4391,8 +4071,7 @@ const ARTISTS = [
     death: 1925,
     wikipedia_url: "https://en.wikipedia.org/wiki/Roger_de_La_Fresnaye",
   },
-  {
-    artist_id: "e594da30-9b5b-4914-beeb-1224f4228130",
+  "e594da30-9b5b-4914-beeb-1224f4228130": {
     full_name: "Rogier Van Der Weyden",
     first_name: "Rogier",
     middle_names: "Van",
@@ -4403,8 +4082,7 @@ const ARTISTS = [
     death: 1464,
     wikipedia_url: "https://en.wikipedia.org/wiki/Rogier_van_der_Weyden",
   },
-  {
-    artist_id: "14d76006-f89a-4037-a111-bd444cf90782",
+  "14d76006-f89a-4037-a111-bd444cf90782": {
     full_name: "Rosa Bonheur",
     first_name: "Rosa",
     middle_names: "",
@@ -4415,8 +4093,7 @@ const ARTISTS = [
     death: 1899,
     wikipedia_url: "https://en.wikipedia.org/wiki/Rosa_Bonheur",
   },
-  {
-    artist_id: "d6c580fc-61df-4b1d-bbdf-b7a4cb6d96ed",
+  "d6c580fc-61df-4b1d-bbdf-b7a4cb6d96ed": {
     full_name: "Salvador Dalí",
     first_name: "Salvador",
     middle_names: "",
@@ -4427,8 +4104,7 @@ const ARTISTS = [
     death: 1989,
     wikipedia_url: "https://en.wikipedia.org/wiki/Salvador_Dalí",
   },
-  {
-    artist_id: "bd5563c9-da3f-4c4b-9024-834df40bfc84",
+  "bd5563c9-da3f-4c4b-9024-834df40bfc84": {
     full_name: "Sandro Botticelli",
     first_name: "Sandro",
     middle_names: "",
@@ -4439,8 +4115,7 @@ const ARTISTS = [
     death: 1510,
     wikipedia_url: "https://en.wikipedia.org/wiki/Sandro_Botticelli",
   },
-  {
-    artist_id: "f3fe2401-1350-487f-9e85-c0b0c65cc018",
+  "f3fe2401-1350-487f-9e85-c0b0c65cc018": {
     full_name: "Sansio Raphael",
     first_name: "Sansio",
     middle_names: "",
@@ -4451,8 +4126,7 @@ const ARTISTS = [
     death: 1520,
     wikipedia_url: "https://en.wikipedia.org/wiki/Raphael",
   },
-  {
-    artist_id: "abe49fff-38d8-4b9a-bbaf-3b8f216694df",
+  "abe49fff-38d8-4b9a-bbaf-3b8f216694df": {
     full_name: "Santiago Rusiñol",
     first_name: "Santiago",
     middle_names: "",
@@ -4463,8 +4137,7 @@ const ARTISTS = [
     death: 1931,
     wikipedia_url: "https://en.wikipedia.org/wiki/Santiago_Rusiñol",
   },
-  {
-    artist_id: "03fc5788-5436-4f05-9ec6-7bd5e4afd16d",
+  "03fc5788-5436-4f05-9ec6-7bd5e4afd16d": {
     full_name: "Sawrey Gilpin",
     first_name: "Sawrey",
     middle_names: "",
@@ -4475,8 +4148,7 @@ const ARTISTS = [
     death: 1807,
     wikipedia_url: "https://en.wikipedia.org/wiki/Sawrey_Gilpin",
   },
-  {
-    artist_id: "6fc0001c-f5aa-44fa-b1fd-52f952f948fc",
+  "6fc0001c-f5aa-44fa-b1fd-52f952f948fc": {
     full_name: "Sergei Vinogradov",
     first_name: "Sergei",
     middle_names: "",
@@ -4487,8 +4159,7 @@ const ARTISTS = [
     death: 1910,
     wikipedia_url: "https://en.wikipedia.org/wiki/Sergei_Vinogradov",
   },
-  {
-    artist_id: "5b663e73-153f-4472-a512-746e1b4d9892",
+  "5b663e73-153f-4472-a512-746e1b4d9892": {
     full_name: "Simon De Vlieger",
     first_name: "Simon",
     middle_names: "",
@@ -4499,8 +4170,7 @@ const ARTISTS = [
     death: 1653,
     wikipedia_url: "https://en.wikipedia.org/wiki/Simon_de_Vlieger",
   },
-  {
-    artist_id: "f8ba6f40-b5d7-49ca-88df-707c0553f8eb",
+  "f8ba6f40-b5d7-49ca-88df-707c0553f8eb": {
     full_name: "Simon Vouet",
     first_name: "Simon",
     middle_names: "",
@@ -4511,8 +4181,7 @@ const ARTISTS = [
     death: 1649,
     wikipedia_url: "https://en.wikipedia.org/wiki/Simon_Vouet",
   },
-  {
-    artist_id: "bd213da3-69ea-4dc1-8a31-2724ae551ed0",
+  "bd213da3-69ea-4dc1-8a31-2724ae551ed0": {
     full_name: "Sir Anthony Van Dyck",
     first_name: "Anthony",
     middle_names: "",
@@ -4523,8 +4192,7 @@ const ARTISTS = [
     death: 1641,
     wikipedia_url: "https://en.wikipedia.org/wiki/Anthony_van_Dyck",
   },
-  {
-    artist_id: "688018fb-7592-4c51-b77a-b8c2c1b608bb",
+  "688018fb-7592-4c51-b77a-b8c2c1b608bb": {
     full_name: "Sir Arthur Stockdale Cope",
     first_name: "Arthur",
     middle_names: "Stockdale",
@@ -4535,8 +4203,7 @@ const ARTISTS = [
     death: 1940,
     wikipedia_url: "https://en.wikipedia.org/wiki/Arthur_Stockdale_Cope",
   },
-  {
-    artist_id: "754053c9-6bef-40ce-83c7-90b82eb6c957",
+  "754053c9-6bef-40ce-83c7-90b82eb6c957": {
     full_name: "Sir Edwin Landseer",
     first_name: "Sir",
     middle_names: "Edwin",
@@ -4547,8 +4214,7 @@ const ARTISTS = [
     death: 1873,
     wikipedia_url: "https://en.wikipedia.org/wiki/Edwin_Landseer",
   },
-  {
-    artist_id: "192de464-51c8-4adb-a5ed-b4d512758e0a",
+  "192de464-51c8-4adb-a5ed-b4d512758e0a": {
     full_name: "Sir George Clausen",
     first_name: "Sir",
     middle_names: "George",
@@ -4559,8 +4225,7 @@ const ARTISTS = [
     death: 1944,
     wikipedia_url: "https://en.wikipedia.org/wiki/George_Clausen",
   },
-  {
-    artist_id: "590a0d40-4da2-4d19-8c46-6cfa14dd27bd",
+  "590a0d40-4da2-4d19-8c46-6cfa14dd27bd": {
     full_name: "Sir Henry Raeburn",
     first_name: "Henry",
     middle_names: "",
@@ -4571,8 +4236,7 @@ const ARTISTS = [
     death: 1823,
     wikipedia_url: "https://en.wikipedia.org/wiki/Henry_Raeburn",
   },
-  {
-    artist_id: "329472a8-97c5-4b19-aa0a-38285bc85bec",
+  "329472a8-97c5-4b19-aa0a-38285bc85bec": {
     full_name: "Sir Joshua Reynolds",
     first_name: "Joshua",
     middle_names: "",
@@ -4583,8 +4247,7 @@ const ARTISTS = [
     death: 1792,
     wikipedia_url: "https://en.wikipedia.org/wiki/Joshua_Reynolds",
   },
-  {
-    artist_id: "fbc193e4-e155-440b-b2c8-8cc232d2a049",
+  "fbc193e4-e155-440b-b2c8-8cc232d2a049": {
     full_name: "Sir Lawrence Alma-Tadema",
     first_name: "Lawrence",
     middle_names: "Alma",
@@ -4595,8 +4258,7 @@ const ARTISTS = [
     death: 1912,
     wikipedia_url: "https://en.wikipedia.org/wiki/Lawrence_Alma-Tadema",
   },
-  {
-    artist_id: "b80edf37-da10-45a8-b538-579edf69e4b6",
+  "b80edf37-da10-45a8-b538-579edf69e4b6": {
     full_name: "Sir Peter Lely",
     first_name: "Sir",
     middle_names: "Peter",
@@ -4607,8 +4269,7 @@ const ARTISTS = [
     death: 1680,
     wikipedia_url: "https://en.wikipedia.org/wiki/Peter_Lely",
   },
-  {
-    artist_id: "81d3c12d-2858-4263-a232-8e0ccdaa26e7",
+  "81d3c12d-2858-4263-a232-8e0ccdaa26e7": {
     full_name: "Spencer Frederick Gore",
     first_name: "Spencer",
     middle_names: "Frederick",
@@ -4619,8 +4280,7 @@ const ARTISTS = [
     death: 1914,
     wikipedia_url: "https://en.wikipedia.org/wiki/Spencer_Gore_(artist)",
   },
-  {
-    artist_id: "57f71991-a8a2-4407-a969-f4712250a136",
+  "57f71991-a8a2-4407-a969-f4712250a136": {
     full_name: "Suzanne Valadon",
     first_name: "Suzanne",
     middle_names: "",
@@ -4631,8 +4291,7 @@ const ARTISTS = [
     death: 1938,
     wikipedia_url: "https://en.wikipedia.org/wiki/Suzanne_Valadon",
   },
-  {
-    artist_id: "4258c332-bb1e-4086-b986-b0314fbca8ae",
+  "4258c332-bb1e-4086-b986-b0314fbca8ae": {
     full_name: "Theo Van Doesburg",
     first_name: "Theo",
     middle_names: "",
@@ -4643,8 +4302,7 @@ const ARTISTS = [
     death: 1931,
     wikipedia_url: "https://en.wikipedia.org/wiki/Theo_van_Doesburg",
   },
-  {
-    artist_id: "86b63faa-8173-4bc4-9dda-0a2f8e716ee1",
+  "86b63faa-8173-4bc4-9dda-0a2f8e716ee1": {
     full_name: "Theodor Von Hörmann",
     first_name: "Theodor",
     middle_names: "",
@@ -4655,8 +4313,7 @@ const ARTISTS = [
     death: 1895,
     wikipedia_url: "https://en.wikipedia.org/wiki/Theodor_von_Hörmann",
   },
-  {
-    artist_id: "af055dc0-2c82-4ca8-8abb-e9c48c072e6d",
+  "af055dc0-2c82-4ca8-8abb-e9c48c072e6d": {
     full_name: "Theodore C. Steele",
     first_name: "Theodore",
     middle_names: "C",
@@ -4667,8 +4324,7 @@ const ARTISTS = [
     death: 1926,
     wikipedia_url: "https://en.wikipedia.org/wiki/T._C._Steele",
   },
-  {
-    artist_id: "ca30b280-00fe-455c-8a41-798c663a1d97",
+  "ca30b280-00fe-455c-8a41-798c663a1d97": {
     full_name: "Thomas Cole",
     first_name: "Thomas",
     middle_names: "",
@@ -4679,8 +4335,7 @@ const ARTISTS = [
     death: 1848,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Cole",
   },
-  {
-    artist_id: "488c2227-71b7-4866-8429-a2ac9c78d56f",
+  "488c2227-71b7-4866-8429-a2ac9c78d56f": {
     full_name: "Thomas Eakins",
     first_name: "Thomas",
     middle_names: "",
@@ -4691,8 +4346,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Eakins",
   },
-  {
-    artist_id: "f0fb6515-632f-4e33-9a5e-1751dfc87672",
+  "f0fb6515-632f-4e33-9a5e-1751dfc87672": {
     full_name: "Thomas Gainsborough",
     first_name: "Thomas",
     middle_names: "",
@@ -4703,8 +4357,7 @@ const ARTISTS = [
     death: 1788,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Gainsborough",
   },
-  {
-    artist_id: "7c43b479-336f-4023-ab40-f7092e0a2910",
+  "7c43b479-336f-4023-ab40-f7092e0a2910": {
     full_name: "Thomas Hovenden",
     first_name: "Thomas",
     middle_names: "",
@@ -4715,8 +4368,7 @@ const ARTISTS = [
     death: 1895,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Hovenden",
   },
-  {
-    artist_id: "78499666-aeb2-471f-881b-d6ca294da708",
+  "78499666-aeb2-471f-881b-d6ca294da708": {
     full_name: "Thomas Jacques Somerscales",
     first_name: "Thomas",
     middle_names: "Jacques",
@@ -4727,8 +4379,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Somerscales",
   },
-  {
-    artist_id: "0e55717d-82b0-4685-bb67-b04dc7a582f9",
+  "0e55717d-82b0-4685-bb67-b04dc7a582f9": {
     full_name: "Thomas Luny",
     first_name: "Thomas",
     middle_names: "",
@@ -4739,8 +4390,7 @@ const ARTISTS = [
     death: 1837,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Luny",
   },
-  {
-    artist_id: "2025d9c6-483c-41b8-aa28-88bf357ea851",
+  "2025d9c6-483c-41b8-aa28-88bf357ea851": {
     full_name: "Thomas Lyde Hornbrook",
     first_name: "Thomas",
     middle_names: "Lyde",
@@ -4751,8 +4401,7 @@ const ARTISTS = [
     death: 1855,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Lyde_Hornbrook",
   },
-  {
-    artist_id: "25b23d69-5c75-43c4-8930-9cbc5940ef18",
+  "25b23d69-5c75-43c4-8930-9cbc5940ef18": {
     full_name: "Thomas Moran",
     first_name: "Thomas",
     middle_names: "",
@@ -4763,8 +4412,7 @@ const ARTISTS = [
     death: 1926,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Moran",
   },
-  {
-    artist_id: "07935e23-053c-4f26-bafe-05b951e29afa",
+  "07935e23-053c-4f26-bafe-05b951e29afa": {
     full_name: "Thomas Sully",
     first_name: "Thomas",
     middle_names: "",
@@ -4775,8 +4423,7 @@ const ARTISTS = [
     death: 1872,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Sully",
   },
-  {
-    artist_id: "c4ea7c89-03d7-4bf0-b926-adbbbb9c88bd",
+  "c4ea7c89-03d7-4bf0-b926-adbbbb9c88bd": {
     full_name: "Thomas Waterman Wood",
     first_name: "Thomas",
     middle_names: "Waterman",
@@ -4787,8 +4434,7 @@ const ARTISTS = [
     death: 1903,
     wikipedia_url: "https://en.wikipedia.org/wiki/Thomas_Waterman_Wood",
   },
-  {
-    artist_id: "6dbdd8fe-5eda-4483-9e40-7aedebf0612e",
+  "6dbdd8fe-5eda-4483-9e40-7aedebf0612e": {
     full_name: "Théo Van Rysselberghe",
     first_name: "Theo",
     middle_names: "",
@@ -4799,8 +4445,7 @@ const ARTISTS = [
     death: 1926,
     wikipedia_url: "https://en.wikipedia.org/wiki/Théo_van_Rysselberghe",
   },
-  {
-    artist_id: "509cf417-eec6-4967-90d1-320d34e8f3a1",
+  "509cf417-eec6-4967-90d1-320d34e8f3a1": {
     full_name: "Théodore Géricault",
     first_name: "Theodore",
     middle_names: "",
@@ -4811,8 +4456,7 @@ const ARTISTS = [
     death: 1824,
     wikipedia_url: "https://en.wikipedia.org/wiki/Théodore_Géricault",
   },
-  {
-    artist_id: "b167ea69-fc67-4c1b-b2fd-42736c58ff48",
+  "b167ea69-fc67-4c1b-b2fd-42736c58ff48": {
     full_name: "Théophile Steinlen",
     first_name: "Theophile",
     middle_names: "Alexandre",
@@ -4823,8 +4467,7 @@ const ARTISTS = [
     death: 1923,
     wikipedia_url: "https://en.wikipedia.org/wiki/Théophile_Steinlen",
   },
-  {
-    artist_id: "c45cdcac-e77f-464d-8c38-5a2193f86c83",
+  "c45cdcac-e77f-464d-8c38-5a2193f86c83": {
     full_name: "Titian",
     first_name: "Tiziano",
     middle_names: "",
@@ -4835,8 +4478,7 @@ const ARTISTS = [
     death: 1576,
     wikipedia_url: "https://en.wikipedia.org/wiki/Titian",
   },
-  {
-    artist_id: "edace082-021f-4703-ae0e-7ce291b6154a",
+  "edace082-021f-4703-ae0e-7ce291b6154a": {
     full_name: "Umberto Boccioni",
     first_name: "Umberto",
     middle_names: "",
@@ -4847,8 +4489,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/Umberto_Boccioni",
   },
-  {
-    artist_id: "7e6b5639-c8ef-4fdc-b8d3-3521819e40d7",
+  "7e6b5639-c8ef-4fdc-b8d3-3521819e40d7": {
     full_name: "Vasiliy Polenov",
     first_name: "Vasiliy",
     middle_names: "",
@@ -4859,8 +4500,7 @@ const ARTISTS = [
     death: 1927,
     wikipedia_url: "https://en.wikipedia.org/wiki/Vasily_Polenov",
   },
-  {
-    artist_id: "37ca5e62-4ba1-4a63-b2fb-ffb40bc4d77d",
+  "37ca5e62-4ba1-4a63-b2fb-ffb40bc4d77d": {
     full_name: "Vilhelm Hammershoi",
     first_name: "Vilhelm",
     middle_names: "",
@@ -4871,8 +4511,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/Vilhelm_Hammershøi",
   },
-  {
-    artist_id: "07f911ed-c0e3-49d6-80a1-0739f48df30b",
+  "07f911ed-c0e3-49d6-80a1-0739f48df30b": {
     full_name: "Vincent Van Gogh",
     first_name: "Vincent",
     middle_names: "",
@@ -4883,8 +4522,7 @@ const ARTISTS = [
     death: 1890,
     wikipedia_url: "https://en.wikipedia.org/wiki/Vincent_van_Gogh",
   },
-  {
-    artist_id: "ccb3b6fb-21ca-4fb3-b3e5-1d0185b60091",
+  "ccb3b6fb-21ca-4fb3-b3e5-1d0185b60091": {
     full_name: "Wassily Kandinsky",
     first_name: "Wassily",
     middle_names: "",
@@ -4895,8 +4533,7 @@ const ARTISTS = [
     death: 1944,
     wikipedia_url: "https://en.wikipedia.org/wiki/Wassily_Kandinsky",
   },
-  {
-    artist_id: "1df4d563-da25-41db-ab51-92680f54c8c9",
+  "1df4d563-da25-41db-ab51-92680f54c8c9": {
     full_name: "Willem Bartel Van Der Kooi",
     first_name: "Willem",
     middle_names: "Bartel",
@@ -4907,8 +4544,7 @@ const ARTISTS = [
     death: 1836,
     wikipedia_url: "https://en.wikipedia.org/wiki/Kooi",
   },
-  {
-    artist_id: "e3f39945-f447-47a9-9beb-82be69bcab18",
+  "e3f39945-f447-47a9-9beb-82be69bcab18": {
     full_name: "Willem Claesz. Heda",
     first_name: "Willem",
     middle_names: "Claesz",
@@ -4919,8 +4555,7 @@ const ARTISTS = [
     death: 1680,
     wikipedia_url: "https://en.wikipedia.org/wiki/Willem_Claesz._Heda",
   },
-  {
-    artist_id: "caab9731-7cdb-41ed-b3c5-e700b6169b75",
+  "caab9731-7cdb-41ed-b3c5-e700b6169b75": {
     full_name: "Willem Duyster",
     first_name: "Willem",
     middle_names: "",
@@ -4931,8 +4566,7 @@ const ARTISTS = [
     death: 1635,
     wikipedia_url: "https://en.wikipedia.org/wiki/Willem_Cornelisz_Duyster",
   },
-  {
-    artist_id: "b10f937c-b9c9-4fc4-972c-61ed29df94b7",
+  "b10f937c-b9c9-4fc4-972c-61ed29df94b7": {
     full_name: "Willem Maris",
     first_name: "Willem",
     middle_names: "",
@@ -4943,8 +4577,7 @@ const ARTISTS = [
     death: 1910,
     wikipedia_url: "https://en.wikipedia.org/wiki/Willem_Maris",
   },
-  {
-    artist_id: "1bdaed14-92e5-4c6f-b406-70524ae4b3ab",
+  "1bdaed14-92e5-4c6f-b406-70524ae4b3ab": {
     full_name: "Willem Van De Velde",
     first_name: "Willem",
     middle_names: "Van",
@@ -4956,8 +4589,7 @@ const ARTISTS = [
     wikipedia_url:
       "https://en.wikipedia.org/wiki/Willem_van_de_Velde_the_Elder",
   },
-  {
-    artist_id: "1a56a769-c8d3-459c-9138-b814eda383af",
+  "1a56a769-c8d3-459c-9138-b814eda383af": {
     full_name: "William Adolphe Bouguereau",
     first_name: "William",
     middle_names: "Adolphe",
@@ -4968,8 +4600,7 @@ const ARTISTS = [
     death: 1905,
     wikipedia_url: "https://en.wikipedia.org/wiki/William-Adolphe_Bouguereau",
   },
-  {
-    artist_id: "a94a5549-987e-469d-bac1-0c3b70fdea89",
+  "a94a5549-987e-469d-bac1-0c3b70fdea89": {
     full_name: "William Bradford",
     first_name: "William",
     middle_names: "",
@@ -4980,8 +4611,7 @@ const ARTISTS = [
     death: 1892,
     wikipedia_url: "https://en.wikipedia.org/wiki/Bradford_Bishop",
   },
-  {
-    artist_id: "d18aa1dc-4aed-45cb-be05-4305a1e26791",
+  "d18aa1dc-4aed-45cb-be05-4305a1e26791": {
     full_name: "William Hodges",
     first_name: "William",
     middle_names: "",
@@ -4992,8 +4622,7 @@ const ARTISTS = [
     death: 1797,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Hodges",
   },
-  {
-    artist_id: "b9dff322-2bfc-45f8-b2d7-b718643f393b",
+  "b9dff322-2bfc-45f8-b2d7-b718643f393b": {
     full_name: "William James Glackens",
     first_name: "William",
     middle_names: "",
@@ -5004,8 +4633,7 @@ const ARTISTS = [
     death: 1938,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Glackens",
   },
-  {
-    artist_id: "f25200f1-5ca0-4cf2-b412-62d3df42cc2a",
+  "f25200f1-5ca0-4cf2-b412-62d3df42cc2a": {
     full_name: "William Merritt Chase",
     first_name: "William",
     middle_names: "Merritt",
@@ -5016,8 +4644,7 @@ const ARTISTS = [
     death: 1916,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Merritt_Chase",
   },
-  {
-    artist_id: "f53e27b8-cfd5-419d-9780-fb73f9fd352e",
+  "f53e27b8-cfd5-419d-9780-fb73f9fd352e": {
     full_name: "William Michael Harnett",
     first_name: "William",
     middle_names: "Michael",
@@ -5028,8 +4655,7 @@ const ARTISTS = [
     death: 1892,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Harnett",
   },
-  {
-    artist_id: "ff7f3c44-2d0b-43c1-8246-61ba1e7dbd5b",
+  "ff7f3c44-2d0b-43c1-8246-61ba1e7dbd5b": {
     full_name: "William P. Chappel",
     first_name: "William",
     middle_names: "P",
@@ -5040,8 +4666,7 @@ const ARTISTS = [
     death: 1887,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Haighton_Chappel",
   },
-  {
-    artist_id: "ded8de8b-dd00-4c15-8a82-5d49a10d0f3b",
+  "ded8de8b-dd00-4c15-8a82-5d49a10d0f3b": {
     full_name: "William Redmore Bigg",
     first_name: "William",
     middle_names: "Redmore",
@@ -5052,8 +4677,7 @@ const ARTISTS = [
     death: 1828,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Redmore_Bigg",
   },
-  {
-    artist_id: "4f731bcd-b952-41b5-8edf-81ee821fb0bf",
+  "4f731bcd-b952-41b5-8edf-81ee821fb0bf": {
     full_name: "William Sidney Mount",
     first_name: "William",
     middle_names: "Sidney",
@@ -5064,8 +4688,7 @@ const ARTISTS = [
     death: 1868,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Sidney_Mount",
   },
-  {
-    artist_id: "da21cf1b-ca35-4bd0-9c9e-857ba8b22420",
+  "da21cf1b-ca35-4bd0-9c9e-857ba8b22420": {
     full_name: "William Stanley Haseltine",
     first_name: "William",
     middle_names: "Stanley",
@@ -5076,8 +4699,7 @@ const ARTISTS = [
     death: 1900,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Stanley_Haseltine",
   },
-  {
-    artist_id: "49436397-ff5a-41c8-8816-3acceab47902",
+  "49436397-ff5a-41c8-8816-3acceab47902": {
     full_name: "William Trost Richards",
     first_name: "William",
     middle_names: "Trost",
@@ -5088,8 +4710,7 @@ const ARTISTS = [
     death: 1905,
     wikipedia_url: "https://en.wikipedia.org/wiki/William_Trost_Richards",
   },
-  {
-    artist_id: "1025c637-719e-4c5c-874e-b836910883e8",
+  "1025c637-719e-4c5c-874e-b836910883e8": {
     full_name: "Winslow Homer",
     first_name: "Winslow",
     middle_names: "",
@@ -5100,8 +4721,7 @@ const ARTISTS = [
     death: 1910,
     wikipedia_url: "https://en.wikipedia.org/wiki/Winslow_Homer",
   },
-  {
-    artist_id: "ff435d4a-3eae-4238-a149-8f42d324f763",
+  "ff435d4a-3eae-4238-a149-8f42d324f763": {
     full_name: "Yves Tanguy",
     first_name: "Yves",
     middle_names: "",
@@ -5112,8 +4732,7 @@ const ARTISTS = [
     death: 1955,
     wikipedia_url: "https://en.wikipedia.org/wiki/Yves_Tanguy",
   },
-  {
-    artist_id: "3a951d6c-02d1-415b-817e-a5fd016b0331",
+  "3a951d6c-02d1-415b-817e-a5fd016b0331": {
     full_name: "Édouard Adam",
     first_name: "Adam",
     middle_names: "",
@@ -5124,8 +4743,7 @@ const ARTISTS = [
     death: 1929,
     wikipedia_url: "https://en.wikipedia.org/wiki/Column_still",
   },
-  {
-    artist_id: "9f38830e-6e10-496b-812b-2e6ff4268eda",
+  "9f38830e-6e10-496b-812b-2e6ff4268eda": {
     full_name: "Édouard Manet",
     first_name: "Edouard",
     middle_names: "",
@@ -5136,8 +4754,7 @@ const ARTISTS = [
     death: 1883,
     wikipedia_url: "https://en.wikipedia.org/wiki/Édouard_Manet",
   },
-  {
-    artist_id: "b3dea632-dab6-49a3-82e1-68f2290b1159",
+  "b3dea632-dab6-49a3-82e1-68f2290b1159": {
     full_name: "Édouard Vuillard",
     first_name: "Edouard",
     middle_names: "",
@@ -5148,8 +4765,7 @@ const ARTISTS = [
     death: 1940,
     wikipedia_url: "https://en.wikipedia.org/wiki/Édouard_Vuillard",
   },
-  {
-    artist_id: "f0cdac3a-9395-4761-8c19-04d270673662",
+  "f0cdac3a-9395-4761-8c19-04d270673662": {
     full_name: "Élisabeth Vigée-LeBrun",
     first_name: "Elisabeth",
     middle_names: "Vigee",
@@ -5160,8 +4776,7 @@ const ARTISTS = [
     death: 1842,
     wikipedia_url: "https://en.wikipedia.org/wiki/Élisabeth_Vigée_Le_Brun",
   },
-  {
-    artist_id: "1bab61ed-afa6-4506-9cdb-43592fee5f02",
+  "1bab61ed-afa6-4506-9cdb-43592fee5f02": {
     full_name: "Émile Bernard",
     first_name: "Emile",
     middle_names: "",
@@ -5172,8 +4787,7 @@ const ARTISTS = [
     death: 1941,
     wikipedia_url: "https://en.wikipedia.org/wiki/Émile_Bernard",
   },
-  {
-    artist_id: "da8875e2-6760-4fee-8e2a-5e762dd3e75b",
+  "da8875e2-6760-4fee-8e2a-5e762dd3e75b": {
     full_name: "Étienne Dinet",
     first_name: "Etienne",
     middle_names: "",
@@ -5184,4 +4798,4 @@ const ARTISTS = [
     death: 1929,
     wikipedia_url: "https://en.wikipedia.org/wiki/Nasreddine_Dinet",
   },
-];
+};

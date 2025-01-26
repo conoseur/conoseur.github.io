@@ -1,19 +1,60 @@
-// Initialize global artwork data
-let globalartworkData;
-let startDate = new Date("01/01/2025"),
-  currentDate = new Date();
-let Difference_In_Time;
-let totalScore = 0,
-  questionStep = 0;
-let timeLeft = 99,
-  timerInterval;
-let log = "▶";
+let question,
+  questionStep = 0,
+  timeLeft = 99,
+  timerInterval,
+  log = "▶",
+  isMobile =
+    /Mobi|Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ),
+  isLandscape = window.innerWidth > window.innerHeight;
 
-// prettier-ignore
-const nationalityInput = document.querySelector('input[id="nationality-select"]');
-const yearInput = document.querySelector('input[id="year-select"]');
-const artistInput = document.querySelector('input[id="artist-select"]');
+window.addEventListener("resize", () => {
+  isLandscape = window.innerWidth > window.innerHeight;
+  console.log("Landscape mode:", isLandscape); // You can use this to see the result in real-time
+});
 
+//    question {
+//     "image_id": "fc249338-f1db-4612-965e-402e8628d4f7",
+//     "artist_id": "37e91e34-3df7-40d3-93f1-d3df6be025e0",
+//     "image_title": "La Chiaruccia",
+//     "subject": "",
+//     "style": "Classicism",
+//     "museum": "",
+//     "label": "24\" x 30\"(61 cm x 76 cm) | 26\" x 32\"(66 cm x 81 cm) | 29\" x 36\"(74 cm x 91 cm) | 30\" x 40\"(76 cm x 102 cm) | 36\" x 48\"(91 cm x 122 cm) | 48\" x 60\"(122 cm x 152 cm) | 54\" x 68\"(137 cm x 173 cm)",
+//     "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Alexandre_Cabanel_-_La_Chiaruccia.jpeg"
+//    }
+
+const { createClient } = supabase;
+const _supabase = createClient(
+  "https://kdcfufobafrpbwewcrst.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY2Z1Zm9iYWZycGJ3ZXdjcnN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc3NjIzNDQsImV4cCI6MjA1MzMzODM0NH0.5oEKXRjAnm6hg1xRQivys6-ULdeBN5oUS3LSjAZumt8"
+);
+
+// Function to fetch data and display artwork
+async function fetchData() {
+  // start loading
+
+  try {
+    let { data, error } = await _supabase.rpc("get_today_artwork");
+    if (error) {
+      console.error("Error fetching artwork:", error);
+    } else if (data) {
+      question = data;
+    } else {
+      // no artwork?
+    }
+  } catch (err) {
+    // error
+  } finally {
+    // show the content after image loaded
+  }
+}
+
+// Call the function
+fetchData();
+
+const inputBox = document.querySelector('input[id="input-box"]');
 const toastContainer = document.getElementById("toast-container");
 
 // Function to generate toasts based on the autocomplete suggestions
@@ -28,111 +69,53 @@ function generateToasts(filteredNationalities, isNationality = true) {
   });
 }
 
-function createToast(suggestion, type, isNationality) {
-  // Create the toast element
+function createToast(type, content) {
   const toast = document.createElement("div");
   toast.classList.add("toast");
 
-  // Customize based on toast type (e.g., success, error, neutral)
+  // Type = "success", "error", "neutral"
   if (type === "success") {
     toast.classList.add("toast-success");
   } else if (type === "error") {
     toast.classList.add("toast-error");
   }
 
-  toast.textContent = suggestion;
+  toast.textContent = content;
 
-  // Add click event to toast
   toast.addEventListener("click", function () {
-    // Update the input field based on whether it's nationality or artist
-    if (isNationality) {
-      nationalityInput.value = suggestion;
-    } else {
-      artistInput.value = suggestion;
-    }
+    inputBox.value = content;
   });
-
-  // Append toast to the container
-  if (!toastContainer) {
-    // If the container doesn't exist, create it
-    const container = document.createElement("div");
-    container.id = "toast-container";
-    document.body.appendChild(container);
-  }
 
   toastContainer.appendChild(toast);
 }
 
-// 2. Autocomplete Logic
-nationalityInput.addEventListener("input", function () {
-  const query = nationalityInput.value.toLowerCase();
-
-  if (query.length > 0) {
-    const filteredNationalities = NATIONALITIES.filter((nationality) =>
-      nationality.toLowerCase().includes(query)
-    );
-
-    // Generate toasts with the filtered nationalities
-    generateToasts(filteredNationalities, true);
-  }
+inputBox.addEventListener("input", function () {
+  // TODO AUTOCOMPLETE based on questionStep
+  // const query = nationalityInput.value.toLowerCase();
+  // if (query.length > 0) {
+  //   const filteredNationalities = NATIONALITIES.filter((nationality) =>
+  //     nationality.toLowerCase().includes(query)
+  //   );
+  //   // Generate toasts with the filtered nationalities
+  //   generateToasts(filteredNationalities, true);
+  // }
 });
-
-artistInput.addEventListener("input", function () {
-  const query = artistInput.value.toLowerCase();
-  const currentNationality = globalartworkData[Difference_In_Time].nationality;
-
-  if (query.length > 0) {
-    // Filter the artist names based on the input query and nationality
-    const filteredArtists = ARTISTS.filter(
-      (artist) =>
-        artist.full_name.toLowerCase().includes(query) &&
-        artist.nationality === currentNationality
-    ).map((artist) => artist.full_name); // Extract names
-
-    // Generate toasts with the filtered artists
-    generateToasts(filteredArtists, false);
-  }
-});
-
-// Async function to fetch the artwork data
-async function fetchArtworkData() {
-  // Only fetching cleaned_artwork_data.json since unique values are included in ARTWORK_VALUES
-  const response = await fetch("./art_data/cleaned_artwork_data2.json");
-  const artworkData = await response.json();
-
-  globalartworkData = artworkData;
-}
-
-function updateDifferenceInTime() {
-  Difference_In_Time = Math.round(
-    (currentDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
-  );
-}
 
 // prettier-ignore
-function displayArtwork(artwork) {
-  // function openArtist() {
-  //   const link = ARTWORK_VALUES.artists[artwork.artist.normalize("NFD").replace(/[\u0300-\u036f]/g, "")];
-  //   window.open(link);
-  // }
-
-  function openArtist() {
-    const artist = ARTISTS.find(
-      (a) => a.full_name.toLowerCase() === artwork.artist.toLowerCase()
-    );
-    const link = artist ? artist.wikipedia_url : "#";
-    window.open(link);
-  }
+function updateValues(question) {
+  artist = ARTISTS[question.artist_id]
 
   /* Update artwork display */
-  document.getElementById("artwork-image").src = artwork.image_url || "";
-  document.getElementById("artwork-image-result").src = artwork.image_url || "";
-  document.getElementById("artwork-artist").textContent = `${artwork.artist || "Unknown Artist"}`;
-  document.getElementById("artwork-title").textContent = `${artwork.worktitle || "Untitled"}`;
+  document.getElementById("artwork-image").src = question.image_url || "";
+  document.getElementById("artwork-image-result").src = question.image_url || "";
+  document.getElementById("artwork-artist").textContent = `${artist.full_name || "Unknown Artist"}`;
+  document.getElementById("artwork-title").textContent = `${question.image_title || "Untitled"}`;
 
+
+  // LOOK AGAIN at -------------------------------------------------------------------------------
   // Manage the artwork link
   const artworkLink = document.getElementById("artwork-link");
-  const newArtworkLink = artwork.wikipedia_url || "#";
+  const newArtworkLink = question.wikipedia_url || "#";
 
   // Remove any existing event listeners by cloning the element
   const newLinkElement = artworkLink.cloneNode(true);
@@ -155,61 +138,9 @@ function displayArtwork(artwork) {
   } else {
     document.getElementById("style").style.display = "none";
   }
+  // LOOK AGAIN at -------------------------------------------------------------------------------
 }
 
-// Format date and wait for artwork data
-async function formatDate(date) {
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  const yyyy = date.getFullYear();
-
-  // Wait for artwork data to load before displaying the artwork
-  await fetchArtworkData();
-
-  // Ensure artwork data is loaded before calling displayArtwork
-  updateDifferenceInTime();
-  displayArtwork(globalartworkData[Difference_In_Time]);
-
-  return `${mm}/${dd}/${yyyy}`;
-}
-
-// Update the date display
-async function updateDateDisplay() {
-  // hideLoadingOverlays();
-  document.getElementById("result").style.display = "none";
-  totalScore = 0;
-  questionStep = 1;
-  document.getElementById("currentDate").textContent = await formatDate(
-    currentDate
-  );
-}
-
-// Initialize date display
-updateDateDisplay();
-
-// Event listeners for navigation buttons
-document.getElementById("prevDate").addEventListener("click", () => {
-  currentDate.setDate(currentDate.getDate() - 1);
-  updateDateDisplay();
-  startTimer();
-});
-
-document.getElementById("nextDate").addEventListener("click", () => {
-  currentDate.setDate(currentDate.getDate() + 1);
-  updateDateDisplay();
-  startTimer();
-});
-
-document.getElementById("randomizer").addEventListener("click", () => {
-  currentDate.setDate(
-    currentDate.getDate() + 200 + Math.floor(Math.random() * 2000)
-  );
-  document.getElementById("date-nav").style.display = "none";
-  updateDateDisplay();
-  startTimer();
-});
-
-// DOM elements
 const timerProgress = document.getElementById("timer-progress");
 const timerText = document.getElementById("timer-text");
 
@@ -224,63 +155,28 @@ function updateTimer() {
   timerText.textContent = timeLeft;
 }
 
-// Function to move to next question
-function showNextQuestion() {
-  questionStep++;
-  nationalityInput.style.display = "none";
-  nationalityInput.value = "";
-  yearInput.style.display = "none";
-  yearInput.value = "";
-  artistInput.style.display = "none";
-  artistInput.value = "";
-  if (questionStep === 1) {
-    nationalityInput.style.display = "block";
-    nationalityInput.focus();
-  } else if (questionStep === 2) {
-    yearInput.style.display = "block";
-    yearInput.focus();
-  } else if (questionStep === 3) {
-    artistInput.style.display = "block";
-    artistInput.focus();
-  }
-}
-
 // Function to show final score
 function showFinalScore() {
   toastContainer.innerHTML = ""; // Clear previous toasts
   const status = document.getElementById("status");
   status.classList.remove("blue", "green", "yellow");
-  if (totalScore == 3 && timeLeft >= 30) {
+  status.innerHTML = BADGE_BEGINEUR;
+  if (timeLeft >= 30) {
     log += "✨";
     status.classList.add("yellow");
-    status.innerHTML = `Conoseur &nbsp;
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600" x="0px" y="0px" width="20" height="20">
-                    <path fill="rgb(90, 93, 0)"
-                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                </svg>
-                `;
+    status.innerHTML = BADGE_CONOSEUR;
   }
-  if (totalScore >= 2 && timeLeft <= 30) {
+  if (timeLeft <= 30) {
     log += "👑";
     status.classList.add("green");
-    status.innerHTML = `Expert &nbsp;
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600" x="0px" y="0px" width="20" height="20">
-                    <path fill="rgb(0, 93, 26)"
-                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                </svg>
-                `;
+    status.innerHTML = BADGE_MASTEUR;
   }
-  if (totalScore == 1) {
+  if (log.contains("❌")) {
     log += "😀";
     status.classList.add("blue");
-    status.innerHTML = `Novice &nbsp;
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600" x="0px" y="0px" width="20" height="20">
-                    <path fill="rgb(0, 87, 93)"
-                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                </svg>
-                `;
+    status.innerHTML = BADGE_AMATEUR;
   } else {
-    log += "😭";
+    log += "🙂";
   }
   document.getElementById("result").style.display = "flex";
 }
@@ -325,10 +221,6 @@ function editDistance(s1, s2) {
   return costs[s2.length];
 }
 
-document.getElementById("popup").addEventListener("click", function () {
-  this.style.display = "none"; // Hides the popup
-});
-
 // Function to handle answer submission
 function handleAnswer() {
   updateDifferenceInTime();
@@ -336,67 +228,37 @@ function handleAnswer() {
 
   toastContainer.innerHTML = "";
 
+  if (!inputBox.value.toLowerCase()) {
+    createToast("You didn't type in anything", "error", false);
+    return;
+  }
+
+  questionStep++;
+
+  // prettier-ignore
   switch (questionStep) {
     case 1:
-      input = nationalityInput.value.toLowerCase();
-      if (!input) {
-        createToast("You didn't type in anything", "error", false);
-        return;
-      }
-      correct = similarity(input, artwork.nationality.toLowerCase()) > 0.6;
-      if (correct) {
-        totalScore++;
-        log += "🌐";
-      } else {
-        log += "❌";
-      }
-      createToast(artwork.nationality, correct ? "success" : "error", false);
+      log = similarity(input, question.nationality.toLowerCase()) > 0.6 ? "🌐" : "❌"
+      createToast(question.nationality, similarity(input, question.nationality.toLowerCase()) > 0.6 ? "success" : "error", false);
       break;
     case 2:
-      input = parseInt(yearInput.value);
-      if (!input) {
-        createToast("You didn't type in anything", "error", false);
-        return;
-      }
-      correct = input >= artwork.artist_born && input <= artwork.artist_dead;
-      if (correct) {
-        totalScore++;
-        log += "🔢";
-      } else {
-        log += "❌";
-      }
+      input = parseInt(inputBox.value);
+      log = input >= artwork.artist_born && input <= artwork.artist_dead ? "🔢" : "❌"
       createToast(input, correct ? "success" : "error", false);
       break;
     case 3:
-      input = artistInput.value.toLowerCase();
-      if (!input) {
-        createToast("You didn't type in anything", "error", false);
-        return;
-      }
-      correct = ARTISTS.some(
-        (artist) => similarity(input, artist.full_name.toLowerCase()) > 0.6
-      );
-      if (correct) {
-        totalScore++;
-        log += "🎨";
-      } else {
-        log += "❌";
-      }
+      log = similarity(input, ARTISTS[question.artist_id].full_name.toLowerCase()) > 0.6 ? "🎨" : "❌"
+      clearInterval(timerInterval);
+      showFinalScore();
       break;
-  }
-
-  if (questionStep < 3) {
-    showNextQuestion();
-  } else {
-    clearInterval(timerInterval);
-    showFinalScore();
   }
 }
 
 function startTimer() {
   clearInterval(timerInterval);
   timeLeft = 99;
-  updateTimer();
+  updateTimer(); // maybe comment this out
+  
   timerInterval = setInterval(() => {
     timeLeft--;
     updateTimer();
@@ -407,12 +269,12 @@ function startTimer() {
   }, 1000);
 
   timeLeft = 99;
-  totalScore = 0;
-  questionStep = 0;
+  questionStep = 1;
   log = "▶";
-  showNextQuestion();
 }
 
+
+// Simplify this ------------------------------------------------------------------------
 function hideLoadingOverlays() {
   document.getElementById("loading-text").style.display = "block";
   document.getElementById("loading-overlay").style.display = "flex";
@@ -440,52 +302,7 @@ function hideLoadingOverlays() {
     overlay2.style.display = "none";
   }, 4000);
 }
-
-fetchArtworkData()
-  .then(() => {
-    console.log("Data loaded");
-
-    // Wait for all images on the page to fully load
-    const images = Array.from(document.querySelectorAll("img"));
-    const imageLoadPromises = images.map(
-      (img) =>
-        new Promise((resolve) => {
-          if (img.complete) {
-            resolve(); // Already loaded
-          } else {
-            img.addEventListener("load", resolve); // Wait for load
-            img.addEventListener("error", resolve); // Handle errors
-          }
-        })
-    );
-
-    Promise.all(imageLoadPromises).then(() => {
-      console.log("All images loaded");
-      hideLoadingOverlays();
-
-      const tutorialModal = document.getElementById("tutorial-modal");
-      const startGameBtn = document.getElementById("start-game");
-
-      clearInterval(timerInterval);
-      updateTimer();
-
-      // Start game button click handler
-      startGameBtn.addEventListener("click", () => {
-        tutorialModal.classList.add("opacity-0");
-        setTimeout(() => {
-          tutorialModal.style.display = "none";
-        }, 300);
-
-        // Reset and start the timer
-        startTimer();
-      });
-    });
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-    document.getElementById("loading-text").textContent =
-      "Failed to load data.";
-  });
+// Simplify this ------------------------------------------------------------------------
 
 const shareData = {
   title: "Do you know this famous piece?",

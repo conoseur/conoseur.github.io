@@ -124,7 +124,7 @@
         // Function to fetch artwork data from a local JSON file
         async function fetchArtworkData() {
             try {
-                const response = await fetch("./art_data/cleaned_artwork_data2.json");
+                const response = await fetch("./art_data/artwork.json");
                 const artworkData = await response.json();
                 globalArtworkData = artworkData;
                 displayGallery(); // Once data is fetched, display the gallery
@@ -138,7 +138,7 @@
             const gallery = document.getElementById('gallery');
             gallery.innerHTML = '';  // Clear the gallery before redisplaying
 
-            globalArtworkData.slice(0, 100).forEach((artwork, index) => {
+            globalArtworkData.slice(40, 60).forEach((artwork, index) => {
                 const artworkDiv = document.createElement('div');
                 artworkDiv.classList.add('artwork');
 

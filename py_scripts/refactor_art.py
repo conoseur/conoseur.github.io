@@ -37,7 +37,7 @@ def find_best_artist_match(artist_name, artist_mapping):
     return "unknown"
 
 # Load the JSON files
-with open("art_data/cleaned_artwork_data2.json", "r", encoding="utf-8") as artwork_file, \
+with open("art_data/artwork.json", "r", encoding="utf-8") as artwork_file, \
      open("art_data/artists.json", "r", encoding="utf-8") as artists_file:
     artworks = json.load(artwork_file)
     artists = json.load(artists_file)  # Now artists is a dictionary keyed by artist_id
