@@ -14,6 +14,12 @@ window.addEventListener("resize", () => {
   console.log("Landscape mode:", isLandscape); // You can use this to see the result in real-time
 });
 
+const inputBox = document.querySelector('input[id="input-box"]');
+const toastContainer = document.getElementById("toast-container");
+const overlay = document.getElementById("loading-overlay");
+const overlay2 = document.getElementById("loading-overlay2");
+const loadingtext = document.getElementById("loading-text");
+
 //    question {
 //     "image_id": "fc249338-f1db-4612-965e-402e8628d4f7",
 //     "artist_id": "37e91e34-3df7-40d3-93f1-d3df6be025e0",
@@ -31,47 +37,90 @@ const _supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY2Z1Zm9iYWZycGJ3ZXdjcnN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc3NjIzNDQsImV4cCI6MjA1MzMzODM0NH0.5oEKXRjAnm6hg1xRQivys6-ULdeBN5oUS3LSjAZumt8"
 );
 
+// TODO make more efficient !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Function to fetch data and display artwork
 async function fetchData() {
-  // start loading
+  showLoadingOverlay();
 
   try {
-    let { data, error } = await _supabase.rpc("get_today_artwork");
+    const params = new URLSearchParams(window.location.search);
+    const imageId = params.get("image_id");
+    let data, error;
+    let loadingtext = document.getElementById("loading-text");
+
+    if (imageId) {
+      // Fetch specific artwork by image_id
+      ({ data, error } = await _supabase.rpc("get_artwork_by_id", {
+        image_id: imageId,
+      }));
+    } else {
+      // Fetch today's artwork
+      ({ data, error } = await _supabase.rpc("get_today_artwork"));
+      if (data) {
+        // Update URL with the new image_id
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set("image_id", data.image_id);
+        window.history.replaceState({}, "", newUrl);
+      }
+    }
+    question = data;
+
     if (error) {
       console.error("Error fetching artwork:", error);
     } else if (data) {
-      question = data;
+      // Process the fetched data
+      const img = new Image();
+      img.src = data.image_url;
+
+      img.onload = () => {
+        updateValues(data);
+        hideLoadingOverlays();
+      };
+
+      img.onerror = () => {
+        loadingtext.innerHTML = "Image failed to load";
+        loadingtext.classList.add("red");
+      };
     } else {
-      // no artwork?
+      loadingtext.innerHTML = "No artwork found";
+      loadingtext.classList.add("red");
     }
   } catch (err) {
-    // error
-  } finally {
-    updateValues(question);
-    // TODO: show the content after image loaded
-    hideLoadingOverlays();
+    console.log(err);
+    loadingtext.innerHTML = "Try refeshing the page";
+    loadingtext.classList.add("red");
   }
 }
 
-// Call the function
 fetchData();
 
-const inputBox = document.querySelector('input[id="input-box"]');
-const toastContainer = document.getElementById("toast-container");
-const overlay = document.getElementById("loading-overlay");
-const overlay2 = document.getElementById("loading-overlay2");
-const loadingtext = document.getElementById("loading-text");
+async function fetchRandom() {
+  showLoadingOverlay();
 
-// Function to generate toasts based on the autocomplete suggestions
-function generateToasts(filteredNationalities, isNationality = true) {
-  toastContainer.innerHTML = ""; // Clear previous toasts
+  try {
+    ({ data, error } = await _supabase.rpc("get_random_artwork"));
 
-  // Generate toasts with nationalities or artists from the autocomplete suggestions
-  filteredNationalities.forEach((suggestion, index) => {
-    if (index < 5) {
-      createToast(suggestion, "neutral", isNationality);
+    if (data) {
+      // Process the fetched data
+      const img = new Image();
+      img.src = data.image_url;
+
+      img.onload = () => {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set("image_id", data.image_id);
+        window.history.replaceState({}, "", newUrl);
+        updateValues(data);
+        hideLoadingOverlays();
+      };
+    } else {
+      loadingtext.innerHTML = "No artwork found";
+      loadingtext.classList.add("red");
     }
-  });
+  } catch {
+    console.log(err);
+    loadingtext.innerHTML = "Try refeshing the page";
+    loadingtext.classList.add("red");
+  }
 }
 
 function createToast(type, content) {
@@ -94,17 +143,47 @@ function createToast(type, content) {
   toastContainer.appendChild(toast);
 }
 
-inputBox.addEventListener("input", function () {
-  // TODO AUTOCOMPLETE based on questionStep
-  // const query = nationalityInput.value.toLowerCase();
-  // if (query.length > 0) {
-  //   const filteredNationalities = NATIONALITIES.filter((nationality) =>
-  //     nationality.toLowerCase().includes(query)
-  //   );
-  //   // Generate toasts with the filtered nationalities
-  //   generateToasts(filteredNationalities, true);
-  // }
-});
+// AUTOCOMPLETE --------------------------------------------------------------------------
+function addAutocomplete() {
+  inputBox.addEventListener("input", function () {
+    const query = inputBox.value.toLowerCase();
+    if (query.length > 0) {
+      toastContainer.innerHTML = ""; // clear toasts
+
+      switch (questionStep) {
+        case 0:
+          const filteredNationalities = NATIONALITIES.filter((nationality) =>
+            nationality.toLowerCase().includes(query)
+          );
+
+          filteredNationalities.forEach((suggestion, index) => {
+            if (index < 5) {
+              createToast("neutral", suggestion);
+            }
+          });
+          break;
+
+        case 2:
+          const currentNationality = ARTISTS[question.artist_id]?.nationality;
+
+          if (!currentNationality)
+            return console.error("Artist nationality not found");
+
+          // Filter artists by nationality and query
+          const filteredArtists = Object.values(ARTISTS)
+            .filter((artist) => artist.nationality === currentNationality)
+            .filter((artist) => artist.full_name.toLowerCase().includes(query));
+
+          filteredArtists.forEach((artist, index) => {
+            if (index < 5) {
+              createToast("neutral", artist.full_name);
+            }
+          });
+          break;
+      }
+    }
+  });
+}
 
 // prettier-ignore
 function updateValues(question) {
@@ -165,22 +244,34 @@ function showFinalScore() {
   const status = document.getElementById("status");
   status.classList.remove("blue", "green", "yellow");
   status.innerHTML = BADGE_BEGINEUR;
-  if (timeLeft >= 30) {
-    log += "✨";
-    status.classList.add("yellow");
-    status.innerHTML = BADGE_CONOSEUR;
-  }
-  if (timeLeft <= 30) {
-    log += "👑";
-    status.classList.add("green");
-    status.innerHTML = BADGE_MASTEUR;
-  }
-  if (log.contains("❌")) {
-    log += "😀";
-    status.classList.add("blue");
-    status.innerHTML = BADGE_AMATEUR;
-  } else {
-    log += "🙂";
+
+  num_wrong = log.split("❌").length - 1;
+
+  switch (num_wrong) {
+    case 0:
+      if (timeLeft >= 50) {
+        status.classList.add("yellow");
+        status.innerHTML = BADGE_CONOSEUR;
+        log += "✨";
+        break;
+      }
+
+    case 1:
+      status.classList.add("green");
+      status.innerHTML = BADGE_MASTEUR;
+      log += "👑";
+      break;
+
+    case 2:
+      status.classList.add("blue");
+      status.innerHTML = BADGE_AMATEUR;
+      log += "😀";
+      break;
+
+    case 3:
+      status.innerHTML = BADGE_BEGINEUR;
+      log += "🙂";
+      break;
   }
   document.getElementById("result").style.display = "flex";
 }
@@ -225,32 +316,34 @@ function editDistance(s1, s2) {
   return costs[s2.length];
 }
 
-// Function to handle answer submission
 function handleAnswer() {
-  toastContainer.innerHTML = "";
+  toastContainer.innerHTML = ""; // clear previous toasts
 
-  if (!inputBox.value.toLowerCase()) {
-    createToast("You didn't type in anything", "error", false);
-    return;
-  }
+  input = inputBox.value.toLowerCase();
+  artist = ARTISTS[question.artist_id];
 
-  questionStep++;
+  if (!input) return createToast("error", "You didn't type in anything");
+
+  questionStep++, (inputBox.value = ""), (correct = false);
 
   // prettier-ignore
   switch (questionStep) {
     case 1:
-      log = similarity(input, question.nationality.toLowerCase()) > 0.6 ? "🌐" : "❌"
-      createToast(question.nationality, similarity(input, question.nationality.toLowerCase()) > 0.6 ? "success" : "error", false);
+      correct = similarity(input, artist.nationality.toLowerCase()) > 0.6
+      log += correct ? "🌐" : "❌"
+      createToast(correct ? "success" : "error", artist.nationality);   
       inputBox.placeholder = "A year when the artist was alive"
       break;
+
     case 2:
-      input = parseInt(inputBox.value);
-      log = input >= artwork.artist_born && input <= artwork.artist_dead ? "🔢" : "❌"
-      createToast(input, correct ? "success" : "error", false);
+      correct = input >= artist.birth && input <= artist.death
+      log +=  correct ? "🔢" : "❌"
+      createToast(correct ? "success" : "error", input);
       inputBox.placeholder = "Name the Artist"
       break;
+
     case 3:
-      log = similarity(input, ARTISTS[question.artist_id].full_name.toLowerCase()) > 0.6 ? "🎨" : "❌"
+      log += similarity(input, artist.full_name.toLowerCase()) > 0.6 ? "🎨" : "❌"
       clearInterval(timerInterval);
       showFinalScore();
       break;
@@ -258,11 +351,11 @@ function handleAnswer() {
 }
 
 function startTimer() {
+  document.getElementById("tutorial-modal").style.display = "none";
   clearInterval(timerInterval);
-  timeLeft = 99;
   inputBox.placeholder = "Guess the Nationality of the Artist";
 
-  updateTimer(); // maybe comment this out
+  (timeLeft = 99), (questionStep = 0), (log = "▶");
 
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -272,35 +365,30 @@ function startTimer() {
       showFinalScore();
     }
   }, 1000);
-
-  timeLeft = 99;
-  questionStep = 1;
-  log = "▶";
 }
 
-// Simplify this ------------------------------------------------------------------------
-function hideLoadingOverlays() {
-  loadingtext.style.display = "block";
-  overlay.style.display = "flex";
-  overlay2.style.display = "flex";
-  loadingtext.style.opacity = "1";
-  overlay.style.opacity = "1";
-  overlay2.style.opacity = "1";
+function showLoadingOverlay() {
+  loadingtext.style.cssText = "display: block; opacity: 1";
+  overlay.style.cssText = "display: flex; opacity: 1";
+  overlay2.style.cssText = "display: flex; opacity: 1";
+}
 
+function hideLoadingOverlays() {
+  document.getElementById("result").style.display = "none";
+
+  addAutocomplete();
   setTimeout(() => {
     overlay.style.transition = "opacity 1s ease-out";
     overlay.style.opacity = "0";
   }, 2000);
 
   setTimeout(() => {
-    overlay.style.transition = "opacity 1s ease-out";
-    overlay.style.opacity = "0";
     overlay.style.display = "none";
     overlay2.style.display = "none";
   }, 3000);
 }
-// Simplify this ------------------------------------------------------------------------
 
+// Share btn ----------------------------------------------------------------------------
 const shareData = {
   title: "Do you know this famous piece?",
   text: "See if you can figure out the artist faster than I did",
@@ -311,7 +399,7 @@ const sharebtn = document.getElementById("shareBTN");
 
 sharebtn.addEventListener("click", async () => {
   try {
-    shareData.text = log;
+    shareData.text = "Log: " + log;
     await navigator.share(shareData);
   } catch (err) {
     console.log(err);

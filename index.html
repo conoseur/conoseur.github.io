@@ -19,7 +19,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"> -->
-    
+
     <title>conoseur</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
     <nav class="navbar">
         <img src="images/logo.png" alt="Logo" class="logo">
         <div>
-            login
+            <!-- login -->
         </div>
     </nav>
 
@@ -99,7 +99,8 @@
             <div class="step">
                 <div class="step-number">2</div>
                 <p class="step-text">
-                    Use your fingers to pan left, right, up, and down on the image. Helpful suggestions will pop up from the wordbank of possible answers
+                    Use your fingers to pan left, right, up, and down on the image. Helpful suggestions will pop up from
+                    the wordbank of possible answers
                     You can click on them to autocomplete.
                 </p>
             </div>
@@ -111,21 +112,19 @@
                 </p>
             </div>
 
-            <button id="start-game" class="badge green">
+            <button id="start-game" onclick="startTimer()" class="badge green">
                 Start Game
             </button>
         </div>
     </div>
 
+
+
     <!-- Result Modal -->
     <div id="result" class="modal">
-        <div class="wrapper" id="cheery"
-            style="z-index: 100; display: flex; justify-content: center; align-items: center; font-size: 50px;">
-            <!-- conoseur -->
-            begineur
-        </div>
-        <div class="modal-content" style="display: none;">
+        <div class="modal-content">
 
+            <!-- add class wrapper -->
             <p id="status" class="badge">
 
             </p>
@@ -133,7 +132,7 @@
                 <img style="max-width: 100%; max-height: 100%; object-fit: contain;" id="artwork-image-result" src=""
                     alt="" />
             </div>
-            <span id="artwork-title"></span><br>
+            <span id="artwork-title" style="z-index: 500;"></span><br>
             <span id="artwork-artist" class="artist"></span>&nbsp;&nbsp;&nbsp;
             <br>
             <br>
@@ -171,7 +170,7 @@
                 </svg>
             </button>
             &nbsp;
-            <button class="badge yellow" id="randomizer">
+            <button class="badge yellow" id="randomizer" onclick="fetchRandom()">
                 Random &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path
