@@ -9,8 +9,7 @@ body {
 
 .artwork-container {
   max-height: 70vh;
-  overflow: clip;
-  overflow: scroll;
+  overflow: auto;
   position: relative;
 }
 
@@ -66,6 +65,103 @@ body {
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Banner styles */
+.banner {
+  position: relative;
+  /* background-color: #f9fafb; Light gray background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  /* z-index: 9; */
+}
+
+.background-blur {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36rem;
+  height: auto;
+  background: linear-gradient('to right', #6d2543, #9089fc);
+  opacity: 0.3;
+  filter: blur(50px);
+}
+
+.left-background {
+  left: max(-7rem, calc(50% - 52rem));
+}
+
+.right-background {
+  left: max(45rem, calc(50% + 8rem));
+}
+
+/* Banner content */
+.banner-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-text {
+  color: #1f2937;
+}
+
+.banner-text strong {
+  font-weight: 600;
+}
+
+.register-button {
+  background-color: #1f2937;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.register-button:hover {
+  background-color: #374151;
+}
+
+.register-button:focus-visible {
+  outline: 2px solid #1f2937;
+}
+
+/* Close button */
+.close-btn-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #1f2937;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #f43f5e; /* Red on hover */
+}
+
+.close-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+  .banner {
+    padding: 2px;
+  }
+  .banner-text {
+    font-size: 0.875rem;
+  }
 }
 
 .logo {
@@ -280,8 +376,8 @@ input[type="text"]::placeholder {
 
 /* Toast Styling ------------------------------------------------------------------------------*/
 .toast-container {
-  position: absolute;
-  bottom: 10px;
+  position: fixed;
+  bottom: 30vh;
   left: 10px;
   z-index: 9999;
   display: flex;
@@ -409,4 +505,81 @@ input[type="text"]::placeholder {
   top: 30%;
   left: 40%;
   animation: blob 10s infinite cubic-bezier(0.215, 0.61, 0.355, 1) reverse;
+}
+
+@keyframes swipeAll {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  20% {
+    transform: translate(-5px, 0);
+    opacity: 1;
+  }
+
+  25% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  30% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  45% {
+    transform: translate(0, -5px);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  55% {
+    opacity: 1;
+  }
+
+  70% {
+    transform: translate(5px, 0);
+    opacity: 1;
+  }
+
+  75% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  95% {
+    transform: translate(0, 5px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+}
+
+.swipe-hand {
+  flex-direction: column;
+  gap: 10px;
+  animation: swipeAll 4s cubic-bezier(0.4, 0, 0.2, 0.5) infinite;
+  fill: rgba(255, 255, 255, 0.3);
+  stroke: black;
+  stroke-width: 0.2px;
 }

@@ -61,9 +61,9 @@ async function fetchData() {
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set("image_id", data.image_id);
         window.history.replaceState({}, "", newUrl);
+        shareData.url = newUrl;
       }
     }
-    question = data;
 
     if (error) {
       console.error("Error fetching artwork:", error);
@@ -73,6 +73,7 @@ async function fetchData() {
       img.src = data.image_url;
 
       img.onload = () => {
+        question = data;
         updateValues(data);
         hideLoadingOverlays();
       };
@@ -109,8 +110,11 @@ async function fetchRandom() {
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set("image_id", data.image_id);
         window.history.replaceState({}, "", newUrl);
+        shareData.url = newUrl;
+        question = data;
         updateValues(data);
         hideLoadingOverlays();
+        startTimer();
       };
     } else {
       loadingtext.innerHTML = "No artwork found";
@@ -156,6 +160,8 @@ function addAutocomplete() {
             nationality.toLowerCase().includes(query)
           );
 
+          console.log(filteredNationalities);
+
           filteredNationalities.forEach((suggestion, index) => {
             if (index < 5) {
               createToast("neutral", suggestion);
@@ -173,6 +179,8 @@ function addAutocomplete() {
           const filteredArtists = Object.values(ARTISTS)
             .filter((artist) => artist.nationality === currentNationality)
             .filter((artist) => artist.full_name.toLowerCase().includes(query));
+
+          console.log(filteredArtists);
 
           filteredArtists.forEach((artist, index) => {
             if (index < 5) {
@@ -352,8 +360,15 @@ function handleAnswer() {
 
 function startTimer() {
   document.getElementById("tutorial-modal").style.display = "none";
-  clearInterval(timerInterval);
-  inputBox.placeholder = "Guess the Nationality of the Artist";
+
+  if (document.getElementById("swipe_gesture")) {
+    setTimeout(() => {
+      document.getElementById("swipe_gesture").style.display = "none";
+    }, 1000);
+
+    document.getElementById("swipe_gesture").style.display = "inline-block";
+    clearInterval(timerInterval);
+  }
 
   (timeLeft = 99), (questionStep = 0), (log = "▶");
 
@@ -371,6 +386,7 @@ function showLoadingOverlay() {
   loadingtext.style.cssText = "display: block; opacity: 1";
   overlay.style.cssText = "display: flex; opacity: 1";
   overlay2.style.cssText = "display: flex; opacity: 1";
+  inputBox.placeholder = "Guess the Nationality of the Artist";
 }
 
 function hideLoadingOverlays() {

@@ -50,12 +50,38 @@
         </div>
     </nav>
 
-    <div class="artwork-container">
-        <div style="position: absolute;">
-            <!-- scroll gif -->
+    <!-- <div class="banner" id="banner">
+        <div class="background-blur left-background"></div>
+        <div class="background-blur right-background"></div>
+        <div class="banner-content">
+            <p class="banner-text">
+                <strong>Created by Adi</strong> &nbsp;&nbsp;&nbsp;&nbsp; Please consider sharing  &nbsp;&nbsp;&nbsp;&nbsp;
+            </p>
+            <a href="#" class="register-button">Register now →</a>
         </div>
-        <img id="artwork-image" src="" alt="Error">
-        <div class="toast-container" id="toast-container" style="display: fixed;"></div>
+        <div class="close-btn-container">
+            <button class="close-btn" id="close-btn">
+                <svg viewBox="0 0 20 20" fill="currentColor" class="close-icon">
+                    <path
+                        d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                </svg>
+            </button>
+        </div>
+    </div> -->
+
+    <div class="artwork-container">
+        <img id="artwork-image" src="" alt="Error"
+            onclick="document.getElementById('swipe_gesture').style.display = 'none'">
+        <!-- scroll gif -->
+        <!-- https://yqnn.github.io/svg-path-editor/s -->
+
+        <div class="toast-container" id="toast-container">
+            <svg xmlns="http://www.w3.org/2000/svg" id="swipe_gesture" viewBox="-10 -10 30 30" width="500px"
+                height="500px" style="display: none;">
+                <path class="swipe-hand"
+                    d="M 3 3 C 3 1 4 1 4 3 L 4 5 C 4 4 5 5 5 6 C 4 4 6 6 6 6 C 7 6 6.6667 6.6667 6 10 A 1.42 1.42 0 0 1 6 10 A 5 5 0 0 0 6 12 T 3 12 A 5 5 90 0 0 2 8 L 2 7 A 1.42 1.42 0 0 1 2 7 C 2 5 3 5 3 6 L 3 3" />
+            </svg>
+        </div>
     </div>
 
     <div class="content-container">
@@ -116,8 +142,8 @@
                 Start Game
             </button>
         </div>
-    </div>
 
+    </div>
 
 
     <!-- Result Modal -->
