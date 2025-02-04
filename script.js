@@ -8,6 +8,14 @@ let question,
       navigator.userAgent
     ),
   isLandscape = window.innerWidth > window.innerHeight;
+let loadingTexts = [
+  "Conoseurship is between art & science",
+  "Find the strokes and connect the dots",
+  "Find signature, Find X marks the spot",
+  "Father is never far",
+  "Loading artwork ...",
+  "Join r/conoseur",
+];
 
 window.addEventListener("resize", () => {
   isLandscape = window.innerWidth > window.innerHeight;
@@ -37,59 +45,51 @@ const _supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY2Z1Zm9iYWZycGJ3ZXdjcnN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc3NjIzNDQsImV4cCI6MjA1MzMzODM0NH0.5oEKXRjAnm6hg1xRQivys6-ULdeBN5oUS3LSjAZumt8"
 );
 
-// TODO make more efficient !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// Function to fetch data and display artwork
 async function fetchData() {
   showLoadingOverlay();
 
   try {
     const params = new URLSearchParams(window.location.search);
     const imageId = params.get("image_id");
-    let data, error;
     let loadingtext = document.getElementById("loading-text");
+    loadingtext.textContent =
+      loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
 
-    if (imageId) {
-      // Fetch specific artwork by image_id
-      ({ data, error } = await _supabase.rpc("get_artwork_by_id", {
-        image_id: imageId,
-      }));
-    } else {
-      // Fetch today's artwork
-      ({ data, error } = await _supabase.rpc("get_today_artwork"));
-      if (data) {
-        // Update URL with the new image_id
+    let { data, error } = imageId
+      ? await _supabase.rpc("get_artwork_by_id", { image_id: imageId })
+      : await _supabase.rpc("get_today_artwork");
+
+    if (error) {
+      throw new Error(error);
+    }
+
+    if (data) {
+      if (!imageId) {
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.set("image_id", data.image_id);
         window.history.replaceState({}, "", newUrl);
         shareData.url = newUrl;
       }
-    }
 
-    if (error) {
-      console.error("Error fetching artwork:", error);
-    } else if (data) {
-      // Process the fetched data
       const img = new Image();
       img.src = data.image_url;
-
       img.onload = () => {
         question = data;
         updateValues(data);
         hideLoadingOverlays();
       };
-
       img.onerror = () => {
-        loadingtext.innerHTML = "Image failed to load";
-        loadingtext.classList.add("red");
+        loadingText.textContent = "Image failed to load";
+        loadingText.classList.add("red");
       };
     } else {
-      loadingtext.innerHTML = "No artwork found";
-      loadingtext.classList.add("red");
+      loadingText.textContent = "No artwork found";
+      loadingText.classList.add("red");
     }
   } catch (err) {
-    console.log(err);
-    loadingtext.innerHTML = "Try refeshing the page";
-    loadingtext.classList.add("red");
+    console.error(err);
+    loadingText.textContent = "Try refreshing the page";
+    loadingText.classList.add("red");
   }
 }
 
@@ -151,85 +151,67 @@ function createToast(type, content) {
 function addAutocomplete() {
   inputBox.addEventListener("input", function () {
     const query = inputBox.value.toLowerCase();
-    if (query.length > 0) {
-      toastContainer.innerHTML = ""; // clear toasts
+    if (!query) return;
 
-      switch (questionStep) {
-        case 0:
-          const filteredNationalities = NATIONALITIES.filter((nationality) =>
-            nationality.toLowerCase().includes(query)
-          );
+    toastContainer.innerHTML = ""; // clear toasts
 
-          console.log(filteredNationalities);
+    switch (questionStep) {
+      case 0:
+        const filteredNationalities = NATIONALITIES.filter((nationality) =>
+          nationality.toLowerCase().includes(query)
+        );
 
-          filteredNationalities.forEach((suggestion, index) => {
-            if (index < 5) {
-              createToast("neutral", suggestion);
-            }
-          });
-          break;
+        console.log(filteredNationalities);
 
-        case 2:
-          const currentNationality = ARTISTS[question.artist_id]?.nationality;
+        filteredNationalities.forEach((suggestion, index) => {
+          if (index < 5) createToast("neutral", suggestion);
+        });
+        break;
 
-          if (!currentNationality)
-            return console.error("Artist nationality not found");
+      case 2:
+        const currentNationality = ARTISTS[question.artist_id]?.nationality;
 
-          // Filter artists by nationality and query
-          const filteredArtists = Object.values(ARTISTS)
-            .filter((artist) => artist.nationality === currentNationality)
-            .filter((artist) => artist.full_name.toLowerCase().includes(query));
+        if (!currentNationality)
+          return console.error("Artist nationality not found");
 
-          console.log(filteredArtists);
+        // Filter artists by nationality and query
+        const filteredArtists = Object.values(ARTISTS)
+          .filter((artist) => artist.nationality === currentNationality)
+          .filter((artist) => artist.full_name.toLowerCase().includes(query));
 
-          filteredArtists.forEach((artist, index) => {
-            if (index < 5) {
-              createToast("neutral", artist.full_name);
-            }
-          });
-          break;
-      }
+        console.log(filteredArtists);
+
+        filteredArtists.forEach((artist, index) => {
+          if (index < 5) createToast("neutral", artist.full_name);
+        });
+        break;
     }
   });
 }
 
-// prettier-ignore
 function updateValues(question) {
-  artist = ARTISTS[question.artist_id]
+  const artist = ARTISTS[question.artist_id] || {};
 
-  /* Update artwork display */
-  document.getElementById("artwork-image").src = question.image_url || "";
-  document.getElementById("artwork-image-result").src = question.image_url || "";
-  document.getElementById("artwork-artist").textContent = `${artist.full_name || "Unknown Artist"}`;
-  document.getElementById("artwork-title").textContent = `${question.image_title || "Untitled"}`;
+  // Update artwork display
+  const setText = (id, text) =>
+    (document.getElementById(id).textContent = text || "Unknown");
+  const setImage = (id, url) => (document.getElementById(id).src = url || "");
 
+  setImage("artwork-image", question.image_url);
+  setImage("artwork-image-result", question.image_url);
+  setText("artwork-artist", artist.full_name || "Unknown Artist");
+  setText("artwork-title", question.image_title || "Untitled");
 
-  // LOOK AGAIN at -------------------------------------------------------------------------------
   // Manage the artwork link
-  const artworkLink = document.getElementById("artwork-link");
-  const newArtworkLink = question.wikipedia_url || "#";
+  document.getElementById("artwork-link").onclick = () =>
+    window.open(artist.wikipedia_url || "#", "_blank");
 
-  // Remove any existing event listeners by cloning the element
-  const newLinkElement = artworkLink.cloneNode(true);
-  newLinkElement.href = newArtworkLink;
-
-  artworkLink.parentNode.replaceChild(newLinkElement, artworkLink);
-
-  // Update additional details if present
-  if (question.subject) {
-    document.getElementById("subject").textContent = question.subject;
-    document.getElementById("subject").style.display = "inline";
-  } else {
-    document.getElementById("subject").style.display = "none";
-  }
-
-  if (question.style) {
-    document.getElementById("style").textContent = question.style;
-    document.getElementById("style").style.display = "inline";
-  } else {
-    document.getElementById("style").style.display = "none";
-  }
-  // LOOK AGAIN at -------------------------------------------------------------------------------
+  // Handle subject & style visibility
+  ["subject", "style"].forEach((id) => {
+    const element = document.getElementById(id);
+    element.textContent = question[id] || "";
+    element.style.display = question[id] ? "inline" : "none";
+  });
 }
 
 const timerProgress = document.getElementById("timer-progress");
@@ -246,41 +228,31 @@ function updateTimer() {
   timerText.textContent = timeLeft;
 }
 
-// Function to show final score
+// prettier-ignore
 function showFinalScore() {
   toastContainer.innerHTML = ""; // Clear previous toasts
+
   const status = document.getElementById("status");
-  status.classList.remove("blue", "green", "yellow");
-  status.innerHTML = BADGE_BEGINEUR;
+  status.classList.remove("blue", "green", "yellow", "grey");
 
-  num_wrong = log.split("❌").length - 1;
+  const numWrong = log.split("❌").length - 1;
 
-  switch (num_wrong) {
-    case 0:
-      if (timeLeft >= 50) {
-        status.classList.add("yellow");
-        status.innerHTML = BADGE_CONOSEUR;
-        log += "✨";
-        break;
-      }
+  const badgeConfig = [
+    { threshold: 0, badge: BADGE_CONOSEUR, className: "yellow", icon: "✨", condition: timeLeft >= 50 },
+    { threshold: 1, badge: BADGE_MASTEUR, className: "green", icon: "👑" },
+    { threshold: 2, badge: BADGE_AMATEUR, className: "blue", icon: "😀" },
+    { threshold: 3, badge: BADGE_BEGINEUR, className: "grey", icon: "🙂" }
+  ];
 
-    case 1:
-      status.classList.add("green");
-      status.innerHTML = BADGE_MASTEUR;
-      log += "👑";
+  for (const { threshold, badge, className, icon, condition = true } of badgeConfig) {
+    if (numWrong === threshold && condition) {
+      status.classList.add(className);
+      status.innerHTML = badge;
+      log += icon;
       break;
-
-    case 2:
-      status.classList.add("blue");
-      status.innerHTML = BADGE_AMATEUR;
-      log += "😀";
-      break;
-
-    case 3:
-      status.innerHTML = BADGE_BEGINEUR;
-      log += "🙂";
-      break;
+    }
   }
+
   document.getElementById("result").style.display = "flex";
 }
 

@@ -265,6 +265,12 @@ body {
   border: 1px solid rgba(0, 42, 255, 0.3);
 }
 
+.badge.grey {
+  background-color: #ffffff98;
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(0, 42, 255, 0.3);
+}
+
 .badge.red {
   background-color: rgba(255, 0, 0, 0.3);
   color: rgb(87, 0, 0);
