@@ -24,6 +24,7 @@ window.addEventListener("resize", () => {
 
 const inputBox = document.querySelector('input[id="input-box"]');
 const toastContainer = document.getElementById("toast-container");
+const progressBar = document.getElementById("progress-bar");
 const overlay = document.getElementById("loading-overlay");
 const overlay2 = document.getElementById("loading-overlay2");
 const loadingtext = document.getElementById("loading-text");
@@ -45,87 +46,109 @@ const _supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkY2Z1Zm9iYWZycGJ3ZXdjcnN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc3NjIzNDQsImV4cCI6MjA1MzMzODM0NH0.5oEKXRjAnm6hg1xRQivys6-ULdeBN5oUS3LSjAZumt8"
 );
 
+async function loadImageWithProgress(url, onProgress) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Image request failed");
+
+  const contentLength = response.headers.get("Content-Length");
+  const total = contentLength ? parseInt(contentLength, 10) : null;
+
+  const reader = response.body.getReader();
+  let received = 0;
+  const chunks = [];
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    chunks.push(value);
+    received += value.length;
+
+    if (total && onProgress) {
+      onProgress(Math.round((received / total) * 100));
+    }
+  }
+
+  const blob = new Blob(chunks);
+  return URL.createObjectURL(blob);
+}
+
+
 async function fetchData() {
   showLoadingOverlay();
 
   try {
     const params = new URLSearchParams(window.location.search);
     const imageId = params.get("image_id");
-    let loadingtext = document.getElementById("loading-text");
-    loadingtext.textContent =
-      loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
+    loadingtext.textContent = loadingTexts[Math.floor(Math.random() * loadingTexts.length)];
 
     let { data, error } = imageId
       ? await _supabase.rpc("get_artwork_by_id", { image_id: imageId })
       : await _supabase.rpc("get_today_artwork");
 
-    if (error) {
-      throw new Error(error);
-    }
+    if (error) throw new Error(error);
 
     if (data) {
-      if (!imageId) {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set("image_id", data.image_id);
-        window.history.replaceState({}, "", newUrl);
-        shareData.url = newUrl;
-      }
+      console.log(data)
 
-      const img = new Image();
-      img.src = data.image_url;
-      img.onload = () => {
-        question = data;
-        updateValues(data);
-        hideLoadingOverlays();
-      };
-      img.onerror = () => {
-        loadingText.textContent = "Image failed to load";
-        loadingText.classList.add("red");
-      };
+      updateValues(data);
+
+      const imgUrl = await loadImageWithProgress(data.image_url, (percent) => {
+        progressBar.style.width = percent + "%";
+      });
+
+      data.image_url = imgUrl; // use the blob URL
+      question = data;
+      hideLoadingOverlays();
     } else {
-      loadingText.textContent = "No artwork found";
-      loadingText.classList.add("red");
+      loadingtext.textContent = "No artwork found";
+      loadingtext.classList.add("red");
     }
   } catch (err) {
     console.error(err);
-    loadingText.textContent = "Try refreshing the page";
-    loadingText.classList.add("red");
+    loadingtext.textContent = "Try refreshing the page";
+    loadingtext.classList.add("red");
   }
 }
-
-fetchData();
 
 async function fetchRandom() {
   showLoadingOverlay();
 
   try {
-    ({ data, error } = await _supabase.rpc("get_random_artwork"));
+    const { data, error } = await _supabase.rpc("get_random_artwork");
+    if (error) throw error;
 
     if (data) {
-      // Process the fetched data
-      const img = new Image();
-      img.src = data.image_url;
+      updateValues(data);
+      const progressBar = document.getElementById("progress-bar");
 
-      img.onload = () => {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set("image_id", data.image_id);
-        window.history.replaceState({}, "", newUrl);
-        shareData.url = newUrl;
-        question = data;
-        updateValues(data);
-        hideLoadingOverlays();
-        startTimer();
-      };
+      const imgUrl = await loadImageWithProgress(data.image_url, (percent) => {
+        progressBar.style.width = percent + "%";
+      });
+
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.set("image_id", data.image_id);
+      window.history.replaceState({}, "", newUrl);
+      shareData.url = newUrl;
+
+      data.image_url = imgUrl;
+      question = data;
+      hideLoadingOverlays();
+      startTimer();
     } else {
-      loadingtext.innerHTML = "No artwork found";
+      loadingtext.textContent = "No artwork found";
       loadingtext.classList.add("red");
     }
-  } catch {
-    console.log(err);
-    loadingtext.innerHTML = "Try refeshing the page";
+  } catch (err) {
+    console.error(err);
+    loadingtext.textContent = "invalid url";
     loadingtext.classList.add("red");
   }
 }
+
+
+fetchData();
+
 
 function createToast(type, content) {
   const toast = document.createElement("div");
@@ -201,6 +224,7 @@ function updateValues(question) {
   setImage("artwork-image-result", question.image_url);
   setText("artwork-artist", artist.full_name || "Unknown Artist");
   setText("artwork-title", question.image_title || "Untitled");
+  setText("description", question.description || "  ");
 
   // Manage the artwork link
   document.getElementById("artwork-link").onclick = () =>
@@ -223,38 +247,37 @@ const circumference = 2 * Math.PI * radius;
 timerProgress.style.strokeDasharray = circumference;
 
 function updateTimer() {
+  if (timeLeft == 20 || timeLeft == 7)
+    createToast("neutral", "time is almost up, submit soon");
   const offset = circumference * (1 - timeLeft / 99);
   timerProgress.style.strokeDashoffset = offset;
   timerText.textContent = timeLeft;
 }
 
-// prettier-ignore
 function showFinalScore() {
-  toastContainer.innerHTML = ""; // Clear previous toasts
+  toastContainer.innerHTML = "";
+  progressBar.style.width = "0%";
 
   const status = document.getElementById("status");
-  status.classList.remove("blue", "green", "yellow", "grey");
+  status.className = ""; // Clear all classes
 
-  const numWrong = log.split("❌").length - 1;
+  const numWrong = (log.match(/❌/g) || []).length;
 
-  const badgeConfig = [
-    { threshold: 0, badge: BADGE_CONOSEUR, className: "yellow", icon: "✨", condition: timeLeft >= 50 },
-    { threshold: 1, badge: BADGE_MASTEUR, className: "green", icon: "👑" },
-    { threshold: 2, badge: BADGE_AMATEUR, className: "blue", icon: "😀" },
-    { threshold: 3, badge: BADGE_BEGINEUR, className: "grey", icon: "🙂" }
+  const badges = [
+    ["yellow", BADGE_CONOSEUR, "✨"],
+    ["green", BADGE_MASTEUR, "👑"],
+    ["blue", BADGE_AMATEUR, "😀"],
+    ["grey", BADGE_BEGINEUR, "🙂"]
   ];
 
-  for (const { threshold, badge, className, icon, condition = true } of badgeConfig) {
-    if (numWrong === threshold && condition) {
-      status.classList.add(className);
-      status.innerHTML = badge;
-      log += icon;
-      break;
-    }
-  }
+  const [className, badge, icon] = badges[numWrong] || badges[badges.length - 1];
+  status.classList.add(className);
+  status.textContent = badge;
+  log += icon;
 
   document.getElementById("result").style.display = "flex";
 }
+
 
 function similarity(s1, s2) {
   var longer = s1;
@@ -311,13 +334,13 @@ function handleAnswer() {
     case 1:
       correct = similarity(input, artist.nationality.toLowerCase()) > 0.6
       log += correct ? "🌐" : "❌"
-      createToast(correct ? "success" : "error", artist.nationality);   
+      createToast(correct ? "success" : "error", artist.nationality);
       inputBox.placeholder = "A year when the artist was alive"
       break;
 
     case 2:
       correct = input >= artist.birth && input <= artist.death
-      log +=  correct ? "🔢" : "❌"
+      log += correct ? "🔢" : "❌"
       createToast(correct ? "success" : "error", input);
       inputBox.placeholder = "Name the Artist"
       break;
