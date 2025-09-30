@@ -255,29 +255,39 @@ function updateTimer() {
 }
 
 function showFinalScore() {
-  toastContainer.innerHTML = "";
-  progressBar.style.width = "0%";
-
+  toastContainer.innerHTML = ""; // Clear previous toasts
   const status = document.getElementById("status");
-  status.className = ""; // Clear all classes
+  status.classList.remove("blue", "green", "yellow");
+  status.innerHTML = BADGE_BEGINEUR;
 
-  const numWrong = (log.match(/❌/g) || []).length;
+  num_wrong = log.split("❌").length - 1;
 
-  const badges = [
-    ["yellow", BADGE_CONOSEUR, "✨"],
-    ["green", BADGE_MASTEUR, "👑"],
-    ["blue", BADGE_AMATEUR, "😀"],
-    ["grey", BADGE_BEGINEUR, "🙂"]
-  ];
+  switch (num_wrong) {
+    case 0:
+        status.classList.add("yellow");
+        status.innerHTML = BADGE_CONOSEUR;
+        log += "✨";
+        break;
 
-  const [className, badge, icon] = badges[numWrong] || badges[badges.length - 1];
-  status.classList.add(className);
-  status.textContent = badge;
-  log += icon;
+    case 1:
+      status.classList.add("green");
+      status.innerHTML = BADGE_MASTEUR;
+      log += "👑";
+      break;
 
+    case 2:
+      status.classList.add("blue");
+      status.innerHTML = BADGE_AMATEUR;
+      log += "😀";
+      break;
+
+    case 3:
+      status.innerHTML = BADGE_BEGINEUR;
+      log += "🙂";
+      break;
+  }
   document.getElementById("result").style.display = "flex";
 }
-
 
 function similarity(s1, s2) {
   var longer = s1;
