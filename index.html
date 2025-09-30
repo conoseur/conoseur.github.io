@@ -40,8 +40,14 @@
         <div>
             <img src="images/logo2.png" alt="Logo">
             <p id="loading-text" class="loading-text">Loading artwork...</p>
+            <div class="progress-wrapper"
+                style="width: 400px; background:#eee; border-radius: 8px; overflow:hidden; margin-top:10px;">
+                <div id="progress-bar" style="width:0%; height:16px; background:#000000; transition:width 0.2s;"></div>
+            </div>
         </div>
     </div>
+
+
 
     <nav class="navbar">
         <img src="images/logo.png" alt="Logo" class="logo">
@@ -84,7 +90,7 @@
         </div>
     </div>
 
-    <div class="content-container">
+    <div class="content-container" style="margin-top: 4px;">
 
         <!-- color change? -->
         <span id="subject" class="badge yellow" style="display: none;"></span>
@@ -94,17 +100,18 @@
 
             <input type="text" placeholder="Guess the Nationality of the Artist" id="input-box">
 
-            <div class="timer-container" style="margin-right: 5px;" onclick="handleAnswer()">
-                <div id="popup" class="popup">
-                    Click here to submit
-                </div>
+            <div class="timer-container" onclick="handleAnswer()"
+                style="background-color: rgb(205, 255, 205); border-radius: 100%;">
                 <svg class="timer-circle" width="50" height="50">
                     <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none" />
                     <circle id="timer-progress" cx="25" cy="25" r="20" stroke="#4CAF50" stroke-width="4" fill="none" />
                 </svg>
-                <div id="timer-text" class="timer-text">99</div>
+                <div id="timer-text" class="timer-text" style="display: none;">99</div>
             </div>
+
+
         </div>
+        <div style="margin: 7px; position: relative; display: flex; max-width: 300px;font-family: 'Inter', sans-serif; font-size: 0.8rem;" id="description"></div>
     </div>
 
 
