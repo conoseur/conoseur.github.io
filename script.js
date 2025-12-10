@@ -25,7 +25,6 @@ window.addEventListener("resize", () => {
 const inputBox = document.querySelector('input[id="input-box"]');
 const toastContainer = document.getElementById("toast-container");
 const progressBar = document.getElementById("progress-bar");
-const progressBar = document.getElementById("progress-bar");
 const overlay = document.getElementById("loading-overlay");
 const overlay2 = document.getElementById("loading-overlay2");
 const loadingtext = document.getElementById("loading-text");
@@ -126,26 +125,8 @@ async function fetchRandom() {
   try {
     const { data, error } = await _supabase.rpc("get_random_artwork");
     if (error) throw error;
-    const { data, error } = await _supabase.rpc("get_random_artwork");
-    if (error) throw error;
 
     if (data) {
-      updateValues(data);
-      const progressBar = document.getElementById("progress-bar");
-
-      const imgUrl = await loadImageWithProgress(data.image_url, (percent) => {
-        progressBar.style.width = percent + "%";
-      });
-
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.set("image_id", data.image_id);
-      window.history.replaceState({}, "", newUrl);
-      shareData.url = newUrl;
-
-      data.image_url = imgUrl;
-      question = data;
-      hideLoadingOverlays();
-      startTimer();
       updateValues(data);
       const progressBar = document.getElementById("progress-bar");
 
@@ -167,9 +148,6 @@ async function fetchRandom() {
       loadingtext.textContent = "No artwork found";
       loadingtext.classList.add("red");
     }
-  } catch (err) {
-    console.error(err);
-    loadingtext.textContent = "invalid url";
   } catch (err) {
     console.error(err);
     loadingtext.textContent = "invalid url";
@@ -326,7 +304,7 @@ function showFinalScore() {
     }
   }
   document.getElementById("result").style.display = "flex";
-}
+
 
 function similarity(s1, s2) {
   var longer = s1;
