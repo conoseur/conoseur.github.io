@@ -277,7 +277,7 @@ function showFinalScore() {
   const status = document.getElementById("status");
   status.className = ""; // Clear all classes
 
-  const numWrong = (log.match(/❌/g) || []).length;
+  const num_wrong = (log.match(/❌/g) || []).length;
 
   switch (num_wrong) {
     case 0:
