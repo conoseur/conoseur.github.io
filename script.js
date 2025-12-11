@@ -106,6 +106,7 @@ async function fetchData() {
     }
   } catch (err) {
     console.error(err);
+    // loadingtext.textContent = "Try refreshing the page";
     loadingtext.innerHTML = `<button class="badge yellow" id="randomizer" onclick="fetchRandom()">
                 Random &nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -144,6 +145,7 @@ async function fetchRandom() {
       startTimer();
     } else {
       loadingtext.textContent = "No artwork found";
+      loadingtext.textContent = "No artwork found";
       loadingtext.classList.add("red");
     }
   } catch (err) {
@@ -152,6 +154,10 @@ async function fetchRandom() {
     loadingtext.classList.add("red");
   }
 }
+
+
+fetchData();
+
 
 
 fetchData();
@@ -232,6 +238,7 @@ function updateValues(question) {
   setText("artwork-artist", artist.full_name || "Unknown Artist");
   setText("artwork-title", question.image_title || "Untitled");
   setText("description", question.description || "  ");
+  setText("description", question.description || "  ");
 
   // Manage the artwork link
   document.getElementById("artwork-link").onclick = () =>
@@ -256,6 +263,8 @@ timerProgress.style.strokeDasharray = circumference;
 function updateTimer() {
   if (timeLeft == 20 || timeLeft == 7)
     createToast("neutral", "time is almost up, submit soon");
+  if (timeLeft == 20 || timeLeft == 7)
+    createToast("neutral", "time is almost up, submit soon");
   const offset = circumference * (1 - timeLeft / 99);
   timerProgress.style.strokeDashoffset = offset;
   timerText.textContent = timeLeft;
@@ -270,20 +279,32 @@ function showFinalScore() {
 
   const numWrong = (log.match(/❌/g) || []).length;
 
-  const badges = [
-    ["yellow", BADGE_CONOSEUR, "✨"],
-    ["green", BADGE_MASTEUR, "👑"],
-    ["blue", BADGE_AMATEUR, "😀"],
-    ["grey", BADGE_BEGINEUR, "🙂"]
-  ];
+  switch (num_wrong) {
+    case 0:
+      status.classList.add("yellow");
+      status.innerHTML = BADGE_CONOSEUR;
+      log += "✨";
+      break;
 
   const [className, badge, icon] = badges[numWrong] || badges[badges.length - 1];
   status.classList.add(className);
   status.textContent = badge;
   log += icon;
 
+    case 2:
+      status.classList.add("blue");
+      status.innerHTML = BADGE_AMATEUR;
+      log += "😀";
+      break;
+
+    case 3:
+      status.innerHTML = BADGE_BEGINEUR;
+      log += "🙂";
+      break;
+    }
+  }
   document.getElementById("result").style.display = "flex";
-}
+
 
 
 function similarity(s1, s2) {
