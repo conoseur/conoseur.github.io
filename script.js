@@ -275,35 +275,33 @@ function showFinalScore() {
   progressBar.style.width = "0%";
 
   const status = document.getElementById("status");
-  status.className = ""; // Clear all classes
+  status.className = ""; // reset
 
   const num_wrong = (log.match(/❌/g) || []).length;
 
-  switch (num_wrong) {
-    case 0:
-      status.classList.add("yellow");
-      status.innerHTML = BADGE_CONOSEUR;
-      log += "✨";
-      break;
-
-  const [className, badge, icon] = badges[numWrong] || badges[badges.length - 1];
-  status.classList.add(className);
-  status.textContent = badge;
-  log += icon;
-
-    case 2:
-      status.classList.add("blue");
-      status.innerHTML = BADGE_AMATEUR;
-      log += "😀";
-      break;
-
-    case 3:
-      status.innerHTML = BADGE_BEGINEUR;
-      log += "🙂";
-      break;
-    }
+  // SCORE LOGIC -------------------------------------------------------
+  if (num_wrong === 0) {
+    // Perfect = Conoseur
+    status.classList.add("yellow");
+    status.innerHTML = BADGE_CONOSEUR;
+    log += "✨";
   }
+  else if (num_wrong === 1 || num_wrong === 2) {
+    // Some mistakes = Amateur
+    status.classList.add("blue");
+    status.innerHTML = BADGE_AMATEUR;
+    log += "😀";
+  }
+  else {
+    // 3 or more mistakes = Beginner
+    status.classList.add("red");
+    status.innerHTML = BADGE_BEGINEUR;
+    log += "🙂";
+  }
+
+  // SHOW RESULT -------------------------------------------------------
   document.getElementById("result").style.display = "flex";
+}
 
 
 
