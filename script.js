@@ -271,12 +271,13 @@ function updateTimer() {
 }
 
 function showFinalScore() {
-  toastContainer.innerHTML = ""; // Clear previous toasts
-  const status = document.getElementById("status");
-  status.classList.remove("blue", "green", "yellow");
-  status.innerHTML = BADGE_BEGINEUR;
+  toastContainer.innerHTML = "";
+  progressBar.style.width = "0%";
 
-  num_wrong = log.split("❌").length - 1;
+  const status = document.getElementById("status");
+  status.className = ""; // Clear all classes
+
+  const numWrong = (log.match(/❌/g) || []).length;
 
   switch (num_wrong) {
     case 0:
@@ -285,11 +286,10 @@ function showFinalScore() {
       log += "✨";
       break;
 
-    case 1:
-      status.classList.add("green");
-      status.innerHTML = BADGE_MASTEUR;
-      log += "👑";
-      break;
+  const [className, badge, icon] = badges[numWrong] || badges[badges.length - 1];
+  status.classList.add(className);
+  status.textContent = badge;
+  log += icon;
 
     case 2:
       status.classList.add("blue");
@@ -304,6 +304,7 @@ function showFinalScore() {
     }
   }
   document.getElementById("result").style.display = "flex";
+
 
 
 function similarity(s1, s2) {
